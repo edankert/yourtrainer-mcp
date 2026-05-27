@@ -1,0 +1,445 @@
+version: 1
+updated: "2026-05-27T00:00Z"
+
+template:
+  replace_me: false
+
+project:
+  name: "yourtrainer-mcp"
+  summary: "Self-hosted MCP server exposing cycling-format knowledge + capability tools. Hosted at mcp.your-applications.com/your-trainer. Maintained alongside Your Trainer."
+  repo_root: "."
+
+retention:
+  policy: active-and-recent
+  recent_changes_max: 25
+  keep_closed_issues_in_snapshot: false
+  keep_done_tasks_in_snapshot: false
+  keep_done_features_in_snapshot: false
+  note: "Snapshot keeps active work + recent changes for handoff; notes are the archive."
+
+docs_system:
+  source_of_truth: SNAPSHOT.yaml
+  instructions:
+    - tools/instructions/OBSIDIAN.md
+    - tools/instructions/LIFECYCLE.md
+  references:
+    - docs/PHASES.md
+
+counters:
+  ADR: 0
+  CHG:
+    last_date: ""
+    last_seq: 0
+  FEAT: 6
+  ISS: 0
+  REQ: 0
+  REL: 0
+  RISK: 3
+  TASK: 54
+  TST: 0
+  WF: 0
+
+focus:
+  task: ""
+  feature: ""
+  phase: "[[PHASE-001-Initial-Launch]]"
+  issue: ""
+  bundled_launch:
+    intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
+    pieces:
+      - "[[PHASE-001-Initial-Launch]]"
+      - "external: ../your-applications.com/docs/features/your-trainer-workout-library/FEAT-0009-Your-Trainer-Workout-Library.md"
+      - "external: ../your-applications.com/docs/features/mcp-web-surfaces/FEAT-0025-MCP-Web-Surfaces.md"
+      - "external: ../your-trainer/docs/features/FEAT-0086-McpIntegrationForAiFeatures.md"
+
+items:
+  features:
+    FEAT-0003:
+      title: "Trojan-horse adoption layer (citation-source framing)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/attribution-citation/FEAT-0003-Attribution-Citation-Policy.md"
+    FEAT-0004:
+      title: "Cycling capability tools (binary + math + linting)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/FEAT-0004-Capability-Tools.md"
+    FEAT-0001:
+      title: "Cycling format knowledge registry"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/FEAT-0001-Format-Knowledge-Registry.md"
+    FEAT-0006:
+      title: "Cycling library-aware operations"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/library-operations/FEAT-0006-Library-Operations.md"
+    FEAT-0002:
+      title: "MCP server + VPS hosting (both layers)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/FEAT-0002-MCP-Hosting.md"
+    FEAT-0005:
+      title: "Cycling rider workflow tools"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/rider-workflows/FEAT-0005-Rider-Workflows.md"
+
+  tasks:
+    TASK-0014:
+      title: "Default output format ADR (trojan-horse intensity calibration)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/attribution-citation/plan/tasks/TASK-0014-Default-output-format-ADR-trojan-horse-intensity-calibration.md"
+      parent: "FEAT-0003"
+    TASK-0015:
+      title: "Attribution + contextual-hint copy (POSITIONING-compliant)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/attribution-citation/plan/tasks/TASK-0015-Attribution-contextual-hint-copy-POSITIONING-compliant.md"
+      parent: "FEAT-0003"
+    TASK-0016:
+      title: "Contextual hint integration in tool responses"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/attribution-citation/plan/tasks/TASK-0016-Contextual-hint-integration-in-tool-responses.md"
+      parent: "FEAT-0003"
+    TASK-0017:
+      title: "Operational health metrics (aggregate-only, no usage telemetry)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/attribution-citation/plan/tasks/TASK-0017-Operational-health-metrics-aggregate-only-no-usage-telemetry.md"
+      parent: "FEAT-0003"
+    TASK-0018:
+      title: "Open-source ADR — library + MCP wrapper publication decision"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/attribution-citation/plan/tasks/TASK-0018-Open-source-ADR-library-MCP-wrapper-publication-decision.md"
+      parent: "FEAT-0003"
+    TASK-0019:
+      title: "Capability tools scope ADR (v1 in/out, future-phase candidates)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0019-Capability-tools-scope-ADR-v1-in-out-future-phase-candidates.md"
+      parent: "FEAT-0004"
+    TASK-0020:
+      title: "FIT-workout read/write tool (binary, Garmin SDK)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0020-FIT-workout-read-write-tool-binary-Garmin-SDK.md"
+      parent: "FEAT-0004"
+    TASK-0021:
+      title: "FIT-activity inspector + NP/IF/TSS calculation"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0021-FIT-activity-inspector-NP-IF-TSS-calculation.md"
+      parent: "FEAT-0004"
+    TASK-0022:
+      title: "Peak power curve calculator (mean-max 1s, 5s, 30s, 1min, 5min, 20min, 60min)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0022-Peak-power-curve-calculator-mean-max-1s-5s-30s-1min-5min-20min-60min.md"
+      parent: "FEAT-0004"
+    TASK-0023:
+      title: "Workout builder from structured intent (JSON → ZWO + FIT + .ytw deterministically)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0023-Workout-builder-from-structured-intent-JSON-ZWO-FIT-ytw-deterministically.md"
+      parent: "FEAT-0004"
+    TASK-0024:
+      title: "App-acceptance checker (consumes FEAT-0001 constraints catalogue)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0024-App-acceptance-checker-consumes-FEAT-0019-constraints-catalogue.md"
+      parent: "FEAT-0004"
+    TASK-0025:
+      title: "Workout structure linter (domain-aware static analysis)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0025-Workout-structure-linter-domain-aware-static-analysis.md"
+      parent: "FEAT-0004"
+    TASK-0026:
+      title: "Batch operations adapter (folder-of-files → aggregated results)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0026-Batch-operations-adapter-folder-of-files-aggregated-results.md"
+      parent: "FEAT-0004"
+    TASK-0027:
+      title: "Training-load curve (CTL / ATL / TSB) from a folder of activities"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0027-Training-load-curve-CTL-ATL-TSB-from-a-folder-of-activities.md"
+      parent: "FEAT-0004"
+    TASK-0028:
+      title: "HR–power decoupling calculator (endurance-ride pace quality)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0028-HR-power-decoupling-calculator-endurance-ride-pace-quality.md"
+      parent: "FEAT-0004"
+    TASK-0033:
+      title: "Workout decomposition (file → structured intent)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0033-Workout-decomposition-file-structured-intent.md"
+      parent: "FEAT-0004"
+    TASK-0035:
+      title: "Workout scaling (duration / FTP / intensity)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0035-Workout-scaling-duration-FTP-intensity.md"
+      parent: "FEAT-0004"
+    TASK-0036:
+      title: "Lap / interval auto-detection on unstructured activities"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0036-Lap-interval-auto-detection-on-unstructured-activities.md"
+      parent: "FEAT-0004"
+    TASK-0037:
+      title: "Lightweight file inspector + format detection"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0037-Lightweight-file-inspector-format-detection.md"
+      parent: "FEAT-0004"
+    TASK-0046:
+      title: "FTP detection from a ride"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0046-FTP-detection-from-a-ride.md"
+      parent: "FEAT-0004"
+    TASK-0047:
+      title: "Power Duration Curve fitting + modelled FTP (mFTP)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0047-Power-Duration-Curve-fitting-modelled-FTP-mFTP.md"
+      parent: "FEAT-0004"
+    TASK-0050:
+      title: "Workout difficulty score (multi-zone breakdown)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0050-Workout-difficulty-score-multi-zone-breakdown.md"
+      parent: "FEAT-0004"
+    TASK-0051:
+      title: "Recovery time estimator"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0051-Recovery-time-estimator.md"
+      parent: "FEAT-0004"
+    TASK-0052:
+      title: "Cadence analysis"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0052-Cadence-analysis.md"
+      parent: "FEAT-0004"
+    TASK-0053:
+      title: "HR drift / aerobic threshold estimator (MAF-style)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0053-HR-drift-aerobic-threshold-estimator-MAF-style.md"
+      parent: "FEAT-0004"
+    TASK-0054:
+      title: "Single-ride segment efforts (local peak-effort detection)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0054-Single-ride-segment-efforts-local-peak-effort-detection.md"
+      parent: "FEAT-0004"
+    TASK-0001:
+      title: "Bootstrap yourtrainer-mcp repo (Python package + CI + MIT licence + knowledge-registry structure)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0001-Bootstrap-cycling-format-tools-repo-Python-package-CI-MIT-licence-knowledge-regi.md"
+      parent: "FEAT-0001"
+    TASK-0002:
+      title: "Author ZWO format documentation (spec + examples + constraints + glossary + conversion notes)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0002-Author-ZWO-format-documentation-spec-examples-constraints-glossary-conversion-no.md"
+      parent: "FEAT-0001"
+    TASK-0003:
+      title: "Author ERG/MRC format documentation"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0003-Author-ERG-MRC-format-documentation.md"
+      parent: "FEAT-0001"
+    TASK-0004:
+      title: "Author FIT format documentation (workout + activity)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0004-Author-FIT-format-documentation-workout-activity.md"
+      parent: "FEAT-0001"
+    TASK-0005:
+      title: "Author route format documentation (GPX + TCX + KML)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0005-Author-route-format-documentation-GPX-TCX-KML.md"
+      parent: "FEAT-0001"
+    TASK-0006:
+      title: "Author .ytw format documentation"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0006-Author-ytw-format-documentation.md"
+      parent: "FEAT-0001"
+    TASK-0007:
+      title: "Author locale string-bundle format documentation (Android XML / iOS strings / .po / flat JSON)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0007-Author-locale-string-bundle-format-documentation-Android-XML-iOS-strings-po-flat.md"
+      parent: "FEAT-0001"
+    TASK-0041:
+      title: "Test infrastructure — fixtures, golden files, Hypothesis strategies, CI harness"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0041-Test-infrastructure-fixtures-golden-files-Hypothesis-strategies-CI-harness.md"
+      parent: "FEAT-0001"
+    TASK-0045:
+      title: "Reference-value test corpus (TrainingPeaks / Intervals.icu canonical numbers)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0045-Reference-value-test-corpus-TrainingPeaks-Intervals-icu-canonical-numbers.md"
+      parent: "FEAT-0001"
+    TASK-0038:
+      title: "Library indexing — build searchable metadata index from a folder"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/library-operations/plan/tasks/TASK-0038-Library-indexing-build-searchable-metadata-index-from-a-folder.md"
+      parent: "FEAT-0006"
+    TASK-0039:
+      title: "Library deduplication — find near-duplicate workouts"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/library-operations/plan/tasks/TASK-0039-Library-deduplication-find-near-duplicate-workouts.md"
+      parent: "FEAT-0006"
+    TASK-0040:
+      title: "Library statistics — aggregate breakdown of a workout / activity library"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/library-operations/plan/tasks/TASK-0040-Library-statistics-aggregate-breakdown-of-a-workout-activity-library.md"
+      parent: "FEAT-0006"
+    TASK-0049:
+      title: "Best-efforts-across-history"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/library-operations/plan/tasks/TASK-0049-Best-efforts-across-history.md"
+      parent: "FEAT-0006"
+    TASK-0008:
+      title: "MCP server architecture ADR + framework choice"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0008-MCP-server-architecture-ADR-framework-choice.md"
+      parent: "FEAT-0002"
+    TASK-0009:
+      title: "VPS provisioning + Caddy/nginx + Let's Encrypt for mcp.your-applications.com"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0009-VPS-provisioning-Caddy-nginx-Let-s-Encrypt-for-mcp-your-applications-com.md"
+      parent: "FEAT-0002"
+    TASK-0010:
+      title: "systemd unit + log rotation + restart-on-failure"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0010-systemd-unit-log-rotation-restart-on-failure.md"
+      parent: "FEAT-0002"
+    TASK-0011:
+      title: "Monitoring + alerting (uptime + error-rate)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0011-Monitoring-alerting-uptime-error-rate.md"
+      parent: "FEAT-0002"
+    TASK-0012:
+      title: "Wire FEAT-0001 library functions as MCP tools"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0012-Wire-FEAT-0019-library-functions-as-MCP-tools.md"
+      parent: "FEAT-0002"
+    TASK-0013:
+      title: "File transfer protocol design (base64 in MCP args vs URL-handoff)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0013-File-transfer-protocol-design-base64-in-MCP-args-vs-URL-handoff.md"
+      parent: "FEAT-0002"
+    TASK-0042:
+      title: "MCP protocol conformance + real-client integration tests"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0042-MCP-protocol-conformance-real-client-integration-tests.md"
+      parent: "FEAT-0002"
+    TASK-0043:
+      title: "Public canary + status page at status.your-applications.com"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0043-Public-canary-status-page-at-status-your-applications-com.md"
+      parent: "FEAT-0002"
+    TASK-0044:
+      title: "Performance baselines + regression detection"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0044-Performance-baselines-regression-detection.md"
+      parent: "FEAT-0002"
+    TASK-0029:
+      title: "Pacing strategy generator (GPX route + FTP + target effort → pacing plan)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/rider-workflows/plan/tasks/TASK-0029-Pacing-strategy-generator-GPX-route-FTP-target-effort-pacing-plan.md"
+      parent: "FEAT-0005"
+    TASK-0030:
+      title: "Activity privacy / anonymisation tool"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/rider-workflows/plan/tasks/TASK-0030-Activity-privacy-anonymisation-tool.md"
+      parent: "FEAT-0005"
+    TASK-0031:
+      title: "Library migration helper (LLM-orchestrated batch conversion)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/rider-workflows/plan/tasks/TASK-0031-Library-migration-helper-LLM-orchestrated-batch-conversion.md"
+      parent: "FEAT-0005"
+    TASK-0032:
+      title: "Format-conversion roundtrip test harness (LLM self-correction tool)"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/rider-workflows/plan/tasks/TASK-0032-Format-conversion-roundtrip-test-harness-LLM-self-correction-tool.md"
+      parent: "FEAT-0005"
+    TASK-0034:
+      title: "Plan-vs-actual adherence scorecard"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/rider-workflows/plan/tasks/TASK-0034-Plan-vs-actual-adherence-scorecard.md"
+      parent: "FEAT-0005"
+    TASK-0048:
+      title: "Climb analysis on a GPX route"
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/rider-workflows/plan/tasks/TASK-0048-Climb-analysis-on-a-GPX-route.md"
+      parent: "FEAT-0005"
+
+  issues: {}
+  requirements: {}
+  risks:
+    RISK-0001:
+      title: "VPS-hosted MCP server security + uptime exposure"
+      status: open
+      path: "docs/risks/RISK-0001-VPS-MCP-Security.md"
+    RISK-0002:
+      title: "Open-source maintenance burden (yourtrainer-mcp)"
+      status: open
+      path: "docs/risks/RISK-0002-OSS-Maintenance-Burden.md"
+    RISK-0003:
+      title: "Format-spec drift (ZWO, FIT, TCX, GPX, ERG/MRC)"
+      status: open
+      path: "docs/risks/RISK-0003-Format-Spec-Drift.md"
+
+  tests: {}
+  workflows: {}
+  decisions: {}
+
+metrics:
+  counts:
+    features_total: 6
+    features_done: 0
+    tasks_total: 54
+    tasks_done: 0
+    tests_total: 0
+    tests_passing: 0
+    tests_failing: 0
+    issues_open: 0
+    issues_triage: 0
+    risks_open: 3
