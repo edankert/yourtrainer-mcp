@@ -14,8 +14,18 @@ def _write_workout(tmp_path, name, intent, fmt="ytw"):
     return str(p)
 
 
-SS = {"name": "SS", "steps": [{"kind": "steady", "duration_s": 1200, "power": 0.88}]}
-EASY = {"name": "Easy", "steps": [{"kind": "steady", "duration_s": 1800, "power": 0.55}]}
+def _intent(name, work_dur, work_pct):
+    return {"name": name, "description": name, "workout_type": "POWER",
+            "warmup": {"duration_seconds": 300, "zone": "Z2", "label": "Warmup",
+                       "target_power_percent": 40, "target_power_end_percent": 70},
+            "intervals": [{"duration_seconds": work_dur, "zone": "Z3", "label": "Work",
+                           "target_power_percent": work_pct}],
+            "cooldown": {"duration_seconds": 300, "zone": "Z1", "label": "Cooldown",
+                         "target_power_percent": 50}}
+
+
+SS = _intent("SS", 1200, 88)
+EASY = _intent("Easy", 1800, 55)
 
 
 def test_index_library_mixes_workouts_and_activities(tmp_path):
@@ -44,7 +54,8 @@ def test_library_stats_aggregates(tmp_path):
     stats = library.library_stats([a, c], ftp_watts=250.0)
     assert stats["files_indexed"] == 2
     assert stats["by_kind"]["workout"] == 2
-    assert stats["total_duration_s"] == 3000  # 1200 + 1800
+    # SS: 300+1200+300=1800; EASY: 300+1800+300=2400 => 4200
+    assert stats["total_duration_s"] == 4200
     assert stats["total_tss"] > 0
 
 

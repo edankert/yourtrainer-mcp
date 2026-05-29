@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 
 from . import power as power_math
-from .workout import Workout, expand_to_power_series
+from .workout import Repeat, Workout, expand_to_power_series
 
 
 def adherence_scorecard(
@@ -39,21 +39,31 @@ def adherence_scorecard(
         idx = int(sec * sample_rate_hz)
         return actual[idx] if 0 <= idx < len(actual) else None
 
+    # Expand (nested) repeat groups so each block maps to a contiguous time
+    # segment, matching the order of expand_to_power_series.
+    expanded: list = []
+
+    def _walk(items):
+        for it in items:
+            if isinstance(it, Repeat):
+                for _ in range(it.repeat):
+                    _walk(it.intervals)
+            else:
+                expanded.append(it)
+
+    _walk(workout.intervals)
+
     steps_out: list[dict] = []
     in_tol_seconds = 0
     counted = 0
     cursor = 0
-    for i, step in enumerate(workout.steps):
-        dur = step.total_duration_s()
+    for i, step in enumerate(expanded):
+        dur = step.duration_seconds
         seg_target = target[cursor:cursor + dur]
         seg_actual = [a for s in range(cursor, cursor + dur) if (a := actual_at(s)) is not None]
         cursor += dur
         if not seg_target or not seg_actual:
-            steps_out.append({"step": i, "kind": step.kind, "status": "no_data"})
-            continue
-        if step.kind == "freeride":
-            steps_out.append({"step": i, "kind": step.kind, "status": "untargeted",
-                              "avg_actual_w": round(power_math.average(seg_actual), 1)})
+            steps_out.append({"step": i, "label": step.label, "status": "no_data"})
             continue
         avg_t = power_math.average(seg_target)
         avg_a = power_math.average(seg_actual)
@@ -66,7 +76,7 @@ def adherence_scorecard(
                 if abs((a - t) / t * 100) <= tolerance_pct:
                     in_tol_seconds += 1
         steps_out.append({
-            "step": i, "kind": step.kind,
+            "step": i, "label": step.label, "interval_type": step.interval_type,
             "avg_target_w": round(avg_t, 1),
             "avg_actual_w": round(avg_a, 1),
             "deviation_pct": round(dev, 1),

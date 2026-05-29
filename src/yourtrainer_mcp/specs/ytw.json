@@ -4,25 +4,28 @@
   "kind": "workout",
   "binary": false,
   "extensions": [".ytw"],
-  "version": "1",
-  "spec": "The Your Trainer Workout format is a JSON document. Top level: {\"format\": \"ytw\", \"version\": 1, \"name\": str, \"description\": str, \"author\": str, \"steps\": [..]}. Power is a fraction of FTP (1.0 == FTP), matching ZWO/MRC semantics, so the file is FTP-independent. Each step has a \"kind\": warmup, cooldown, ramp (duration_s, power_low, power_high), steady (duration_s, power), interval (repeat, on_duration_s, off_duration_s, on_power, off_power), or freeride (duration_s). Any step may carry an optional integer \"cadence\" (rpm). .ytw imports directly into Your Trainer; it is the canonical authoring target of the build/decompose tools and round-trips losslessly with ZWO.",
+  "version": "Canonical schema: your-trainer/docs/ytw-schema.json.",
+  "spec": "The Your Trainer Workout format is a JSON document. Required top-level keys: programId (string), programName (string), description (string), totalDuration (integer seconds), and intervals (array). Optional: workoutType (POWER | HR_ZONE | ROUTE), variant (STANDARD | RAMP_TEST), difficulty (1-5), category, primaryLocale, and a strings localization block. Each entry in intervals is either a WorkoutInterval or a RepeatGroup. A WorkoutInterval has: duration (seconds), intensityZone (Z1-Z7 token), label, intervalType (WARMUP | COOLDOWN | INTERVAL), optional id, targetPowerPercent (integer % of FTP; for ramps this is the start), optional targetPowerEndPercent (ramp end; linear interpolation), optional targetHrZone (1-5 for HR_ZONE workouts), optional cadenceTarget (rpm), and optional cues (timed coaching messages: offsetSec, text, optional durationSec). A RepeatGroup has repeat (1-50) and intervals (WorkoutInterval list; nested repeat groups are not allowed); the app flattens it on import. The strings block maps each locale to {name, description, labels (keyed by interval id), cues (keyed by 'id:index')}. .ytw imports directly into Your Trainer.",
   "examples": [
-    {"title": "Steady endurance", "content": "{\n  \"format\": \"ytw\", \"version\": 1, \"name\": \"20 min Z2\",\n  \"steps\": [{\"kind\": \"steady\", \"duration_s\": 1200, \"power\": 0.65}]\n}"},
-    {"title": "Warmup + intervals + cooldown", "content": "{\n  \"format\": \"ytw\", \"version\": 1, \"name\": \"5x1 VO2\",\n  \"steps\": [\n    {\"kind\": \"warmup\", \"duration_s\": 600, \"power_low\": 0.4, \"power_high\": 0.75},\n    {\"kind\": \"interval\", \"repeat\": 5, \"on_duration_s\": 60, \"off_duration_s\": 60, \"on_power\": 1.2, \"off_power\": 0.5},\n    {\"kind\": \"cooldown\", \"duration_s\": 300, \"power_low\": 0.6, \"power_high\": 0.4}\n  ]\n}"},
-    {"title": "Step with cadence target", "content": "{\n  \"format\": \"ytw\", \"version\": 1, \"name\": \"Cadence drill\",\n  \"steps\": [{\"kind\": \"steady\", \"duration_s\": 300, \"power\": 0.6, \"cadence\": 100}]\n}"}
+    {"title": "Steady endurance", "content": "{\n  \"programId\": \"endurance-30\",\n  \"programName\": \"30 min Z2\",\n  \"description\": \"Steady endurance ride.\",\n  \"totalDuration\": 1800,\n  \"workoutType\": \"POWER\",\n  \"intervals\": [\n    {\"duration\": 1800, \"intensityZone\": \"Z2\", \"label\": \"Endurance\", \"intervalType\": \"INTERVAL\", \"targetPowerPercent\": 65}\n  ]\n}"},
+    {"title": "Warmup + repeat group + cooldown", "content": "{\n  \"programId\": \"vo2-5x3\",\n  \"programName\": \"VO2 5x3\",\n  \"description\": \"Five 3-minute VO2max efforts.\",\n  \"totalDuration\": 3300,\n  \"workoutType\": \"POWER\",\n  \"intervals\": [\n    {\"duration\": 600, \"intensityZone\": \"Z2\", \"label\": \"Warmup\", \"intervalType\": \"WARMUP\", \"targetPowerPercent\": 45, \"targetPowerEndPercent\": 75},\n    {\"repeat\": 5, \"intervals\": [\n      {\"duration\": 180, \"intensityZone\": \"Z5\", \"label\": \"On\", \"intervalType\": \"INTERVAL\", \"targetPowerPercent\": 115},\n      {\"duration\": 180, \"intensityZone\": \"Z1\", \"label\": \"Off\", \"intervalType\": \"INTERVAL\", \"targetPowerPercent\": 50}\n    ]},\n    {\"duration\": 300, \"intensityZone\": \"Z1\", \"label\": \"Cooldown\", \"intervalType\": \"COOLDOWN\", \"targetPowerPercent\": 60, \"targetPowerEndPercent\": 40}\n  ]\n}"},
+    {"title": "Interval with cues + localized strings", "content": "{\n  \"programId\": \"ss-1x20\",\n  \"programName\": \"Sweet Spot 20\",\n  \"description\": \"One 20-minute sweet-spot block.\",\n  \"totalDuration\": 1200,\n  \"workoutType\": \"POWER\",\n  \"primaryLocale\": \"en\",\n  \"intervals\": [\n    {\"duration\": 1200, \"intensityZone\": \"Z3\", \"label\": \"Sweet Spot\", \"intervalType\": \"INTERVAL\", \"id\": \"ss\", \"targetPowerPercent\": 90, \"cadenceTarget\": 90, \"cues\": [{\"offsetSec\": 0, \"text\": \"Lock in.\"}]}\n  ],\n  \"strings\": {\"en\": {\"name\": \"Sweet Spot 20\", \"description\": \"One 20-minute sweet-spot block.\", \"labels\": {\"ss\": \"Sweet Spot\"}, \"cues\": {\"ss:0\": \"Lock in.\"}}}\n}"}
   ],
   "constraints": [
-    {"app": "your_trainer", "note": "Power values are fractions of FTP; 1.0 == FTP."},
-    {"app": "your_trainer", "note": "format must equal \"ytw\" and version must be a supported integer (currently 1)."},
-    {"app": "your_trainer", "note": "interval steps expand to repeat on/off pairs in document order."}
+    {"app": "your_trainer", "note": "targetPowerPercent is an integer percentage of FTP (90 == 90% FTP); ramps interpolate to targetPowerEndPercent."},
+    {"app": "your_trainer", "note": "intervalType is WARMUP, COOLDOWN, or INTERVAL; repeat groups are flattened on import and may not nest."},
+    {"app": "your_trainer", "note": "Blocks referenced in strings.labels / strings.cues must carry a stable id; cues keys are 'id:index'."},
+    {"app": "your_trainer", "note": "RepeatGroup.repeat is 1-50; cue text best kept under 80 characters."}
   ],
   "conversion_notes": [
-    {"to": "zwo", "note": "1:1 step mapping to Warmup/Cooldown/Ramp/SteadyState/IntervalsT/FreeRide; power fractions unchanged."},
-    {"to": "mrc", "note": "Multiply power fractions by 100 for %FTP rows; sample ramps/intervals into minute,percent points."},
-    {"to": "fit", "note": "Encode power fractions as FIT %FTP (1000+percent); expand intervals/ramps to discrete time steps."}
+    {"to": "zwo", "note": "Map intervalType WARMUP/COOLDOWN to Warmup/Cooldown, ramps (targetPowerEndPercent) to Ramp, constant blocks to SteadyState, and a 2-block repeat group to IntervalsT. Power: percent/100."},
+    {"to": "fit", "note": "Encode targetPowerPercent as FIT %FTP (1000+percent); expand repeat groups; map intervalType to step intensity (warmup/cooldown/active)."},
+    {"to": "erg", "note": "Multiply targetPowerPercent by FTP/100 for absolute watts; sample ramps/repeats into minute,watt rows."}
   ],
   "glossary": [
-    {"term": "kind", "definition": "The step type: warmup/cooldown/ramp/steady/interval/freeride."},
-    {"term": "power", "definition": "Target as a fraction of FTP (1.0 == FTP)."}
+    {"term": "intervalType", "definition": "WARMUP, COOLDOWN, or INTERVAL — drives display and work-only summaries."},
+    {"term": "targetPowerPercent", "definition": "Target power as an integer percentage of FTP (ramp start)."},
+    {"term": "RepeatGroup", "definition": "{repeat, intervals}; expands to repeat copies of the inner intervals on import."},
+    {"term": "strings", "definition": "Per-locale {name, description, labels, cues}; labels keyed by interval id, cues by 'id:index'."}
   ]
 }

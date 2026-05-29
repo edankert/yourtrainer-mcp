@@ -1,9 +1,9 @@
 """≥10 FIT-workout sample corpus (TASK-0020).
 
 Combines the three real Garmin workout files with a diverse set of generated
-workouts. Each generated workout is encoded to FIT, decoded back (power profile
-preserved within %FTP quantisation), and — when the optional fitparse extra is
-present — independently re-parsed to confirm the bytes are valid FIT.
+workouts (canonical-schema intents). Each generated workout is encoded to FIT,
+decoded back (power profile preserved — integer %FTP round-trips exactly), and,
+when fitparse is present, independently re-parsed to confirm valid FIT bytes.
 """
 
 from __future__ import annotations
@@ -19,50 +19,46 @@ EXT = Path(__file__).parent / "fixtures" / "external"
 REAL_WORKOUTS = ["WorkoutIndividualSteps.fit", "WorkoutRepeatSteps.fit",
                  "WorkoutCustomTargetValues.fit"]
 
-# 10 diverse synthetic-but-realistic workouts covering every step kind/combo.
+
+def _wu(lo=40, hi=70, dur=600):
+    return {"duration_seconds": dur, "zone": "Z2", "label": "Warmup",
+            "target_power_percent": lo, "target_power_end_percent": hi}
+
+
+def _cd(lo=60, hi=40, dur=300):
+    return {"duration_seconds": dur, "zone": "Z1", "label": "Cooldown",
+            "target_power_percent": lo, "target_power_end_percent": hi}
+
+
+def _blk(dur, pct, zone="Z3", label="Work", end=None):
+    b = {"duration_seconds": dur, "zone": zone, "label": label, "target_power_percent": pct}
+    if end is not None:
+        b["target_power_end_percent"] = end
+    return b
+
+
+def _intent(name, intervals):
+    return {"name": name, "description": name, "workout_type": "POWER",
+            "warmup": _wu(), "intervals": intervals, "cooldown": _cd()}
+
+
 GENERATED = [
-    {"name": "Recovery", "steps": [{"kind": "steady", "duration_s": 1800, "power": 0.5}]},
-    {"name": "Endurance", "steps": [
-        {"kind": "warmup", "duration_s": 600, "power_low": 0.4, "power_high": 0.6},
-        {"kind": "steady", "duration_s": 5400, "power": 0.65},
-        {"kind": "cooldown", "duration_s": 600, "power_low": 0.6, "power_high": 0.4}]},
-    {"name": "Sweet Spot 3x12", "steps": [
-        {"kind": "warmup", "duration_s": 600, "power_low": 0.45, "power_high": 0.75},
-        {"kind": "interval", "repeat": 3, "on_duration_s": 720, "off_duration_s": 300,
-         "on_power": 0.9, "off_power": 0.55},
-        {"kind": "cooldown", "duration_s": 420, "power_low": 0.6, "power_high": 0.4}]},
-    {"name": "Threshold 2x20", "steps": [
-        {"kind": "warmup", "duration_s": 900, "power_low": 0.4, "power_high": 0.8},
-        {"kind": "interval", "repeat": 2, "on_duration_s": 1200, "off_duration_s": 300,
-         "on_power": 1.0, "off_power": 0.5}]},
-    {"name": "VO2 5x3", "steps": [
-        {"kind": "warmup", "duration_s": 600, "power_low": 0.4, "power_high": 0.8},
-        {"kind": "interval", "repeat": 5, "on_duration_s": 180, "off_duration_s": 180,
-         "on_power": 1.15, "off_power": 0.5},
-        {"kind": "cooldown", "duration_s": 300, "power_low": 0.6, "power_high": 0.4}]},
-    {"name": "Anaerobic 8x30", "steps": [
-        {"kind": "warmup", "duration_s": 600, "power_low": 0.4, "power_high": 0.85},
-        {"kind": "interval", "repeat": 8, "on_duration_s": 30, "off_duration_s": 150,
-         "on_power": 1.5, "off_power": 0.45}]},
-    {"name": "Ramp Test", "steps": [
-        {"kind": "ramp", "duration_s": 1500, "power_low": 0.4, "power_high": 1.5}]},
-    {"name": "Over-Unders", "steps": [
-        {"kind": "warmup", "duration_s": 600, "power_low": 0.4, "power_high": 0.8},
-        {"kind": "interval", "repeat": 6, "on_duration_s": 120, "off_duration_s": 120,
-         "on_power": 1.05, "off_power": 0.88},
-        {"kind": "cooldown", "duration_s": 300, "power_low": 0.6, "power_high": 0.4}]},
-    {"name": "Free Ride Opener", "steps": [
-        {"kind": "warmup", "duration_s": 300, "power_low": 0.4, "power_high": 0.7},
-        {"kind": "freeride", "duration_s": 1200},
-        {"kind": "steady", "duration_s": 300, "power": 0.55}]},
-    {"name": "Pyramid", "steps": [
-        {"kind": "warmup", "duration_s": 600, "power_low": 0.4, "power_high": 0.75},
-        {"kind": "steady", "duration_s": 60, "power": 0.9},
-        {"kind": "steady", "duration_s": 120, "power": 1.0},
-        {"kind": "steady", "duration_s": 180, "power": 1.1},
-        {"kind": "steady", "duration_s": 120, "power": 1.0},
-        {"kind": "steady", "duration_s": 60, "power": 0.9},
-        {"kind": "cooldown", "duration_s": 300, "power_low": 0.6, "power_high": 0.4}]},
+    _intent("Recovery", [_blk(1800, 50, "Z1", "Easy")]),
+    _intent("Endurance", [_blk(5400, 65, "Z2", "Endurance")]),
+    _intent("Sweet Spot 3x12", [{"repeat": 3, "intervals": [
+        _blk(720, 90, "Z3", "Sweet Spot"), _blk(300, 55, "Z1", "Recovery")]}]),
+    _intent("Threshold 2x20", [{"repeat": 2, "intervals": [
+        _blk(1200, 100, "Z4", "Threshold"), _blk(300, 50, "Z1", "Recovery")]}]),
+    _intent("VO2 5x3", [{"repeat": 5, "intervals": [
+        _blk(180, 115, "Z5", "VO2"), _blk(180, 50, "Z1", "Recovery")]}]),
+    _intent("Anaerobic 8x30", [{"repeat": 8, "intervals": [
+        _blk(30, 150, "Z6", "Sprint"), _blk(150, 45, "Z1", "Recovery")]}]),
+    _intent("Ramp", [_blk(1500, 50, "Z2", "Ramp", end=120)]),
+    _intent("Over-Unders", [{"repeat": 6, "intervals": [
+        _blk(120, 105, "Z4", "Over"), _blk(120, 88, "Z3", "Under")]}]),
+    _intent("Tempo", [_blk(1800, 80, "Z3", "Tempo")]),
+    _intent("Pyramid", [_blk(60, 90), _blk(120, 100), _blk(180, 110, "Z5"),
+                        _blk(120, 100), _blk(60, 90)]),
 ]
 
 
@@ -79,7 +75,7 @@ def test_generated_workout_fit_roundtrips(intent):
     s1 = wk.expand_to_power_series(w, 250.0)
     s2 = wk.expand_to_power_series(back, 250.0)
     assert len(s1) == len(s2)
-    assert all(abs(a - b) <= 1.25 for a, b in zip(s1, s2, strict=True))
+    assert s1 == s2  # integer %FTP -> exact round-trip
 
 
 @pytest.mark.parametrize("intent", GENERATED, ids=[w["name"] for w in GENERATED])
@@ -88,11 +84,10 @@ def test_generated_workout_parses_in_fitparse(intent):
     import io
     data = fit_workout.encode_workout_fit(wk.build_workout(intent))
     ff = fitparse.FitFile(io.BytesIO(data))
-    steps = list(ff.get_messages("workout_step"))
-    assert len(steps) >= 1  # an independent parser accepts our bytes
+    assert len(list(ff.get_messages("workout_step"))) >= 1
 
 
 @pytest.mark.parametrize("name", REAL_WORKOUTS)
 def test_real_workout_decodes(name):
     w = fit_workout.decode_workout_fit((EXT / name).read_bytes())
-    assert w.name and len(w.steps) >= 3
+    assert w.name and len(w.intervals) >= 3

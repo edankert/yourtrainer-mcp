@@ -29,13 +29,13 @@ counters:
   ADR: 6
   CHG:
     last_date: "20260529"
-    last_seq: 14
+    last_seq: 15
   FEAT: 7
   ISS: 1
   REQ: 0
   REL: 0
   RISK: 4
-  TASK: 62
+  TASK: 63
   TST: 12
   WF: 0
 
@@ -44,7 +44,7 @@ focus:
   feature: "[[FEAT-0002]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "FEAT-0007 Your Trainer content integration: MCP now proxies the website (curated workout library, AI-skill catalogue, manual Q&A) as stateless public-content fetch + restrained Powered-by-Your-Trainer attribution + server instructions. 191 tests. ISS-0001 raised: .ytw writer schema != real Your Trainer .ytw (reconcile before app import)."
+  active_wave: "TASK-0063/ISS-0001 done: workout model + .ytw writer/reader realigned to the canonical Your Trainer schema (verified against workout-schema.html: separate workoutType/variant, nested repeat groups, exact field names). build input = workout-intent shape; 192 tests."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -199,6 +199,12 @@ items:
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/yourtrainer-content/plan/tasks/TASK-0062-Manual-QA-tools.md"
       parent: "FEAT-0007"
+    TASK-0063:
+      title: "Realign workout model + .ytw writer/reader to the canonical Your Trainer schema (ISS-0001)"
+      status: done
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0063-Realign-ytw-schema.md"
+      parent: "FEAT-0004"
     TASK-0025:
       title: "Workout structure linter (domain-aware static analysis)"
       status: done
@@ -477,7 +483,7 @@ items:
   issues:
     ISS-0001:
       title: ".ytw writer schema does not match the real Your Trainer .ytw format"
-      status: triage
+      status: fixed
       path: "docs/issues/ISS-0001-ytw-schema-mismatch.md"
       note: "build_workout_from_intent emits {format,steps}; real Your Trainer .ytw uses programId/programName/description + localized cues. Reconcile before the app imports MCP-built .ytw."
   requirements: {}
@@ -609,11 +615,11 @@ metrics:
   counts:
     features_total: 7
     features_done: 5
-    tasks_total: 62
-    tasks_done: 58
+    tasks_total: 63
+    tasks_done: 59
     tests_total: 12
     tests_passing: 12
     tests_failing: 0
     issues_open: 0
-    issues_triage: 1
+    issues_triage: 0
     risks_open: 3

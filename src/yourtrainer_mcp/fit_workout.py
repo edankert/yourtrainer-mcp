@@ -2,56 +2,54 @@
 
 Encodes a :class:`~yourtrainer_mcp.workout.Workout` to a valid FIT-workout
 binary and decodes one back. Power targets use FIT's "% FTP" convention
-(stored as ``1000 + percent``). Intervals and ramps are expanded to discrete
-time steps on write — semantically faithful and lossless under the
-per-second-power round-trip check.
+(stored as ``1000 + percent``). Because the workout model stores power as an
+integer percentage of FTP, repeat groups and ramps round-trip exactly (no
+quantisation loss) under the per-second-power check.
 """
 
 from __future__ import annotations
 
 from . import fit
-from .workout import Step, Workout
+from .workout import Block, Repeat, Workout, zone_for_percent
 
 # workout_step enums.
 _DUR_TIME = 0
 _TGT_POWER = 4
-_TGT_OPEN = 2
 _INT_ACTIVE, _INT_REST, _INT_WARMUP, _INT_COOLDOWN = 0, 1, 2, 3
 
-
-def _pct(frac: float) -> int:
-    """Encode a fraction-of-FTP as FIT % FTP (1000 + percent)."""
-    return 1000 + int(round(frac * 100))
-
-
-def _unpct(value: int) -> float:
-    return (value - 1000) / 100.0
+_INTENSITY_FROM_TYPE = {"WARMUP": _INT_WARMUP, "COOLDOWN": _INT_COOLDOWN, "INTERVAL": _INT_ACTIVE}
+_TYPE_FROM_INTENSITY = {_INT_WARMUP: "WARMUP", _INT_COOLDOWN: "COOLDOWN",
+                        _INT_ACTIVE: "INTERVAL", _INT_REST: "INTERVAL"}
 
 
-def _flatten(workout: Workout) -> list[tuple[str, int, float, float]]:
-    """Flatten to ``[(intensity_kind, duration_s, power_low, power_high)]``.
+def _pct(percent: int) -> int:
+    """Encode an integer % of FTP as FIT % FTP (1000 + percent)."""
+    return 1000 + int(percent)
 
-    intervals -> on/off steps; ramps/warmup/cooldown keep their low/high.
-    freeride -> kind 'freeride' with low/high == -1 sentinel.
-    """
-    out: list[tuple[str, int, float, float]] = []
-    for s in workout.steps:
-        if s.kind == "interval":
-            for _ in range(s.repeat or 0):
-                out.append(("on", s.on_duration_s or 0, s.on_power or 0, s.on_power or 0))
-                out.append(("off", s.off_duration_s or 0, s.off_power or 0, s.off_power or 0))
-        elif s.kind == "steady":
-            out.append(("steady", s.duration_s, s.power or 0, s.power or 0))
-        elif s.kind in ("warmup", "cooldown", "ramp"):
-            out.append((s.kind, s.duration_s, s.power_low or 0, s.power_high or 0))
-        elif s.kind == "freeride":
-            out.append(("freeride", s.duration_s, -1.0, -1.0))
+
+def _unpct(value: int) -> int:
+    return int(value) - 1000
+
+
+def _flatten(workout: Workout) -> list[Block]:
+    """Flatten the workout (expanding nested repeat groups) into a list of blocks."""
+    out: list[Block] = []
+
+    def walk(items):
+        for it in items:
+            if isinstance(it, Repeat):
+                for _ in range(it.repeat):
+                    walk(it.intervals)
+            else:
+                out.append(it)
+
+    walk(workout.intervals)
     return out
 
 
 def encode_workout_fit(workout: Workout) -> bytes:
     """Serialise a Workout to FIT-workout bytes."""
-    steps = _flatten(workout)
+    blocks = _flatten(workout)
     w = fit.FitWriter()
 
     w.add_message(fit.MSG_FILE_ID, [
@@ -64,33 +62,28 @@ def encode_workout_fit(workout: Workout) -> bytes:
     w.add_message(fit.MSG_WORKOUT, [
         fit.Field(8, fit.STRING, workout.name or "Workout"),  # wkt_name
         fit.Field(4, fit.ENUM, 2),                            # sport = cycling
-        fit.Field(6, fit.UINT16, len(steps)),                 # num_valid_steps
+        fit.Field(6, fit.UINT16, len(blocks)),                # num_valid_steps
     ])
 
-    intensity_map = {
-        "warmup": _INT_WARMUP, "cooldown": _INT_COOLDOWN,
-        "off": _INT_REST, "on": _INT_ACTIVE, "steady": _INT_ACTIVE,
-        "ramp": _INT_ACTIVE, "freeride": _INT_ACTIVE,
-    }
-    for idx, (kind, dur, lo, hi) in enumerate(steps):
-        is_open = kind == "freeride"
-        fields = [
-            fit.Field(254, fit.UINT16, idx),                  # message_index
-            fit.Field(1, fit.ENUM, _DUR_TIME),                # duration_type
-            fit.Field(2, fit.UINT32, max(0, dur) * 1000),     # duration_value (ms)
-            fit.Field(3, fit.ENUM, _TGT_OPEN if is_open else _TGT_POWER),
-            fit.Field(4, fit.UINT32, 0),                      # target_value
-            fit.Field(5, fit.UINT32, 0 if is_open else _pct(lo)),   # custom low
-            fit.Field(6, fit.UINT32, 0 if is_open else _pct(hi)),   # custom high
-            fit.Field(7, fit.ENUM, intensity_map[kind]),      # intensity
-        ]
-        w.add_message(fit.MSG_WORKOUT_STEP, fields)
+    for idx, b in enumerate(blocks):
+        lo = b.target_power_percent or 0
+        hi = b.target_power_end_percent if b.target_power_end_percent is not None else lo
+        w.add_message(fit.MSG_WORKOUT_STEP, [
+            fit.Field(254, fit.UINT16, idx),                       # message_index
+            fit.Field(1, fit.ENUM, _DUR_TIME),                     # duration_type
+            fit.Field(2, fit.UINT32, max(0, b.duration_seconds) * 1000),  # duration_value (ms)
+            fit.Field(3, fit.ENUM, _TGT_POWER),                    # target_type = power
+            fit.Field(4, fit.UINT32, 0),                           # target_value
+            fit.Field(5, fit.UINT32, _pct(lo)),                    # custom_target_power_low
+            fit.Field(6, fit.UINT32, _pct(hi)),                    # custom_target_power_high
+            fit.Field(7, fit.ENUM, _INTENSITY_FROM_TYPE.get(b.interval_type, _INT_ACTIVE)),
+        ])
 
     return w.to_bytes()
 
 
 def decode_workout_fit(data: bytes) -> Workout:
-    """Decode FIT-workout bytes back into a Workout (flattened steps)."""
+    """Decode FIT-workout bytes back into a Workout (flat blocks)."""
     messages = fit.decode(data)
     name = "Workout"
     raw_steps: list[tuple[int, dict]] = []
@@ -102,27 +95,21 @@ def decode_workout_fit(data: bytes) -> Workout:
             raw_steps.append((int(idx) if idx is not None else len(raw_steps), vals))
 
     def _get(vals: dict, key: int, default: int) -> int:
-        # Coalesce both "missing" and FIT "invalid" (None) fields to the default.
         v = vals.get(key)
         return default if v is None else int(v)
 
     raw_steps.sort(key=lambda t: t[0])
-    steps: list[Step] = []
+    blocks: list[Block | Repeat] = []
     for _idx, vals in raw_steps:
         dur = _get(vals, 2, 0) // 1000
-        target_type = _get(vals, 3, _TGT_POWER)
         intensity = _get(vals, 7, _INT_ACTIVE)
-        if target_type == _TGT_OPEN:
-            steps.append(Step("freeride", dur))
-            continue
         lo = _unpct(_get(vals, 5, 1000))
         hi = _unpct(_get(vals, 6, 1000))
-        if intensity == _INT_WARMUP:
-            steps.append(Step("warmup", dur, power_low=lo, power_high=hi))
-        elif intensity == _INT_COOLDOWN:
-            steps.append(Step("cooldown", dur, power_low=lo, power_high=hi))
-        elif lo == hi:
-            steps.append(Step("steady", dur, power=lo))
-        else:
-            steps.append(Step("ramp", dur, power_low=lo, power_high=hi))
-    return Workout(name=name, steps=steps)
+        itype = _TYPE_FROM_INTENSITY.get(intensity, "INTERVAL")
+        label = {"WARMUP": "Warm Up", "COOLDOWN": "Cool Down"}.get(itype, "Work")
+        blocks.append(Block(
+            duration_seconds=dur, zone=zone_for_percent(lo), label=label,
+            interval_type=itype, target_power_percent=lo,
+            target_power_end_percent=hi if hi != lo else None,
+        ))
+    return Workout(name=name, workout_type="POWER", intervals=blocks)

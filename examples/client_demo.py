@@ -23,11 +23,18 @@ async def main() -> None:
     async with Client(server.mcp) as c:
         print("# Flow 1 — AI assistant builds a sweet-spot workout (.ytw)")
         built = (await c.call_tool("build_workout_from_intent", {
-            "intent": {"name": "Sweet Spot 3x12", "steps": [
-                {"kind": "warmup", "duration_s": 600, "power_low": 0.45, "power_high": 0.75},
-                {"kind": "interval", "repeat": 3, "on_duration_s": 720, "off_duration_s": 300,
-                 "on_power": 0.9, "off_power": 0.55},
-                {"kind": "cooldown", "duration_s": 420, "power_low": 0.6, "power_high": 0.4}]},
+            "intent": {
+                "name": "Sweet Spot 3x12", "description": "3x12 at 90% FTP",
+                "workout_type": "POWER", "category": "sweet-spot",
+                "warmup": {"duration_seconds": 600, "zone": "Z2", "label": "Warmup",
+                           "target_power_percent": 45, "target_power_end_percent": 75},
+                "intervals": [{"repeat": 3, "intervals": [
+                    {"duration_seconds": 720, "zone": "Z3", "label": "Sweet Spot",
+                     "id": "ss", "target_power_percent": 90},
+                    {"duration_seconds": 300, "zone": "Z1", "label": "Recovery",
+                     "target_power_percent": 55}]}],
+                "cooldown": {"duration_seconds": 420, "zone": "Z1", "label": "Cooldown",
+                             "target_power_percent": 60, "target_power_end_percent": 40}},
             "output_format": "ytw",
         })).data
         diff = built["summary"]["difficulty"]
@@ -36,17 +43,24 @@ async def main() -> None:
         attr = built["_attribution"]
         print(f"  attribution: {attr.get('note', attr['source'])}")
 
-        print("\n# Flow 2 — workout creation: convert a ZWO, scale to 30 min")
+        print("\n# Flow 2 — workout creation: convert a ZWO to .ytw + scale to 50%")
         zwo = (await c.call_tool("build_workout_from_intent", {
-            "intent": {"name": "Threshold 2x20", "steps": [
-                {"kind": "steady", "duration_s": 2400, "power": 1.0}]},
+            "intent": {
+                "name": "Threshold 2x20", "description": "2x20 at FTP",
+                "workout_type": "POWER",
+                "warmup": {"duration_seconds": 600, "zone": "Z2", "label": "Warmup",
+                           "target_power_percent": 40, "target_power_end_percent": 80},
+                "intervals": [{"duration_seconds": 1200, "zone": "Z4", "label": "Threshold",
+                               "target_power_percent": 100}],
+                "cooldown": {"duration_seconds": 300, "zone": "Z1", "label": "Cooldown",
+                             "target_power_percent": 50}},
             "output_format": "zwo"})).data["document"]
-        intent = (await c.call_tool("decompose_workout",
-                                    {"document": zwo, "source_format": "zwo"})).data["intent"]
+        ytw = (await c.call_tool("decompose_workout",
+                                 {"document": zwo, "source_format": "zwo"})).data["ytw"]
         scaled = (await c.call_tool("scale_workout", {
             "document": zwo, "source_format": "zwo",
             "duration_factor": 0.5, "output_format": "ytw"})).data
-        print(f"  decomposed {len(intent['steps'])} step(s); "
+        print(f"  ZWO->.ytw: programId={ytw['programId']}; "
               f"scaled to {scaled['summary']['total_duration_s']}s")
 
         print("\n# Flow 3 — analyse a recorded ride (real Edge 810 + Vector)")

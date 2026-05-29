@@ -1,29 +1,64 @@
 {
-  "format": "ytw",
-  "version": 1,
-  "name": "Golden Sweet Spot 3x12",
+  "programId": "golden-sweet-spot-3x12",
+  "programName": "Golden Sweet Spot 3x12",
   "description": "Canonical golden workout for regression tests",
-  "author": "yourtrainer-mcp",
-  "steps": [
+  "totalDuration": 4080,
+  "workoutType": "POWER",
+  "primaryLocale": "en",
+  "intervals": [
     {
-      "kind": "warmup",
-      "duration_s": 600,
-      "power_low": 0.45,
-      "power_high": 0.75
+      "duration": 600,
+      "intensityZone": "Z2",
+      "label": "Warmup",
+      "intervalType": "WARMUP",
+      "id": "warmup",
+      "targetPowerPercent": 45,
+      "targetPowerEndPercent": 75
     },
     {
-      "kind": "interval",
       "repeat": 3,
-      "on_duration_s": 720,
-      "off_duration_s": 300,
-      "on_power": 0.9,
-      "off_power": 0.55
+      "intervals": [
+        {
+          "duration": 720,
+          "intensityZone": "Z3",
+          "label": "Sweet Spot",
+          "intervalType": "INTERVAL",
+          "id": "ss",
+          "targetPowerPercent": 90
+        },
+        {
+          "duration": 300,
+          "intensityZone": "Z1",
+          "label": "Recovery",
+          "intervalType": "INTERVAL",
+          "id": "rec",
+          "targetPowerPercent": 55
+        }
+      ]
     },
     {
-      "kind": "cooldown",
-      "duration_s": 420,
-      "power_low": 0.6,
-      "power_high": 0.4
+      "duration": 420,
+      "intensityZone": "Z1",
+      "label": "Cooldown",
+      "intervalType": "COOLDOWN",
+      "id": "cooldown",
+      "targetPowerPercent": 60,
+      "targetPowerEndPercent": 40
     }
-  ]
+  ],
+  "difficulty": 3,
+  "category": "sweet-spot",
+  "strings": {
+    "en": {
+      "name": "Golden Sweet Spot 3x12",
+      "description": "Canonical golden workout for regression tests",
+      "labels": {
+        "warmup": "Warmup",
+        "ss": "Sweet Spot",
+        "rec": "Recovery",
+        "cooldown": "Cooldown"
+      },
+      "cues": {}
+    }
+  }
 }

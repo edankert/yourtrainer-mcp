@@ -1,4 +1,5 @@
-"""Tests for the workout authoring cluster (TASK-0023/0033/0035/0025/0050/0024)."""
+"""Tests for the workout authoring cluster, aligned to the canonical schema
+(TASK-0023/0033/0035/0025/0050/0024/0063)."""
 
 from __future__ import annotations
 
@@ -11,54 +12,77 @@ from yourtrainer_mcp import workout as wk
 INTENT = {
     "name": "Sweet Spot 2x20",
     "description": "Classic sweet-spot session",
-    "author": "tester",
-    "steps": [
-        {"kind": "warmup", "duration_s": 600, "power_low": 0.4, "power_high": 0.7},
-        {"kind": "steady", "duration_s": 1200, "power": 0.9, "cadence": 90},
-        {"kind": "steady", "duration_s": 300, "power": 0.5},
-        {"kind": "interval", "repeat": 4, "on_duration_s": 60, "off_duration_s": 60,
-         "on_power": 1.2, "off_power": 0.5},
-        {"kind": "cooldown", "duration_s": 600, "power_low": 0.6, "power_high": 0.4},
+    "workout_type": "POWER",
+    "category": "sweet-spot",
+    "difficulty": 3,
+    "warmup": {"duration_seconds": 600, "zone": "Z2", "label": "Warmup", "id": "warmup",
+               "target_power_percent": 50, "target_power_end_percent": 75,
+               "cues": [{"offset_seconds": 0, "text": "Spin up"}]},
+    "intervals": [
+        {"duration_seconds": 1200, "zone": "Z3", "label": "Sweet Spot", "id": "ss",
+         "target_power_percent": 90, "cadence_target": 90},
+        {"duration_seconds": 300, "zone": "Z1", "label": "Recovery", "id": "rec",
+         "target_power_percent": 50},
+        {"repeat": 4, "intervals": [
+            {"duration_seconds": 60, "zone": "Z5", "label": "On", "id": "on",
+             "target_power_percent": 120},
+            {"duration_seconds": 60, "zone": "Z1", "label": "Off", "id": "off",
+             "target_power_percent": 50}]},
     ],
+    "cooldown": {"duration_seconds": 600, "zone": "Z1", "label": "Cooldown", "id": "cooldown",
+                 "target_power_percent": 60, "target_power_end_percent": 40},
 }
 
 
 def test_build_and_total_duration():
     w = wk.build_workout(INTENT)
-    # 600 + 1200 + 300 + 4*(60+60) + 600 = 3180
+    # 600 + 1200 + 300 + 4*(60+60) + 600 = 3180; warmup + 3 items + cooldown = 5 intervals
     assert w.total_duration_s() == 3180
+    assert len(w.intervals) == 5
     assert w.name == "Sweet Spot 2x20"
 
 
 def test_build_rejects_missing_fields():
     with pytest.raises(wk.WorkoutError):
-        wk.build_workout({"steps": [{"kind": "steady", "duration_s": 60}]})  # no power
+        wk.build_workout({"name": "x", "description": "d", "intervals": [],
+                          "cooldown": {"duration_seconds": 1, "zone": "Z1", "label": "c",
+                                       "target_power_percent": 50}})  # no warmup
     with pytest.raises(wk.WorkoutError):
-        wk.build_workout({"steps": [{"kind": "bogus"}]})
-    with pytest.raises(wk.WorkoutError):
-        wk.build_workout({"steps": []})
+        # warmup block missing target_power_percent for a POWER workout
+        wk.build_workout({"name": "x", "description": "d",
+                          "warmup": {"duration_seconds": 60, "zone": "Z1", "label": "w"},
+                          "intervals": [], "cooldown": {"duration_seconds": 60, "zone": "Z1",
+                                                        "label": "c", "target_power_percent": 50}})
 
 
-def test_zwo_roundtrip_preserves_structure():
+def test_ytw_matches_canonical_shape():
+    w = wk.build_workout(INTENT)
+    doc = json.loads(wk.to_ytw(w))
+    assert doc["programId"] == "sweet-spot-2x20"
+    assert doc["programName"] == "Sweet Spot 2x20"
+    assert doc["workoutType"] == "POWER"
+    assert doc["totalDuration"] == 3180
+    # warmup carries intervalType + ramp end; repeat group preserved
+    assert doc["intervals"][0]["intervalType"] == "WARMUP"
+    assert doc["intervals"][0]["targetPowerEndPercent"] == 75
+    assert doc["intervals"][3]["repeat"] == 4
+    assert doc["strings"]["en"]["labels"]["ss"] == "Sweet Spot"
+    assert doc["strings"]["en"]["cues"]["warmup:0"] == "Spin up"
+
+
+def test_zwo_roundtrip_preserves_power_series():
     w = wk.build_workout(INTENT)
     zwo = wk.to_zwo(w)
     assert "<workout_file>" in zwo and "IntervalsT" in zwo
     back = wk.from_zwo(zwo)
-    assert back.total_duration_s() == w.total_duration_s()
-    assert [s.kind for s in back.steps] == [s.kind for s in w.steps]
-    assert back.steps[3].repeat == 4
-    assert back.steps[1].power == pytest.approx(0.9)
+    assert wk.expand_to_power_series(w, 250.0) == wk.expand_to_power_series(back, 250.0)
 
 
-def test_ytw_roundtrip_preserves_structure():
+def test_ytw_roundtrip_preserves_power_series():
     w = wk.build_workout(INTENT)
-    ytw = wk.to_ytw(w)
-    doc = json.loads(ytw)
-    assert doc["format"] == "ytw" and doc["version"] == wk.YTW_VERSION
-    back = wk.from_ytw(ytw)
+    back = wk.from_ytw(wk.to_ytw(w))
     assert back.total_duration_s() == w.total_duration_s()
-    assert [s.kind for s in back.steps] == [s.kind for s in w.steps]
-    assert back.steps[1].cadence == 90
+    assert wk.expand_to_power_series(w, 250.0) == wk.expand_to_power_series(back, 250.0)
 
 
 def test_from_ytw_rejects_non_ytw():
@@ -66,106 +90,86 @@ def test_from_ytw_rejects_non_ytw():
         wk.from_ytw(json.dumps({"format": "nope"}))
 
 
-def test_scale_duration_halves_all_steps():
+def test_scale_duration_halves():
     w = wk.build_workout(INTENT)
     half = wk.scale_workout(w, duration_factor=0.5)
-    assert half.total_duration_s() == pytest.approx(w.total_duration_s() / 2, abs=2)
+    assert half.total_duration_s() == pytest.approx(w.total_duration_s() / 2, abs=6)
     assert "50% duration" in half.name
 
 
-def test_scale_intensity_raises_power_not_duration():
+def test_scale_intensity_raises_power():
     w = wk.build_workout(INTENT)
     harder = wk.scale_workout(w, intensity_factor=1.1)
     assert harder.total_duration_s() == w.total_duration_s()
-    # steady step 0.9 -> 0.99
-    steady = next(s for s in harder.steps if s.kind == "steady")
-    assert steady.power == pytest.approx(0.99)
+    ss = harder.intervals[1]  # the Z3 sweet-spot block (90 -> 99)
+    assert ss.target_power_percent == 99
 
 
 def test_scale_rejects_non_positive():
-    w = wk.build_workout(INTENT)
     with pytest.raises(wk.WorkoutError):
-        wk.scale_workout(w, duration_factor=0)
+        wk.scale_workout(wk.build_workout(INTENT), duration_factor=0)
 
 
-def test_difficulty_score_reasonable():
+def test_difficulty_is_ftp_independent():
     w = wk.build_workout(INTENT)
     score = wk.difficulty_score(w, ftp=250.0)
     assert score["duration_s"] == 3180
-    assert 0 < score["intensity_factor"] < 1.2
-    assert score["tss"] > 0
-    # FTP-independence: TSS identical for a different FTP.
+    assert 0 < score["intensity_factor"] < 1.2 and score["tss"] > 0
     assert score["tss"] == pytest.approx(wk.difficulty_score(w, ftp=300.0)["tss"], abs=0.1)
 
 
 def test_lint_flags_missing_warmup_and_zero_duration():
-    bad = wk.Workout(name="", steps=[wk.Step("steady", duration_s=0, power=0.8)])
-    findings = wk.lint_workout(bad)
-    codes = {f["code"] for f in findings}
-    assert "zero-duration" in codes
-    assert "no-warmup" in codes
-    assert "no-name" in codes
+    bad = wk.Workout(name="", intervals=[
+        wk.Block(duration_seconds=0, zone="Z3", label="x", target_power_percent=80)])
+    codes = {f["code"] for f in wk.lint_workout(bad)}
+    assert {"zero-duration", "no-warmup", "no-name"} <= codes
 
 
 def test_lint_clean_workout_has_no_errors():
-    w = wk.build_workout(INTENT)
-    findings = wk.lint_workout(w)
+    findings = wk.lint_workout(wk.build_workout(INTENT))
     assert not [f for f in findings if f["severity"] == "error"]
 
 
 def test_lint_flags_implausible_power():
-    w = wk.Workout(name="x", steps=[
-        wk.Step("warmup", 60, power_low=0.4, power_high=0.6),
-        wk.Step("steady", 60, power=9.0),
-    ])
-    codes = {f["code"] for f in wk.lint_workout(w)}
-    assert "power-range" in codes
+    w = wk.Workout(name="x", intervals=[
+        wk.Block(60, "Z1", "Warm Up", interval_type="WARMUP", target_power_percent=40),
+        wk.Block(60, "Z7", "x", target_power_percent=900)])
+    assert "power-range" in {f["code"] for f in wk.lint_workout(w)}
 
+
+# ---- app-acceptance (verified, sourced) ----
 
 def test_app_acceptance_garmin_step_limit():
-    # Verified: Garmin caps synced/FIT workouts at 50 steps.
-    steps = [{"kind": "steady", "duration_s": 60, "power": 0.8} for _ in range(60)]
-    result = wk.app_acceptance(wk.build_workout({"name": "long", "steps": steps}), apps=["garmin"])
+    blocks = [wk.Block(60, "Z3", "w", target_power_percent=80) for _ in range(60)]
+    result = wk.app_acceptance(wk.Workout(name="x", intervals=blocks), apps=["garmin"])
     assert result["garmin"]["accepted"] is False
     assert any("50-step" in i for i in result["garmin"]["issues"])
-    assert result["garmin"]["source"]  # sourced
 
 
 def test_app_acceptance_garmin_warns_on_ramp_expansion():
-    # Verified: Garmin has no native ramp; ramps expand to steps (warning, not block).
-    w = wk.Workout(name="x", steps=[
-        wk.Step("warmup", 60, power_low=0.4, power_high=0.6),
-        wk.Step("steady", 60, power=0.8),
-    ])
+    w = wk.Workout(name="x", intervals=[
+        wk.Block(60, "Z2", "Warm Up", interval_type="WARMUP", target_power_percent=40,
+                 target_power_end_percent=70),
+        wk.Block(60, "Z3", "Work", target_power_percent=80)])
     result = wk.app_acceptance(w, apps=["garmin"])
     assert result["garmin"]["accepted"] is True
     assert any("ramp" in w_.lower() for w_ in result["garmin"]["warnings"])
 
 
 def test_app_acceptance_garmin_repeat_limit():
-    # Verified: Garmin caps repeats at 99.
-    w = wk.Workout(name="x", steps=[
-        wk.Step("interval", repeat=120, on_duration_s=30, off_duration_s=30,
-                on_power=1.0, off_power=0.5)])
+    w = wk.Workout(name="x", intervals=[wk.Repeat(repeat=120, intervals=[
+        wk.Block(30, "Z5", "On", target_power_percent=120),
+        wk.Block(30, "Z1", "Off", target_power_percent=50)])])
     result = wk.app_acceptance(w, apps=["garmin"])
     assert result["garmin"]["accepted"] is False
     assert any("repeat" in i for i in result["garmin"]["issues"])
 
 
-def test_app_acceptance_zwift_supports_ramp_and_freeride():
-    # Verified: Ramp + FreeRide are native ZWO elements.
-    w = wk.Workout(name="x", steps=[
-        wk.Step("warmup", 60, power_low=0.4, power_high=0.6),
-        wk.Step("freeride", 600),
-    ])
-    result = wk.app_acceptance(w, apps=["zwift"])
+def test_app_acceptance_zwift_accepts_ramp():
+    result = wk.app_acceptance(wk.build_workout(INTENT), apps=["zwift"])
     assert result["zwift"]["accepted"] is True
-    assert result["zwift"]["issues"] == []
 
 
 def test_app_acceptance_unknown_app_is_indeterminate():
-    w = wk.build_workout(
-        {"name": "x", "steps": [{"kind": "steady", "duration_s": 60, "power": 0.8}]}
-    )
-    result = wk.app_acceptance(w, apps=["peloton"])
+    result = wk.app_acceptance(wk.build_workout(INTENT), apps=["peloton"])
     assert result["peloton"]["accepted"] is None

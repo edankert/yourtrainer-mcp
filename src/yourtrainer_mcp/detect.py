@@ -37,7 +37,7 @@ def detect_format(filename: str, head: bytes | None = None) -> str | None:
             return "tcx"
         if "<kml" in lowered:
             return "kml"
-        if text.startswith("{") and '"ytw"' in lowered:
+        if text.startswith("{") and ('"programid"' in lowered or '"ytw"' in lowered):
             return "ytw"
     return _EXT_TO_KEY.get(Path(filename).suffix.lower())
 

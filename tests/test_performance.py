@@ -47,9 +47,16 @@ def test_interval_detection_hour_is_fast():
 
 
 def test_build_and_score_is_fast():
-    intent = {"name": "perf", "steps": [
-        {"kind": "interval", "repeat": 20, "on_duration_s": 60, "off_duration_s": 60,
-         "on_power": 1.1, "off_power": 0.5}]}
+    intent = {"name": "perf", "description": "d", "workout_type": "POWER",
+              "warmup": {"duration_seconds": 600, "zone": "Z2", "label": "Warmup",
+                         "target_power_percent": 40, "target_power_end_percent": 70},
+              "intervals": [{"repeat": 20, "intervals": [
+                  {"duration_seconds": 60, "zone": "Z5", "label": "On",
+                   "target_power_percent": 110},
+                  {"duration_seconds": 60, "zone": "Z1", "label": "Off",
+                   "target_power_percent": 50}]}],
+              "cooldown": {"duration_seconds": 300, "zone": "Z1", "label": "Cooldown",
+                           "target_power_percent": 50}}
 
     def go():
         w = wk.build_workout(intent)

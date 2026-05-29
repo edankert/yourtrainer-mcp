@@ -1,27 +1,44 @@
 {
   "name": "Golden Sweet Spot 3x12",
   "description": "Canonical golden workout for regression tests",
-  "author": "yourtrainer-mcp",
-  "steps": [
+  "workout_type": "POWER",
+  "category": "sweet-spot",
+  "difficulty": 3,
+  "warmup": {
+    "duration_seconds": 600,
+    "zone": "Z2",
+    "label": "Warmup",
+    "id": "warmup",
+    "target_power_percent": 45,
+    "target_power_end_percent": 75
+  },
+  "intervals": [
     {
-      "kind": "warmup",
-      "duration_s": 600,
-      "power_low": 0.45,
-      "power_high": 0.75
-    },
-    {
-      "kind": "interval",
       "repeat": 3,
-      "on_duration_s": 720,
-      "off_duration_s": 300,
-      "on_power": 0.9,
-      "off_power": 0.55
-    },
-    {
-      "kind": "cooldown",
-      "duration_s": 420,
-      "power_low": 0.6,
-      "power_high": 0.4
+      "intervals": [
+        {
+          "duration_seconds": 720,
+          "zone": "Z3",
+          "label": "Sweet Spot",
+          "id": "ss",
+          "target_power_percent": 90
+        },
+        {
+          "duration_seconds": 300,
+          "zone": "Z1",
+          "label": "Recovery",
+          "id": "rec",
+          "target_power_percent": 55
+        }
+      ]
     }
-  ]
+  ],
+  "cooldown": {
+    "duration_seconds": 420,
+    "zone": "Z1",
+    "label": "Cooldown",
+    "id": "cooldown",
+    "target_power_percent": 60,
+    "target_power_end_percent": 40
+  }
 }

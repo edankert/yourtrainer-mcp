@@ -8,12 +8,15 @@ from yourtrainer_mcp import workflows
 from yourtrainer_mcp import workout as wk
 from yourtrainer_mcp.adherence import adherence_scorecard
 
+# Two 300 s blocks (80% then 60% FTP); warmup/cooldown carry the structure so
+# the expanded series is exactly [200]*300 + [150]*300 at FTP 250.
 WORKOUT = wk.build_workout({
-    "name": "Steady",
-    "steps": [
-        {"kind": "steady", "duration_s": 300, "power": 0.8},
-        {"kind": "steady", "duration_s": 300, "power": 0.6},
-    ],
+    "name": "Steady", "description": "d", "workout_type": "POWER",
+    "warmup": {"duration_seconds": 300, "zone": "Z3", "label": "Work",
+               "target_power_percent": 80},
+    "intervals": [],
+    "cooldown": {"duration_seconds": 300, "zone": "Z2", "label": "Ease",
+                 "target_power_percent": 60},
 })
 
 
@@ -27,11 +30,10 @@ def test_adherence_perfect_when_actual_matches_plan():
 
 def test_adherence_low_when_actual_too_easy():
     ftp = 250.0
-    actual = [0.5 * ftp] * 600  # well below both targets
+    actual = [0.5 * ftp] * 600
     out = adherence_scorecard(WORKOUT, actual, ftp)
     assert out["compliance_pct"] < 60
-    first = out["steps"][0]
-    assert first["deviation_pct"] < 0  # under target
+    assert out["steps"][0]["deviation_pct"] < 0
 
 
 def test_adherence_rejects_bad_ftp():
@@ -41,12 +43,11 @@ def test_adherence_rejects_bad_ftp():
 
 def test_migration_inventory_flags_conversions(tmp_path):
     (tmp_path / "a.zwo").write_text("<workout_file><workout></workout></workout_file>")
-    (tmp_path / "b.ytw").write_text('{"format":"ytw","steps":[]}')
+    (tmp_path / "b.ytw").write_text('{"programId":"b","intervals":[]}')
     (tmp_path / "c.gpx").write_text("<gpx></gpx>")
     paths = [str(tmp_path / n) for n in ("a.zwo", "b.ytw", "c.gpx")]
     out = workflows.migration_inventory(paths, target_format="ytw")
     assert out["files"] == 3
-    # .zwo is a workout needing conversion; .ytw already target; .gpx not a workout.
     assert out["needs_conversion"] == 1
     by_file = {i["file"]: i for i in out["items"]}
     assert by_file["a.zwo"]["needs_conversion"] is True
@@ -65,8 +66,13 @@ def test_roundtrip_lossless_zwo_to_ytw():
 
 def test_roundtrip_detects_loss():
     zwo = wk.to_zwo(WORKOUT)
-    shorter = wk.to_ytw(wk.build_workout({"name": "x", "steps": [
-        {"kind": "steady", "duration_s": 300, "power": 0.8}]}))
+    shorter = wk.to_ytw(wk.build_workout({
+        "name": "x", "description": "d", "workout_type": "POWER",
+        "warmup": {"duration_seconds": 300, "zone": "Z3", "label": "w",
+                   "target_power_percent": 80},
+        "intervals": [],
+        "cooldown": {"duration_seconds": 1, "zone": "Z1", "label": "c",
+                     "target_power_percent": 50}}))
     out = workflows.roundtrip_workout(zwo, "zwo", shorter, "ytw")
     assert out["lossless"] is False
     assert out["duration_match"] is False

@@ -35,7 +35,7 @@ def _workout_entry(path: Path, fmt: str, ftp: float) -> dict:
         "file": path.name, "format": fmt, "kind": "workout",
         "name": w.name, "duration_s": w.total_duration_s(),
         "tss": diff["tss"], "intensity_factor": diff["intensity_factor"],
-        "steps": len(w.steps),
+        "intervals": len(w.intervals),
     }
 
 

@@ -43,11 +43,19 @@ def test_no_comparative_content_in_corpus():
 
 # ---- validators ----
 
+_INTENT = {
+    "name": "v", "description": "d", "workout_type": "POWER",
+    "warmup": {"duration_seconds": 300, "zone": "Z2", "label": "Warmup",
+               "target_power_percent": 40, "target_power_end_percent": 70},
+    "intervals": [{"duration_seconds": 600, "zone": "Z3", "label": "Work",
+                   "target_power_percent": 85}],
+    "cooldown": {"duration_seconds": 300, "zone": "Z1", "label": "Cooldown",
+                 "target_power_percent": 50},
+}
+
+
 def test_validate_zwo_roundtrip_is_valid():
-    w = wk.build_workout({"name": "v", "steps": [
-        {"kind": "warmup", "duration_s": 300, "power_low": 0.4, "power_high": 0.7},
-        {"kind": "steady", "duration_s": 600, "power": 0.85}]})
-    assert validators.validate("zwo", wk.to_zwo(w))["valid"] is True
+    assert validators.validate("zwo", wk.to_zwo(wk.build_workout(_INTENT)))["valid"] is True
 
 
 def test_validate_zwo_garbage_is_invalid():
@@ -55,7 +63,7 @@ def test_validate_zwo_garbage_is_invalid():
 
 
 def test_validate_ytw():
-    valid_doc = '{"format":"ytw","steps":[{"kind":"freeride","duration_s":60}]}'
+    valid_doc = wk.to_ytw(wk.build_workout(_INTENT))
     assert validators.validate("ytw", valid_doc)["valid"]
     assert not validators.validate("ytw", '{"format":"nope"}')["valid"]
 
@@ -75,9 +83,7 @@ def test_validate_erg_needs_numeric_rows():
 
 
 def test_validate_fit_base64():
-    w = wk.build_workout(
-        {"name": "f", "steps": [{"kind": "steady", "duration_s": 60, "power": 0.8}]}
-    )
+    w = wk.build_workout(_INTENT)
     b64 = base64.b64encode(fit_workout.encode_workout_fit(w)).decode("ascii")
     assert validators.validate("fit", b64)["valid"] is True
     assert not validators.validate("fit", base64.b64encode(b"junk").decode())["valid"]

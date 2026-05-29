@@ -40,3 +40,12 @@ TASK-0006).
 ## Next step
 Pull the canonical `.ytw` / `workout-intent.json` schema and realign the writer +
 the `specs/ytw.json` doc. Needs a decision on cue-string localization scope.
+
+## Resolution (2026-05-29, TASK-0063 / CHG-20260529-15)
+Fixed. The workout model + `to_ytw`/`from_ytw` now produce/consume the canonical
+Your Trainer `.ytw` (programId/programName/intervals with intervalType/
+targetPowerPercent/repeat groups/strings), and `build_workout_from_intent` takes
+the `workout-intent` shape. Verified against workout-schema.html (separate
+workoutType/variant; nested repeat groups). Localized cue/label *translation* into
+non-primary locales remains the website generator's job; the MCP emits the
+primary-locale `strings` block (+ any supplied name_i18n/description_i18n).

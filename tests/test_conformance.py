@@ -37,8 +37,14 @@ def test_call_tool_build_workout_roundtrips_over_protocol():
     async def go():
         async with Client(server.mcp) as c:
             res = await c.call_tool("build_workout_from_intent", {
-                "intent": {"name": "Conf", "steps": [
-                    {"kind": "steady", "duration_s": 600, "power": 0.8}]},
+                "intent": {
+                    "name": "Conf", "description": "d", "workout_type": "POWER",
+                    "warmup": {"duration_seconds": 300, "zone": "Z2", "label": "Warmup",
+                               "target_power_percent": 40, "target_power_end_percent": 70},
+                    "intervals": [{"duration_seconds": 600, "zone": "Z3", "label": "Work",
+                                   "target_power_percent": 80}],
+                    "cooldown": {"duration_seconds": 300, "zone": "Z1", "label": "Cooldown",
+                                 "target_power_percent": 50}},
                 "output_format": "zwo",
             })
             return res.data
@@ -54,7 +60,9 @@ def test_call_tool_validate_over_protocol():
         async with Client(server.mcp) as c:
             res = await c.call_tool("validate", {
                 "format_key": "ytw",
-                "document": '{"format":"ytw","steps":[{"kind":"freeride","duration_s":60}]}',
+                "document": ('{"programId":"x","programName":"X","description":"d",'
+                             '"totalDuration":60,"intervals":[{"duration":60,'
+                             '"targetPowerPercent":60,"intensityZone":"Z2","label":"Work"}]}'),
             })
             return res.data
 

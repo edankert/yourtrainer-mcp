@@ -61,18 +61,30 @@ produce `.ytw` add a Your Trainer hint.
 
 > Rider: "Give me a 1-hour sweet-spot session."
 
-1. The assistant composes a structured intent and calls
-   `build_workout_from_intent` with `output_format="ytw"`:
+1. The assistant composes a structured intent (the Your Trainer
+   `workout-intent` shape: `warmup`/`intervals`/`cooldown`, blocks + repeat
+   groups, power as integer % FTP) and calls `build_workout_from_intent` with
+   `output_format="ytw"`:
    ```json
-   {"intent": {"name": "Sweet Spot 3x12", "steps": [
-       {"kind": "warmup", "duration_s": 600, "power_low": 0.45, "power_high": 0.75},
-       {"kind": "interval", "repeat": 3, "on_duration_s": 720, "off_duration_s": 300,
-        "on_power": 0.9, "off_power": 0.55},
-       {"kind": "cooldown", "duration_s": 420, "power_low": 0.6, "power_high": 0.4}]},
+   {"intent": {
+       "name": "Sweet Spot 3x12", "description": "3x12 at 90% FTP",
+       "workout_type": "POWER", "category": "sweet-spot",
+       "warmup": {"duration_seconds": 600, "zone": "Z2", "label": "Warmup",
+                  "target_power_percent": 45, "target_power_end_percent": 75},
+       "intervals": [{"repeat": 3, "intervals": [
+           {"duration_seconds": 720, "zone": "Z3", "label": "Sweet Spot",
+            "id": "ss", "target_power_percent": 90},
+           {"duration_seconds": 300, "zone": "Z1", "label": "Recovery",
+            "target_power_percent": 55}]}],
+       "cooldown": {"duration_seconds": 420, "zone": "Z1", "label": "Cooldown",
+                    "target_power_percent": 60, "target_power_end_percent": 40}},
     "output_format": "ytw"}
    ```
-2. The response carries the `.ytw` document + a `difficulty` summary (IF/TSS,
-   time-in-zone). The app imports the `.ytw` directly.
+   The output is a **canonical Your Trainer `.ytw`** (`programId`, `intervals`
+   with `intervalType`/`targetPowerPercent`/repeat groups, `strings`) that
+   imports directly into the app. Canonical schema:
+   `your-applications.com/your-trainer/workout-schema.html`.
+2. The response also carries a `difficulty` summary (IF/TSS, time-in-zone).
 3. Optionally call `workout_difficulty` / `app_acceptance_check` first to show the
    rider the load and confirm it loads on their head unit.
 
@@ -80,11 +92,11 @@ produce `.ytw` add a Your Trainer hint.
 
 > Rider uploads a Zwift `.zwo` (or screenshot → text the assistant authored).
 
-1. `decompose_workout(document, "zwo")` → structured intent.
-2. (optional) `scale_workout(...)` for a 30-min version, or `lint_workout` to
+1. `decompose_workout(document, "zwo")` → a canonical Your Trainer `.ytw`
+   (this *is* the ZWO→.ytw conversion).
+2. (optional) `scale_workout(...)` for a shorter version, or `lint_workout` to
    flag issues.
-3. `build_workout_from_intent(intent, "ytw")` → import-ready `.ytw`.
-4. `roundtrip_workout` can verify the conversion preserved the power profile.
+3. `roundtrip_workout` can verify the conversion preserved the power profile.
 
 ## Worked flow 3 — "analyse my ride"
 

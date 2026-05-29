@@ -13,14 +13,17 @@ from yourtrainer_mcp.activity import inspect_activity, parse_activity_file
 
 INTENT = {
     "name": "FIT 5x3",
-    "steps": [
-        {"kind": "warmup", "duration_s": 600, "power_low": 0.4, "power_high": 0.7},
-        {"kind": "interval", "repeat": 5, "on_duration_s": 180, "off_duration_s": 180,
-         "on_power": 1.1, "off_power": 0.5},
-        {"kind": "steady", "duration_s": 300, "power": 0.65},
-        {"kind": "freeride", "duration_s": 120},
-        {"kind": "cooldown", "duration_s": 600, "power_low": 0.6, "power_high": 0.4},
+    "description": "FIT codec test",
+    "warmup": {"duration_seconds": 600, "zone": "Z2", "label": "Warmup",
+               "target_power_percent": 40, "target_power_end_percent": 70},
+    "intervals": [
+        {"repeat": 5, "intervals": [
+            {"duration_seconds": 180, "zone": "Z5", "label": "On", "target_power_percent": 110},
+            {"duration_seconds": 180, "zone": "Z1", "label": "Off", "target_power_percent": 50}]},
+        {"duration_seconds": 300, "zone": "Z2", "label": "Steady", "target_power_percent": 65},
     ],
+    "cooldown": {"duration_seconds": 600, "zone": "Z1", "label": "Cooldown",
+                 "target_power_percent": 60, "target_power_end_percent": 40},
 }
 
 
@@ -44,18 +47,18 @@ def test_workout_fit_roundtrip_preserves_power_profile():
     s1 = wk.expand_to_power_series(w, ftp=250.0)
     s2 = wk.expand_to_power_series(back, ftp=250.0)
     assert len(s1) == len(s2)
-    # Allow ±1.25 W (0.5% FTP integer rounding on 250 W FTP).
-    assert max(abs(a - b) for a, b in zip(s1, s2, strict=True)) <= 1.25
+    # Integer % FTP -> exact round-trip (no quantisation loss).
+    assert s1 == s2
     assert back.name == "FIT 5x3"
 
 
 def test_workout_fit_step_count_matches_flattened():
     w = wk.build_workout(INTENT)
     back = fit_workout.decode_workout_fit(fit_workout.encode_workout_fit(w))
-    # warmup(1) + 5*(on+off)=10 + steady(1) + freeride(1) + cooldown(1) = 14
-    assert len(back.steps) == 14
-    assert back.steps[-1].kind == "cooldown"
-    assert any(s.kind == "freeride" for s in back.steps)
+    # warmup(1) + 5*(on+off)=10 + steady(1) + cooldown(1) = 13 flattened blocks
+    assert len(back.intervals) == 13
+    assert back.intervals[-1].interval_type == "COOLDOWN"
+    assert back.intervals[0].interval_type == "WARMUP"
 
 
 def test_decode_rejects_non_fit():

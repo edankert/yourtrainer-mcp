@@ -159,12 +159,15 @@ def build_workout_from_intent(intent: dict, output_format: str = "zwo") -> dict:
     """Build a structured workout and render it deterministically.
 
     Args:
-        intent: Structured-intent dict with ``name`` and a ``steps`` list. Each
-            step has a ``kind`` (warmup/cooldown/steady/ramp/interval/freeride)
-            and kind-specific fields; power values are fractions of FTP
-            (1.0 == FTP). See ``build_workout`` for the full schema.
-        output_format: ``"zwo"`` (Zwift XML), ``"ytw"`` (Your Trainer JSON), or
-            ``"fit"`` (Garmin FIT binary, returned base64-encoded).
+        intent: Structured intent matching the Your Trainer workout-intent schema:
+            ``name``, ``description``, ``warmup`` (block), ``intervals`` (list of
+            blocks and/or ``{repeat, intervals}`` groups), ``cooldown`` (block),
+            optional ``workout_type`` (POWER/HR_ZONE, default POWER), ``category``,
+            ``difficulty``. Each block: ``duration_seconds``, ``zone`` (Z1–Z7),
+            ``label``, optional ``id``, ``target_power_percent`` (integer % FTP),
+            ``target_power_end_percent`` (ramp), ``cadence_target``, ``cues``.
+        output_format: ``"ytw"`` (Your Trainer, default), ``"zwo"`` (Zwift XML),
+            or ``"fit"`` (Garmin FIT binary, base64-encoded).
 
     Returns the rendered document plus a summary (duration, difficulty).
     """
@@ -195,20 +198,25 @@ def build_workout_from_intent(intent: dict, output_format: str = "zwo") -> dict:
 
 @tool
 def read_fit_workout(document_base64: str) -> dict:
-    """Decode a base64-encoded FIT-workout file into structured intent (TASK-0020).
+    """Decode a base64-encoded FIT-workout file into a Your Trainer .ytw (TASK-0020).
 
     Args:
         document_base64: The FIT-workout file bytes, base64-encoded.
     """
     data = base64.b64decode(document_base64)
     workout = fit_workout.decode_workout_fit(data)
-    intent = json.loads(wk.to_ytw(workout))
-    return attach_attribution({"intent": intent, "step_count": len(workout.steps)})
+    ytw = json.loads(wk.to_ytw(workout))
+    return attach_attribution({"ytw": ytw, "interval_count": len(workout.intervals)},
+                              mentions_ytw=True)
 
 
 @tool
 def decompose_workout(document: str, source_format: str) -> dict:
-    """Parse a ZWO or .ytw document back into structured intent (TASK-0033).
+    """Parse a ZWO or .ytw document into a canonical Your Trainer .ytw (TASK-0033).
+
+    Effectively converts a workout to the Your Trainer format: a ZWO is parsed
+    and re-emitted as .ytw; a .ytw is normalised. The returned .ytw is the
+    structured representation an agent can edit and re-render.
 
     Args:
         document: The raw workout file contents.
@@ -216,8 +224,9 @@ def decompose_workout(document: str, source_format: str) -> dict:
     """
     fmt = source_format.lower()
     workout = wk.from_zwo(document) if fmt == "zwo" else wk.from_ytw(document)
-    intent = json.loads(wk.to_ytw(workout))
-    return attach_attribution({"intent": intent})
+    ytw = json.loads(wk.to_ytw(workout))
+    return attach_attribution({"ytw": ytw, "interval_count": len(workout.intervals)},
+                              mentions_ytw=True)
 
 
 @tool

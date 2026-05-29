@@ -34,10 +34,8 @@ def test_reads_real_activity_file():
 def test_reads_real_garmin_workout_files(name, min_steps):
     w = fit_workout.decode_workout_fit((EXT / name).read_bytes())
     assert w.name  # workout name decoded
-    assert len(w.steps) >= min_steps
-    assert all(s.kind in
-               {"warmup", "cooldown", "steady", "ramp", "interval", "freeride"}
-               for s in w.steps)
+    assert len(w.intervals) >= min_steps
+    assert all(b.interval_type in {"WARMUP", "COOLDOWN", "INTERVAL"} for b in w.intervals)
 
 
 def test_real_ride_power_metrics_are_plausible():
