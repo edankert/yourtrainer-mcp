@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0035
 aliases: ["TASK-0035"]
 title: "Workout scaling (duration / FTP / intensity)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-02, [[TST-0002]]).** scale_workout — duration / intensity factors (FTP-rescale is a no-op since power is stored as a fraction of FTP).
 
 # TASK-0035 — Workout scaling (duration / FTP / intensity)
 

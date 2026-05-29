@@ -18,8 +18,17 @@ def test_tools_are_registered():
         result = asyncio.run(result)
     tool_names = {getattr(t, "name", None) for t in result}
 
-    assert "list_supported_formats" in tool_names
-    assert "inspect_activity_file" in tool_names
+    expected = {
+        "list_supported_formats",
+        "inspect_activity_file",
+        "build_workout_from_intent",
+        "decompose_workout",
+        "scale_workout",
+        "lint_workout",
+        "workout_difficulty",
+        "app_acceptance_check",
+    }
+    assert expected.issubset(tool_names)
 
 
 def test_list_supported_formats_callable_returns_attribution():

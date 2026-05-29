@@ -29,21 +29,22 @@ counters:
   ADR: 3
   CHG:
     last_date: "20260529"
-    last_seq: 1
+    last_seq: 2
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
   TASK: 54
-  TST: 1
+  TST: 2
   WF: 0
 
 focus:
-  task: "[[TASK-0021]]"
+  task: "[[TASK-0020]]"
   feature: "[[FEAT-0004]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
+  active_wave: "Wave 2 — FIT binary (workout write + activity read round-trip). Wave 1 (workout authoring) done. Building full PHASE-001 v1 locally; VPS deploy held until v1 complete."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -145,19 +146,19 @@ items:
       parent: "FEAT-0004"
     TASK-0023:
       title: "Workout builder from structured intent (JSON → ZWO + FIT + .ytw deterministically)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0023-Workout-builder-from-structured-intent-JSON-ZWO-FIT-ytw-deterministically.md"
       parent: "FEAT-0004"
     TASK-0024:
       title: "App-acceptance checker (consumes FEAT-0001 constraints catalogue)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0024-App-acceptance-checker-consumes-FEAT-0019-constraints-catalogue.md"
       parent: "FEAT-0004"
     TASK-0025:
       title: "Workout structure linter (domain-aware static analysis)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0025-Workout-structure-linter-domain-aware-static-analysis.md"
       parent: "FEAT-0004"
@@ -181,13 +182,13 @@ items:
       parent: "FEAT-0004"
     TASK-0033:
       title: "Workout decomposition (file → structured intent)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0033-Workout-decomposition-file-structured-intent.md"
       parent: "FEAT-0004"
     TASK-0035:
       title: "Workout scaling (duration / FTP / intensity)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0035-Workout-scaling-duration-FTP-intensity.md"
       parent: "FEAT-0004"
@@ -217,7 +218,7 @@ items:
       parent: "FEAT-0004"
     TASK-0050:
       title: "Workout difficulty score (multi-zone breakdown)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0050-Workout-difficulty-score-multi-zone-breakdown.md"
       parent: "FEAT-0004"
@@ -438,6 +439,12 @@ items:
       kind: automated
       path: "docs/features/capability-tools/plan/tests/TST-0001-Power-Metrics-And-Inspector.md"
       verifies: ["[[TASK-0021]]"]
+    TST-0002:
+      title: "Workout authoring unit suite (build/decompose/scale/lint/difficulty/acceptance)"
+      status: passing
+      kind: automated
+      path: "docs/features/capability-tools/plan/tests/TST-0002-Workout-Authoring.md"
+      verifies: ["[[TASK-0023]]","[[TASK-0033]]","[[TASK-0035]]","[[TASK-0025]]","[[TASK-0050]]","[[TASK-0024]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -461,9 +468,9 @@ metrics:
     features_total: 6
     features_done: 0
     tasks_total: 54
-    tasks_done: 4
-    tests_total: 1
-    tests_passing: 1
+    tasks_done: 10
+    tests_total: 2
+    tests_passing: 2
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

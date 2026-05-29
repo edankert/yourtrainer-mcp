@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0033
 aliases: ["TASK-0033"]
 title: "Workout decomposition (file → structured intent)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-02, [[TST-0002]]).** decompose_workout — ZWO/.ytw → structured intent; symmetric inverse of the builder, verified by roundtrip tests.
 
 # TASK-0033 — Workout decomposition (file → structured intent)
 

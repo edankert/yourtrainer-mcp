@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0023
 aliases: ["TASK-0023"]
 title: "Workout builder from structured intent (JSON → ZWO + FIT + .ytw deterministically)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: L
 ---
+
+> **Done 2026-05-29 (CHG-20260529-02, [[TST-0002]]).** build_workout_from_intent → ZWO + .ytw deterministically; FIT output deferred to Wave 2 (fit_workout.py).
 
 # TASK-0023 — Workout builder from structured intent (JSON → ZWO + FIT + .ytw deterministically)
 

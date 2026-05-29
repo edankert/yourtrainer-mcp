@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0025
 aliases: ["TASK-0025"]
 title: "Workout structure linter (domain-aware static analysis)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-02, [[TST-0002]]).** lint_workout — domain-aware static analysis (warmup/cooldown, durations, power ranges, cadence, rep counts).
 
 # TASK-0025 — Workout structure linter (domain-aware static analysis)
 
