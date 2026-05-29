@@ -29,14 +29,14 @@ counters:
   ADR: 5
   CHG:
     last_date: "20260529"
-    last_seq: 7
+    last_seq: 8
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
   TASK: 54
-  TST: 8
+  TST: 9
   WF: 0
 
 focus:
@@ -44,7 +44,7 @@ focus:
   feature: "[[FEAT-0004]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "v1 functional build complete (FEAT-0001/0003/0004/0005/0006 + MCP server). Remaining: VPS deploy (held per user), infra tasks (monitoring/status/perf), and external-asset tasks (FIT samples, TP corpus, Hypothesis). 31 MCP tools; 118 tests green."
+  active_wave: "Wave 7 (hardening) done: Hypothesis property tests + golden files (TASK-0041), perf baselines (TASK-0044); monitoring + status-page artefacts (TASK-0011/0043, doing). 137 tests. Remaining for PHASE-001 exit: live VPS deploy (held) + provisioning/external-asset tasks."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -292,7 +292,7 @@ items:
       parent: "FEAT-0001"
     TASK-0041:
       title: "Test infrastructure — fixtures, golden files, Hypothesis strategies, CI harness"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0041-Test-infrastructure-fixtures-golden-files-Hypothesis-strategies-CI-harness.md"
       parent: "FEAT-0001"
@@ -347,8 +347,9 @@ items:
       parent: "FEAT-0002"
     TASK-0011:
       title: "Monitoring + alerting (uptime + error-rate)"
-      status: backlog
+      status: doing
       phase: "[[PHASE-001-Initial-Launch]]"
+      note: "healthcheck.sh + get_health metrics + alerting wiring guide delivered; live alert channel needs the deployed host."
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0011-Monitoring-alerting-uptime-error-rate.md"
       parent: "FEAT-0002"
     TASK-0012:
@@ -372,13 +373,14 @@ items:
       parent: "FEAT-0002"
     TASK-0043:
       title: "Public canary + status page at status.your-applications.com"
-      status: backlog
+      status: doing
       phase: "[[PHASE-001-Initial-Launch]]"
+      note: "status/canary.py + static status/index.html delivered and verified locally; hosting at status.your-applications.com needs the host."
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0043-Public-canary-status-page-at-status-your-applications-com.md"
       parent: "FEAT-0002"
     TASK-0044:
       title: "Performance baselines + regression detection"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0044-Performance-baselines-regression-detection.md"
       parent: "FEAT-0002"
@@ -484,6 +486,12 @@ items:
       kind: automated
       path: "docs/features/mcp-hosting/plan/tests/TST-0008-Conformance-And-Health.md"
       verifies: ["[[TASK-0042]]","[[TASK-0017]]"]
+    TST-0009:
+      title: "Property-based, golden-file & performance suite"
+      status: passing
+      kind: automated
+      path: "docs/features/format-knowledge-registry/plan/tests/TST-0009-Properties-Golden-Performance.md"
+      verifies: ["[[TASK-0041]]","[[TASK-0044]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -517,9 +525,9 @@ metrics:
     features_total: 6
     features_done: 3
     tasks_total: 54
-    tasks_done: 46
-    tests_total: 8
-    tests_passing: 8
+    tasks_done: 48
+    tests_total: 9
+    tests_passing: 9
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0043
 aliases: ["TASK-0043"]
 title: "Public canary + status page at status.your-applications.com"
-status: backlog
+status: doing
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0002]]"]
 fixes: []
 effort: M
 ---
+
+> **In progress 2026-05-29 (CHG-20260529-08).** deploy/status/canary.py + static index.html, verified locally; hosting pending the deployed host.
 
 # TASK-0043 — Public canary + status page at status.your-applications.com
 

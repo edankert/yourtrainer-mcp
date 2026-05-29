@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0041
 aliases: ["TASK-0041"]
 title: "Test infrastructure — fixtures, golden files, Hypothesis strategies, CI harness"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0001]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-08).** Hypothesis property tests (roundtrip/FTP-independence/scale/FIT) + golden files + perf budgets; conftest fixtures + CI harness already in place.
 
 # TASK-0041 — Test infrastructure — fixtures, golden files, Hypothesis strategies, CI harness
 

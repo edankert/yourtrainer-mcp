@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>yourtrainer-mcp · status</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.5 system-ui, sans-serif; max-width: 40rem; margin: 4rem auto;
+           padding: 0 1rem; }
+    .badge { display: inline-block; padding: .25rem .75rem; border-radius: 999px;
+             font-weight: 600; }
+    .up { background: #d6f5dd; color: #0a6b2b; }
+    .down { background: #fbe0e0; color: #a01313; }
+    .muted { color: #777; font-size: .9rem; }
+    code { background: rgba(127,127,127,.15); padding: .1rem .35rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>yourtrainer-mcp</h1>
+  <p>Status of the cycling-format MCP endpoint
+     <code>mcp.your-applications.com/your-trainer</code>,
+     maintained by the team behind Your Trainer.</p>
+  <p id="status"><span class="badge muted">checking…</span></p>
+  <p class="muted" id="detail"></p>
+  <p class="muted" id="checked"></p>
+  <script>
+    fetch('status.json', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(s => {
+        const badge = document.getElementById('status');
+        badge.innerHTML = s.up
+          ? '<span class="badge up">Operational</span>'
+          : '<span class="badge down">Disruption</span>';
+        const lat = s.latency_ms != null ? ` · ${s.latency_ms} ms` : '';
+        document.getElementById('detail').textContent = `${s.detail || ''}${lat}`;
+        document.getElementById('checked').textContent =
+          s.checked_at ? `Last checked: ${s.checked_at}` : '';
+      })
+      .catch(() => {
+        document.getElementById('status').innerHTML =
+          '<span class="badge down">Status unavailable</span>';
+      });
+  </script>
+</body>
+</html>

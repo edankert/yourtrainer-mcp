@@ -1,0 +1,15 @@
+{
+  "duration_s": 4080,
+  "normalized_power_frac": 0.793,
+  "intensity_factor": 0.793,
+  "tss": 71.3,
+  "time_in_zone_s": {
+    "Z1 Active Recovery": 1415.0,
+    "Z2 Endurance": 505.0,
+    "Z3 Tempo": 2160.0,
+    "Z4 Threshold": 0.0,
+    "Z5 VO2max": 0.0,
+    "Z6 Anaerobic": 0.0,
+    "Z7 Neuromuscular": 0.0
+  }
+}

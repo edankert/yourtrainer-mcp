@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0044
 aliases: ["TASK-0044"]
 title: "Performance baselines + regression detection"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0002]]"]
 fixes: []
 effort: S
 ---
+
+> **Done 2026-05-29 (CHG-20260529-08).** tests/test_performance.py budget tests (catch O(n^2)/pathological regressions) + scripts/benchmark.py baseline reporter.
 
 # TASK-0044 — Performance baselines + regression detection
 

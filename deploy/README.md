@@ -53,8 +53,29 @@ sudo -u ytmcp .venv/bin/pip install .
 sudo systemctl restart yourtrainer-mcp
 ```
 
+## Monitoring + alerting (TASK-0011)
+- **Liveness:** `deploy/healthcheck.sh` sends an MCP `initialize` and exits
+  non-zero if the server doesn't identify itself. Wire it to whatever you run:
+  - systemd: an `OnFailure=` unit, or a `.timer` that runs the check and alerts.
+  - cron: `*/5 * * * * ENDPOINT=https://mcp.your-applications.com/your-trainer /opt/yourtrainer-mcp/deploy/healthcheck.sh || mail -s 'mcp down' you@…`
+  - Uptime Kuma / Healthchecks.io: point an HTTP(S) monitor at the endpoint, or
+    have the script ping a push URL on success.
+- **Error rate / load shape:** the `get_health` MCP tool returns aggregate-only
+  counters (requests/errors/by-tool/uptime) — scrape it or call it from a check.
+  It holds no per-call or rider data (statelessness invariant).
+
+## Public status page (TASK-0043)
+- `deploy/status/canary.py` probes the endpoint and writes `status.json`; run it
+  on a timer on the host:
+  ```bash
+  ENDPOINT=https://mcp.your-applications.com/your-trainer \
+    python3 deploy/status/canary.py /var/www/status/status.json
+  ```
+- `deploy/status/index.html` is a static page that reads `status.json`. Serve
+  the `deploy/status/` directory (e.g. at `status.your-applications.com`).
+
 ## Notes
-- Monitoring/alerting (TASK-0011) and the public status page (TASK-0043) are
-  separate tasks; this artefact covers provisioning + service + proxy only.
+- These monitoring/status artefacts are ready to wire; "done" for TASK-0011/0043
+  requires the live host (an actual alert channel + a hosted status page).
 - The `ReadWritePaths=` / capability-drop lines in the unit assume the process
   truly writes nothing. If you add file-based logging later, grant the path.

@@ -1,0 +1,29 @@
+{
+  "format": "ytw",
+  "version": 1,
+  "name": "Golden Sweet Spot 3x12",
+  "description": "Canonical golden workout for regression tests",
+  "author": "yourtrainer-mcp",
+  "steps": [
+    {
+      "kind": "warmup",
+      "duration_s": 600,
+      "power_low": 0.45,
+      "power_high": 0.75
+    },
+    {
+      "kind": "interval",
+      "repeat": 3,
+      "on_duration_s": 720,
+      "off_duration_s": 300,
+      "on_power": 0.9,
+      "off_power": 0.55
+    },
+    {
+      "kind": "cooldown",
+      "duration_s": 420,
+      "power_low": 0.6,
+      "power_high": 0.4
+    }
+  ]
+}

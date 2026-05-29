@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0011
 aliases: ["TASK-0011"]
 title: "Monitoring + alerting (uptime + error-rate)"
-status: backlog
+status: doing
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0002]]"]
 fixes: []
 effort: S
 ---
+
+> **In progress 2026-05-29 (CHG-20260529-08).** deploy/healthcheck.sh + get_health + alerting guide; live alert channel pending the deployed host.
 
 # TASK-0011 — Monitoring + alerting (uptime + error-rate)
 
