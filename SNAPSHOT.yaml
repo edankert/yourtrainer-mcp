@@ -29,13 +29,13 @@ counters:
   ADR: 5
   CHG:
     last_date: "20260529"
-    last_seq: 12
+    last_seq: 13
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
-  TASK: 56
+  TASK: 57
   TST: 11
   WF: 0
 
@@ -44,7 +44,7 @@ focus:
   feature: "[[FEAT-0002]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "Wave 10 (polish): fixed FIT invalid-sentinel bug; >=10 FIT-workout sample corpus (TASK-0020 code-complete bar on-device test); HR-only real ride fixture; twine check PASSED; integrator docs + example client (TASK-0056). 178 tests. Hard blockers remain: VPS SSH (TASK-0009/live 0011/0043), Garmin Edge device (0020), TrainingPeaks numbers (0021/0045)."
+  active_wave: "Verified app-acceptance constraints against vendor docs (TASK-0057): corrected wrong guesses (Garmin no-native-ramp, 50-step cap; dropped invented Wahoo/Zwift caps); only sourced facts ship. 181 tests. Deploy + on-device test still pending the user."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -157,6 +157,12 @@ items:
       status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0024-App-acceptance-checker-consumes-FEAT-0019-constraints-catalogue.md"
+      parent: "FEAT-0004"
+    TASK-0057:
+      title: "Verify + correct app-acceptance constraints against vendor docs (sourced)"
+      status: done
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/capability-tools/plan/tasks/TASK-0057-Verify-app-acceptance-constraints.md"
       parent: "FEAT-0004"
     TASK-0025:
       title: "Workout structure linter (domain-aware static analysis)"
@@ -548,8 +554,8 @@ metrics:
   counts:
     features_total: 6
     features_done: 4
-    tasks_total: 56
-    tasks_done: 52
+    tasks_total: 57
+    tasks_done: 53
     tests_total: 11
     tests_passing: 11
     tests_failing: 0

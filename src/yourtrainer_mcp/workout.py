@@ -470,40 +470,78 @@ def lint_workout(workout: Workout) -> list[dict]:
 
 
 # --------------------------------------------------------------------------- #
-# App-acceptance checker (TASK-0024) — v1 constraints seed
+# App-acceptance checker (TASK-0024 / verified by TASK-0057)
 # --------------------------------------------------------------------------- #
 
-# Seed constraints catalogue. The authoritative catalogue lands with FEAT-0001
-# (knowledge registry). This v1 seed encodes a few widely-known limits so the
-# tool is wired and testable; entries are descriptive, never comparative.
+# Per-app workout constraints. Every entry below is sourced; capabilities we
+# could NOT verify against vendor/reference documentation are deliberately
+# omitted rather than guessed (a missing key means "unknown", not "false").
+# Descriptive only — never comparative (POSITIONING Principle 1).
+#
+# Sources:
+# - Garmin 50-step limit: real upload error "Workout exceeds ... maximum
+#   expected number of 50 steps" (forums.trainerday.com/t/.../6202;
+#   forums.garmin.com Connect-web threads). Garmin has no native ramp step, so
+#   ramps must be expanded into discrete steps (TrainerDay converter notes).
+#   Garmin Connect's web builder caps lower (20 steps); 50 is the synced/FIT cap.
+# - Garmin 99-repeat cap: Garmin Connect / forums.
+# - Zwift native Ramp + FreeRide elements, and no documented step/size cap:
+#   github.com/h4l/zwift-workout-file-reference (canonical ZWO tag reference).
 APP_CONSTRAINTS: dict[str, dict] = {
-    "zwift": {"max_steps": 1000, "supports_freeride": True, "supports_ramp": True},
-    "garmin_edge": {"max_steps": 50, "supports_freeride": False, "supports_ramp": True,
-                    "max_name_chars": 32},
-    "wahoo": {"max_steps": 200, "supports_freeride": True, "supports_ramp": True},
+    "garmin": {
+        "display": "Garmin (Edge / Connect-synced)",
+        "max_steps": 50,
+        "max_repeats": 99,
+        "native_ramp": False,  # ramps expand into multiple discrete steps
+        "source": "Garmin 50-step upload error (trainerday/garmin forums); no native ramp.",
+    },
+    "zwift": {
+        "display": "Zwift",
+        "max_steps": None,  # no documented hard limit
+        "native_ramp": True,
+        "native_freeride": True,
+        "source": "h4l/zwift-workout-file-reference (Ramp + FreeRide are native ZWO elements).",
+    },
 }
 
 
 def app_acceptance(workout: Workout, apps: list[str] | None = None) -> dict:
-    """Report, per app, whether the workout will load cleanly.
+    """Report, per app, whether a workout will load cleanly.
 
-    Returns ``{app: {"accepted": bool, "issues": [str, ...]}}``.
+    Returns ``{app: {"accepted": bool|None, "issues": [...], "warnings": [...],
+    "source": str}}``. ``accepted`` is ``None`` when no verified constraints are
+    on record for the app. Only documented, sourced limits are enforced;
+    ``issues`` are hard blockers, ``warnings`` are caveats (e.g. ramp expansion).
     """
     targets = apps or list(APP_CONSTRAINTS)
     n_steps = len(workout.steps)
     has_freeride = any(s.kind == "freeride" for s in workout.steps)
+    has_ramp = any(s.kind in ("warmup", "cooldown", "ramp") for s in workout.steps)
+    max_repeat = max((s.repeat or 0 for s in workout.steps if s.kind == "interval"), default=0)
+
     result: dict[str, dict] = {}
     for app in targets:
         c = APP_CONSTRAINTS.get(app)
         if c is None:
-            result[app] = {"accepted": None, "issues": [f"No constraints on record for '{app}'."]}
+            result[app] = {"accepted": None,
+                           "issues": [f"No verified constraints on record for '{app}'."],
+                           "warnings": []}
             continue
         issues: list[str] = []
-        if n_steps > c["max_steps"]:
-            issues.append(f"{n_steps} steps exceeds the {c['max_steps']}-step limit.")
-        if has_freeride and not c["supports_freeride"]:
+        warnings: list[str] = []
+        max_steps = c.get("max_steps")
+        if max_steps is not None and n_steps > max_steps:
+            issues.append(f"{n_steps} steps exceeds the documented {max_steps}-step limit.")
+        max_repeats = c.get("max_repeats")
+        if max_repeats is not None and max_repeat > max_repeats:
+            issues.append(f"interval repeat {max_repeat} exceeds the {max_repeats}-repeat limit.")
+        if c.get("native_ramp") is False and has_ramp:
+            warnings.append(
+                "No native ramp support: ramps/warmup/cooldown expand into multiple "
+                "discrete steps, which may push the workout over the step limit."
+            )
+        if c.get("native_freeride") is False and has_freeride:
             issues.append("Contains a FreeRide block, which this app does not support.")
-        if "max_name_chars" in c and len(workout.name) > c["max_name_chars"]:
-            issues.append(f"Name exceeds {c['max_name_chars']} characters.")
-        result[app] = {"accepted": not issues, "issues": issues}
+        result[app] = {"accepted": not issues, "issues": issues,
+                       "warnings": warnings, "source": c["source"]}
     return result

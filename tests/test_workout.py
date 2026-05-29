@@ -122,18 +122,50 @@ def test_lint_flags_implausible_power():
     assert "power-range" in codes
 
 
-def test_app_acceptance_flags_freeride_on_garmin():
+def test_app_acceptance_garmin_step_limit():
+    # Verified: Garmin caps synced/FIT workouts at 50 steps.
+    steps = [{"kind": "steady", "duration_s": 60, "power": 0.8} for _ in range(60)]
+    result = wk.app_acceptance(wk.build_workout({"name": "long", "steps": steps}), apps=["garmin"])
+    assert result["garmin"]["accepted"] is False
+    assert any("50-step" in i for i in result["garmin"]["issues"])
+    assert result["garmin"]["source"]  # sourced
+
+
+def test_app_acceptance_garmin_warns_on_ramp_expansion():
+    # Verified: Garmin has no native ramp; ramps expand to steps (warning, not block).
+    w = wk.Workout(name="x", steps=[
+        wk.Step("warmup", 60, power_low=0.4, power_high=0.6),
+        wk.Step("steady", 60, power=0.8),
+    ])
+    result = wk.app_acceptance(w, apps=["garmin"])
+    assert result["garmin"]["accepted"] is True
+    assert any("ramp" in w_.lower() for w_ in result["garmin"]["warnings"])
+
+
+def test_app_acceptance_garmin_repeat_limit():
+    # Verified: Garmin caps repeats at 99.
+    w = wk.Workout(name="x", steps=[
+        wk.Step("interval", repeat=120, on_duration_s=30, off_duration_s=30,
+                on_power=1.0, off_power=0.5)])
+    result = wk.app_acceptance(w, apps=["garmin"])
+    assert result["garmin"]["accepted"] is False
+    assert any("repeat" in i for i in result["garmin"]["issues"])
+
+
+def test_app_acceptance_zwift_supports_ramp_and_freeride():
+    # Verified: Ramp + FreeRide are native ZWO elements.
     w = wk.Workout(name="x", steps=[
         wk.Step("warmup", 60, power_low=0.4, power_high=0.6),
         wk.Step("freeride", 600),
     ])
-    result = wk.app_acceptance(w)
-    assert result["garmin_edge"]["accepted"] is False
+    result = wk.app_acceptance(w, apps=["zwift"])
     assert result["zwift"]["accepted"] is True
+    assert result["zwift"]["issues"] == []
 
 
-def test_app_acceptance_flags_long_name_on_garmin():
-    w = wk.Workout(name="x" * 40, steps=[wk.Step("steady", 60, power=0.8)])
-    result = wk.app_acceptance(w, apps=["garmin_edge"])
-    assert result["garmin_edge"]["accepted"] is False
-    assert any("Name exceeds" in i for i in result["garmin_edge"]["issues"])
+def test_app_acceptance_unknown_app_is_indeterminate():
+    w = wk.build_workout(
+        {"name": "x", "steps": [{"kind": "steady", "duration_s": 60, "power": 0.8}]}
+    )
+    result = wk.app_acceptance(w, apps=["peloton"])
+    assert result["peloton"]["accepted"] is None

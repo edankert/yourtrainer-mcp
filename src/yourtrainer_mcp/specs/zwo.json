@@ -14,6 +14,7 @@
   "constraints": [
     {"app": "zwift", "note": "Power expressed as a fraction of FTP; 1.0 means 100% FTP."},
     {"app": "zwift", "note": "Steps execute in document order; there is no explicit time axis beyond per-step Duration."},
+    {"app": "zwift", "note": "Ramp and FreeRide are native ZWO elements (alongside Warmup/Cooldown/SteadyState/IntervalsT/MaxEffort). No step-count or file-size limit is documented. Source: github.com/h4l/zwift-workout-file-reference."},
     {"app": "generic", "note": "Ramp/Warmup/Cooldown all carry PowerLow/PowerHigh; only the on-screen colour differs."}
   ],
   "conversion_notes": [

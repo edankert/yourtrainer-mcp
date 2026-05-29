@@ -12,8 +12,12 @@
     {"title": "workout_step power target (% FTP)", "content": "target_type=power(4); custom_target_power_low/high = 1000+percent\n; 95% FTP low, 105% FTP high -> 1095 .. 1105"}
   ],
   "constraints": [
-    {"app": "garmin_edge", "note": "Workout step text events longer than ~32 characters can fail to load on some older Edge units."},
+    {"app": "garmin", "note": "Synced/FIT workouts are capped at 50 steps (the upload error reads 'Workout exceeds ... maximum expected number of 50 steps'); Garmin Connect's web builder caps lower (around 20). Source: trainerday/garmin community forums."},
+    {"app": "garmin", "note": "Repeats are capped at 99. Source: Garmin Connect / forums."},
+    {"app": "garmin", "note": "No native ramp step type: ramps are expanded into multiple discrete constant-power steps, which count toward the 50-step limit."},
+    {"app": "garmin", "note": "Anecdotally, very long workout-step text/names may be truncated on some older Edge units (commonly cited as ~32 chars); not vendor-confirmed, so treat as a soft caution."},
     {"app": "generic", "note": "Timestamps are seconds since the FIT epoch 1989-12-31T00:00:00Z; values below 0x10000000 denote system (relative) time."},
+    {"app": "generic", "note": "Fields use a per-base-type invalid sentinel (e.g. uint16 0xFFFF) for present-but-unset values; readers must treat those as no-data, not real readings."},
     {"app": "generic", "note": "Compressed-timestamp headers and developer data fields exist; a minimal reader may not handle them."}
   ],
   "conversion_notes": [
