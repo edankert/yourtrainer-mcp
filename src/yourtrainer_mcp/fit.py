@@ -204,19 +204,19 @@ def decode_activity(data: bytes) -> list[dict]:
         if global_num != MSG_RECORD:
             continue
         sample: dict = {}
-        if 253 in vals:
+        if vals.get(253) is not None:
             sample["timestamp_s"] = int(vals[253])  # seconds since FIT epoch
-        if 7 in vals:
+        if vals.get(7) is not None:
             sample["power"] = float(vals[7])
-        if 3 in vals:
+        if vals.get(3) is not None:
             sample["heart_rate"] = float(vals[3])
-        if 4 in vals:
+        if vals.get(4) is not None:
             sample["cadence"] = float(vals[4])
-        if 5 in vals:
+        if vals.get(5) is not None:
             sample["distance_m"] = vals[5] / 100.0
-        if 2 in vals:
+        if vals.get(2) is not None:
             sample["altitude_m"] = vals[2] / 5.0 - 500.0
-        if 6 in vals:
+        if vals.get(6) is not None:
             sample["speed_mps"] = vals[6] / 1000.0
         out.append(sample)
     return out
@@ -232,4 +232,9 @@ def _decode_value(type_byte: int, size: int, raw: bytes, endian: str) -> Any:
     fmt_char = base[2]
     assert fmt_char is not None  # only string has no struct format, handled above
     fmt = endian + fmt_char.lstrip("<>")
-    return struct.unpack(fmt, raw)[0]
+    value = struct.unpack(fmt, raw)[0]
+    # FIT uses a per-base-type "invalid" sentinel for present-but-unset fields
+    # (e.g. an Edge 500 with no power meter records power == 0xFFFF). Map those
+    # to None so they aren't mistaken for real readings.
+    invalid = base[4]
+    return None if value == invalid else value

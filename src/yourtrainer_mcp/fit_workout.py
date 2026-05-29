@@ -95,22 +95,28 @@ def decode_workout_fit(data: bytes) -> Workout:
     name = "Workout"
     raw_steps: list[tuple[int, dict]] = []
     for global_num, vals in messages:
-        if global_num == fit.MSG_WORKOUT and 8 in vals:
+        if global_num == fit.MSG_WORKOUT and vals.get(8) is not None:
             name = str(vals[8])
         elif global_num == fit.MSG_WORKOUT_STEP:
-            raw_steps.append((int(vals.get(254, len(raw_steps))), vals))
+            idx = vals.get(254)
+            raw_steps.append((int(idx) if idx is not None else len(raw_steps), vals))
+
+    def _get(vals: dict, key: int, default: int) -> int:
+        # Coalesce both "missing" and FIT "invalid" (None) fields to the default.
+        v = vals.get(key)
+        return default if v is None else int(v)
 
     raw_steps.sort(key=lambda t: t[0])
     steps: list[Step] = []
     for _idx, vals in raw_steps:
-        dur = int(vals.get(2, 0)) // 1000
-        target_type = int(vals.get(3, _TGT_POWER))
-        intensity = int(vals.get(7, _INT_ACTIVE))
+        dur = _get(vals, 2, 0) // 1000
+        target_type = _get(vals, 3, _TGT_POWER)
+        intensity = _get(vals, 7, _INT_ACTIVE)
         if target_type == _TGT_OPEN:
             steps.append(Step("freeride", dur))
             continue
-        lo = _unpct(int(vals.get(5, 1000)))
-        hi = _unpct(int(vals.get(6, 1000)))
+        lo = _unpct(_get(vals, 5, 1000))
+        hi = _unpct(_get(vals, 6, 1000))
         if intensity == _INT_WARMUP:
             steps.append(Step("warmup", dur, power_low=lo, power_high=hi))
         elif intensity == _INT_COOLDOWN:

@@ -17,6 +17,7 @@ applies to the files in this directory.
 |------|---------|
 | `Activity.fit` | Small real activity file — exercises the FIT reader. |
 | `Edge810-Vector-2013-08-16-15-35-10.fit` | Real Garmin Edge 810 + Vector power-meter ride (4700 power samples) — reference corpus for NP/IF/TSS. |
+| `garmin-edge-500-activity.fit` | Real Edge 500 ride with HR but no power — exercises FIT invalid-sentinel handling + the no-power path. |
 | `WorkoutIndividualSteps.fit` | Real Garmin FIT workout (individual steps). |
 | `WorkoutRepeatSteps.fit` | Real Garmin FIT workout (with a repeat block). |
 | `WorkoutCustomTargetValues.fit` | Real Garmin FIT workout (custom power targets). |

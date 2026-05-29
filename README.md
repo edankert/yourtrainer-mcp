@@ -69,6 +69,7 @@ yourtrainer-mcp                # stdio transport (local MCP clients)
 YTMCP_TRANSPORT=http yourtrainer-mcp   # streamable-HTTP on 127.0.0.1:8080/your-trainer
 ```
 Deploy to a VPS: see [`deploy/README.md`](deploy/README.md).
+Integrate a client (app AI assistant / workout creation): see [`docs/INTEGRATION.md`](docs/INTEGRATION.md) and [`examples/client_demo.py`](examples/client_demo.py).
 
 ## Project-os structure
 - `SNAPSHOT.yaml` — canonical machine-readable state.

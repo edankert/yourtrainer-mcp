@@ -29,22 +29,22 @@ counters:
   ADR: 5
   CHG:
     last_date: "20260529"
-    last_seq: 10
+    last_seq: 11
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
-  TASK: 55
+  TASK: 56
   TST: 11
   WF: 0
 
 focus:
   task: ""
-  feature: "[[FEAT-0001]]"
+  feature: "[[FEAT-0002]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "Wave 9 (polish): vendored MIT real FIT files (python-fitparse) + reference corpus. Real Garmin workout files read by our codec; real ride NP cross-validated 3 ways (our codec, fitparse, naive impl) = 301.05 W. 153 tests. TASK-0020/0021/0045 advanced (still doing: >=10 workout samples, >=5 TP-sourced activities, on-device test)."
+  active_wave: "Wave 10 (polish): fixed FIT invalid-sentinel bug; >=10 FIT-workout sample corpus (TASK-0020 code-complete bar on-device test); HR-only real ride fixture; twine check PASSED; integrator docs + example client (TASK-0056). 178 tests. Hard blockers remain: VPS SSH (TASK-0009/live 0011/0043), Garmin Edge device (0020), TrainingPeaks numbers (0021/0045)."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -390,6 +390,12 @@ items:
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0044-Performance-baselines-regression-detection.md"
       parent: "FEAT-0002"
+    TASK-0056:
+      title: "Integrator docs + example MCP client (workout creation + AI assistant flows)"
+      status: done
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0056-Integrator-docs-and-example-client.md"
+      parent: "FEAT-0002"
     TASK-0029:
       title: "Pacing strategy generator (GPX route + FTP + target effort → pacing plan)"
       status: done
@@ -542,8 +548,8 @@ metrics:
   counts:
     features_total: 6
     features_done: 3
-    tasks_total: 55
-    tasks_done: 49
+    tasks_total: 56
+    tasks_done: 50
     tests_total: 11
     tests_passing: 11
     tests_failing: 0

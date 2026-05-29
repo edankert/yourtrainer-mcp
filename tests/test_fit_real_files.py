@@ -68,3 +68,15 @@ def test_inspect_real_ride_end_to_end():
     assert p["normalized_power_w"] == pytest.approx(301.1, abs=0.5)
     assert p["intensity_factor"] == pytest.approx(1.095, abs=0.01)
     assert p["training_stress_score"] == pytest.approx(156.5, abs=1.0)
+
+
+def test_real_hr_only_ride_has_no_phantom_power():
+    # Edge 500 with no power meter: FIT records power == 0xFFFF (invalid). The
+    # sentinel must be dropped, not read as 65535 W. HR is present.
+    f = EXT / "garmin-edge-500-activity.fit"
+    samples = fit.decode_activity(f.read_bytes())
+    assert not [s for s in samples if "power" in s]
+    assert sum(1 for s in samples if "heart_rate" in s) > 1000
+    summary = inspect_activity(parse_activity_file(f), 250.0)
+    assert summary["power"] is None
+    assert summary["heart_rate"]["avg_bpm"] > 0
