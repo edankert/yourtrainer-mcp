@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0029
 aliases: ["TASK-0029"]
 title: "Pacing strategy generator (GPX route + FTP + target effort → pacing plan)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0005]]"]
 fixes: []
 effort: L
 ---
+
+> **Done 2026-05-29 (CHG-20260529-06, [[TST-0006]]).** route.pacing_strategy — base target from intensity, climb targets nudged by gradient (capped 1.15xFTP), cadence hints; analyze_route tool.
 
 # TASK-0029 — Pacing strategy generator (GPX route + FTP + target effort → pacing plan)
 

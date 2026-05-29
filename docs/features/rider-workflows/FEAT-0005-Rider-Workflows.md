@@ -3,7 +3,7 @@ type: "[[feature]]"
 id: FEAT-0005
 aliases: ["FEAT-0005"]
 title: "Cycling rider workflow tools"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27

@@ -29,22 +29,22 @@ counters:
   ADR: 3
   CHG:
     last_date: "20260529"
-    last_seq: 5
+    last_seq: 6
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
   TASK: 54
-  TST: 5
+  TST: 6
   WF: 0
 
 focus:
-  task: "[[TASK-0029]]"
+  task: "[[TASK-0038]]"
   feature: "[[FEAT-0004]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "Wave 5 — rider workflows (FEAT-0005: pacing, anonymisation, migration, roundtrip, adherence, climb). Waves 1-4 done. VPS deploy held until v1 complete."
+  active_wave: "Wave 6 — library ops (FEAT-0006: indexing, dedup, stats, best-efforts) + close hosting/trojan-horse. Waves 1-5 done; FEAT-0005 complete. VPS deploy held until v1 complete."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -82,7 +82,7 @@ items:
       path: "docs/features/mcp-hosting/FEAT-0002-MCP-Hosting.md"
     FEAT-0005:
       title: "Cycling rider workflow tools"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/rider-workflows/FEAT-0005-Rider-Workflows.md"
 
@@ -382,37 +382,37 @@ items:
       parent: "FEAT-0002"
     TASK-0029:
       title: "Pacing strategy generator (GPX route + FTP + target effort → pacing plan)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/rider-workflows/plan/tasks/TASK-0029-Pacing-strategy-generator-GPX-route-FTP-target-effort-pacing-plan.md"
       parent: "FEAT-0005"
     TASK-0030:
       title: "Activity privacy / anonymisation tool"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/rider-workflows/plan/tasks/TASK-0030-Activity-privacy-anonymisation-tool.md"
       parent: "FEAT-0005"
     TASK-0031:
       title: "Library migration helper (LLM-orchestrated batch conversion)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/rider-workflows/plan/tasks/TASK-0031-Library-migration-helper-LLM-orchestrated-batch-conversion.md"
       parent: "FEAT-0005"
     TASK-0032:
       title: "Format-conversion roundtrip test harness (LLM self-correction tool)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/rider-workflows/plan/tasks/TASK-0032-Format-conversion-roundtrip-test-harness-LLM-self-correction-tool.md"
       parent: "FEAT-0005"
     TASK-0034:
       title: "Plan-vs-actual adherence scorecard"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/rider-workflows/plan/tasks/TASK-0034-Plan-vs-actual-adherence-scorecard.md"
       parent: "FEAT-0005"
     TASK-0048:
       title: "Climb analysis on a GPX route"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/rider-workflows/plan/tasks/TASK-0048-Climb-analysis-on-a-GPX-route.md"
       parent: "FEAT-0005"
@@ -464,6 +464,12 @@ items:
       kind: automated
       path: "docs/features/format-knowledge-registry/plan/tests/TST-0005-Registry-And-Validators.md"
       verifies: ["[[TASK-0002]]","[[TASK-0003]]","[[TASK-0004]]","[[TASK-0005]]","[[TASK-0006]]","[[TASK-0007]]"]
+    TST-0006:
+      title: "Rider workflows suite (route/pacing/anonymise/adherence/migration/roundtrip)"
+      status: passing
+      kind: automated
+      path: "docs/features/rider-workflows/plan/tests/TST-0006-Rider-Workflows.md"
+      verifies: ["[[TASK-0029]]","[[TASK-0030]]","[[TASK-0031]]","[[TASK-0032]]","[[TASK-0034]]","[[TASK-0048]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -487,9 +493,9 @@ metrics:
     features_total: 6
     features_done: 0
     tasks_total: 54
-    tasks_done: 28
-    tests_total: 5
-    tests_passing: 5
+    tasks_done: 34
+    tests_total: 6
+    tests_passing: 6
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

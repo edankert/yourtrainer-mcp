@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0030
 aliases: ["TASK-0030"]
 title: "Activity privacy / anonymisation tool"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0005]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-06, [[TST-0006]]).** anonymize.anonymize_gpx — start/end privacy zones, optional HR strip, re-emits clean GPX with no device metadata.
 
 # TASK-0030 — Activity privacy / anonymisation tool
 

@@ -40,6 +40,11 @@ def test_tools_are_registered():
         "recovery_time",
         "detect_file",
         "batch_inspect",
+        "analyze_route",
+        "anonymize_gpx",
+        "adherence_scorecard",
+        "migration_inventory",
+        "roundtrip_workout",
     }
     assert expected.issubset(tool_names)
 

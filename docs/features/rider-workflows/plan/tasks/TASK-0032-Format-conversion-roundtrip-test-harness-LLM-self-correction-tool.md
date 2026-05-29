@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0032
 aliases: ["TASK-0032"]
 title: "Format-conversion roundtrip test harness (LLM self-correction tool)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0005]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-06, [[TST-0006]]).** workflows.roundtrip_workout — compares converted vs original by expanded power series; reports max/mean deviation + lossless flag.
 
 # TASK-0032 — Format-conversion roundtrip test harness (LLM self-correction tool)
 

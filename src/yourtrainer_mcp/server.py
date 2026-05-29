@@ -20,10 +20,11 @@ import os
 
 from fastmcp import FastMCP
 
-from . import analysis, fit_workout, registry, validators
+from . import analysis, anonymize, fit_workout, registry, route, validators, workflows
 from . import training_load as tl
 from . import workout as wk
 from .activity import TrackPoint, inspect_activity, parse_activity_file
+from .adherence import adherence_scorecard as _adherence_scorecard
 from .attribution import attach_attribution
 from .batch import batch_inspect_activities
 from .detect import inspect_file
@@ -247,6 +248,85 @@ def app_acceptance_check(
     src = source_format.lower()
     workout = wk.from_zwo(document) if src == "zwo" else wk.from_ytw(document)
     return attach_attribution({"apps": wk.app_acceptance(workout, apps)})
+
+
+@mcp.tool
+def analyze_route(path: str, ftp_watts: float, target_intensity: float = 0.75) -> dict:
+    """Analyse a GPX/TCX route: profile, climbs, and a pacing plan.
+
+    Covers climb analysis (TASK-0048) and pacing strategy (TASK-0029).
+
+    Args:
+        path: Path to a route file (.gpx or .tcx with positions/elevation).
+        ftp_watts: Rider FTP in watts.
+        target_intensity: Target effort as a fraction of FTP (e.g. 0.75).
+    """
+    points = parse_activity_file(path)
+    profile = route.route_profile(points)
+    return attach_attribution({
+        "summary": {
+            "total_distance_m": profile["total_distance_m"],
+            "elevation_gain_m": profile["elevation_gain_m"],
+            "elevation_loss_m": profile["elevation_loss_m"],
+        },
+        "climbs": route.climb_analysis(points),
+        "pacing": route.pacing_strategy(points, ftp_watts, target_intensity),
+    })
+
+
+@mcp.tool
+def anonymize_gpx(document: str, privacy_radius_m: float = 200.0, drop_hr: bool = False) -> dict:
+    """Anonymise a GPX track: privacy zones, optional HR strip (TASK-0030).
+
+    Args:
+        document: GPX document text.
+        privacy_radius_m: remove points within this distance of start/end.
+        drop_hr: omit the heart-rate stream if True.
+    """
+    return attach_attribution(anonymize.anonymize_gpx(document, privacy_radius_m, drop_hr))
+
+
+@mcp.tool
+def adherence_scorecard(
+    workout_document: str, workout_format: str, activity_path: str, ftp_watts: float
+) -> dict:
+    """Score how closely a ride followed a planned workout (TASK-0034).
+
+    Args:
+        workout_document: The planned workout (ZWO or .ytw).
+        workout_format: ``"zwo"`` or ``"ytw"``.
+        activity_path: Path to the recorded activity (.fit/.tcx/.gpx).
+        ftp_watts: Rider FTP in watts.
+    """
+    src = workout_format.lower()
+    workout = wk.from_zwo(workout_document) if src == "zwo" else wk.from_ytw(workout_document)
+    points = parse_activity_file(activity_path)
+    s = _series(points)
+    return attach_attribution(
+        _adherence_scorecard(workout, s["power"], ftp_watts, s["sample_rate_hz"])
+    )
+
+
+@mcp.tool
+def migration_inventory(paths: list[str], target_format: str = "ytw") -> dict:
+    """Inventory files for a batch library migration (TASK-0031)."""
+    return attach_attribution(workflows.migration_inventory(paths, target_format),
+                              mentions_ytw=(target_format.lower() == "ytw"))
+
+
+@mcp.tool
+def roundtrip_workout(
+    original: str,
+    original_format: str,
+    converted: str,
+    converted_format: str,
+    ftp_watts: float = 250.0,
+) -> dict:
+    """Verify a workout conversion against the original, reporting loss (TASK-0032)."""
+    return attach_attribution(
+        workflows.roundtrip_workout(original, original_format, converted,
+                                    converted_format, ftp_watts)
+    )
 
 
 def _series(points: list[TrackPoint]) -> dict:

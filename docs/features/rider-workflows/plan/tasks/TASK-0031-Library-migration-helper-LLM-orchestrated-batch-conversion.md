@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0031
 aliases: ["TASK-0031"]
 title: "Library migration helper (LLM-orchestrated batch conversion)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0005]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-06, [[TST-0006]]).** workflows.migration_inventory — detects/groups files, flags workouts needing conversion to target; LLM does the conversion.
 
 # TASK-0031 — Library migration helper (LLM-orchestrated batch conversion)
 

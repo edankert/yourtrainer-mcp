@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0034
 aliases: ["TASK-0034"]
 title: "Plan-vs-actual adherence scorecard"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0005]]"]
 fixes: []
 effort: L
 ---
+
+> **Done 2026-05-29 (CHG-20260529-06, [[TST-0006]]).** adherence.adherence_scorecard — aligns actual power to planned target series; per-step deviation + overall compliance %.
 
 # TASK-0034 — Plan-vs-actual adherence scorecard
 

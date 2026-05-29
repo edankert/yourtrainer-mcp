@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0048
 aliases: ["TASK-0048"]
 title: "Climb analysis on a GPX route"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0005]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-06, [[TST-0006]]).** route.climb_analysis — detects climbs (grade/length thresholds), elevation gain, avg grade, coarse HC/1-4 category.
 
 # TASK-0048 — Climb analysis on a GPX route
 
