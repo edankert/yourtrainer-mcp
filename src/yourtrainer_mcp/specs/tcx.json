@@ -1,0 +1,27 @@
+{
+  "key": "tcx",
+  "name": "Training Center XML (TCX)",
+  "kind": "activity",
+  "binary": false,
+  "extensions": [".tcx"],
+  "version": "Garmin TrainingCenterDatabase v2 schema.",
+  "spec": "TCX is an XML format rooted at <TrainingCenterDatabase>. Activities live under <Activities>/<Activity Sport=\"Biking\">, each split into one or more <Lap> elements that contain a <Track> of <Trackpoint> samples. A Trackpoint carries <Time> (ISO-8601), optional <Position> (<LatitudeDegrees>, <LongitudeDegrees>), <AltitudeMeters>, <DistanceMeters> (cumulative), <HeartRateBpm><Value>, and <Cadence> (cycling rpm). Power is not in core TCX; it is carried in <Extensions> via the Garmin Activity Extension TPX element: <TPX><Watts>..</Watts><Speed>..</Speed></TPX>. Unlike GPX, distance is stored cumulatively per point.",
+  "examples": [
+    {"title": "Trackpoint with HR and cadence", "content": "<Trackpoint>\n  <Time>2026-01-01T00:00:00Z</Time>\n  <Position><LatitudeDegrees>52.0</LatitudeDegrees><LongitudeDegrees>5.0</LongitudeDegrees></Position>\n  <AltitudeMeters>12.0</AltitudeMeters>\n  <DistanceMeters>0</DistanceMeters>\n  <HeartRateBpm><Value>140</Value></HeartRateBpm>\n  <Cadence>90</Cadence>\n</Trackpoint>"},
+    {"title": "Power via TPX extension", "content": "<Trackpoint>\n  <Time>2026-01-01T00:00:01Z</Time>\n  <Extensions>\n    <TPX xmlns=\"http://www.garmin.com/xmlschemas/ActivityExtension/v2\"><Watts>240</Watts></TPX>\n  </Extensions>\n</Trackpoint>"},
+    {"title": "Activity skeleton", "content": "<TrainingCenterDatabase xmlns=\"http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2\">\n  <Activities><Activity Sport=\"Biking\"><Lap><Track>\n    <!-- Trackpoints -->\n  </Track></Lap></Activity></Activities>\n</TrainingCenterDatabase>"}
+  ],
+  "constraints": [
+    {"app": "generic", "note": "HeartRateBpm wraps the integer in a child <Value> element."},
+    {"app": "generic", "note": "Power lives in Extensions/TPX/Watts, not as a first-class Trackpoint child."},
+    {"app": "generic", "note": "DistanceMeters is cumulative from activity start, not per-segment."}
+  ],
+  "conversion_notes": [
+    {"to": "gpx", "note": "Map Trackpoint -> trkpt; Position -> lat/lon; AltitudeMeters -> ele; TPX Watts -> power extension."},
+    {"to": "fit", "note": "Convert degrees -> semicircles; cumulative DistanceMeters maps directly to the record distance field."}
+  ],
+  "glossary": [
+    {"term": "TPX", "definition": "Garmin Activity Extension element carrying Watts/Speed per Trackpoint."},
+    {"term": "Lap", "definition": "A subdivision of an Activity; each Lap holds its own Track of Trackpoints."}
+  ]
+}

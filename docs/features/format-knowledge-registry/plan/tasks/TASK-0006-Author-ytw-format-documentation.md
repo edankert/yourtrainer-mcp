@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0006
 aliases: ["TASK-0006"]
 title: "Author .ytw format documentation"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0001]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-05, [[TST-0005]]).** specs/ytw.json: the .ytw JSON format v1 documented (matches workout.py); examples + conversion notes; validate('ytw').
 
 # TASK-0006 — Author .ytw format documentation
 

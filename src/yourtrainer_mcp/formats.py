@@ -30,6 +30,8 @@ SUPPORTED_FORMATS: tuple[FormatInfo, ...] = (
     FormatInfo("tcx", "Training Center XML", "activity", False, (".tcx",)),
     FormatInfo("kml", "Keyhole Markup Language", "route", False, (".kml",)),
     FormatInfo("ytw", "Your Trainer Workout", "workout", False, (".ytw",)),
+    FormatInfo("locale", "Locale string bundles", "locale", False,
+               (".strings", ".po")),
 )
 
 

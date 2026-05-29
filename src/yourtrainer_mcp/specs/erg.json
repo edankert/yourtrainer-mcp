@@ -1,0 +1,27 @@
+{
+  "key": "erg",
+  "name": "ERG (absolute-watt workout)",
+  "kind": "workout",
+  "binary": false,
+  "extensions": [".erg"],
+  "version": "PerfPRO / TrainerRoad-era plain-text ERG course format.",
+  "spec": "ERG is a plain-text format with two sections. [COURSE HEADER] holds metadata as KEY = VALUE lines, notably VERSION, UNITS = ENGLISH|METRIC, DESCRIPTION, FILE NAME, MINUTES WATTS (the column legend). [COURSE DATA] is whitespace-separated rows of 'minutes watts' — elapsed time in (fractional) minutes and the absolute target power in watts at that time. Power between points is interpolated linearly, so a step change is encoded by two rows at the same minute with different watts. The file is FTP-independent only in the sense that watts are absolute; recreating %FTP requires knowing the rider FTP the file was authored for.",
+  "examples": [
+    {"title": "Steady 200 W for 20 min", "content": "[COURSE HEADER]\nVERSION = 2\nUNITS = ENGLISH\nDESCRIPTION = Steady\nMINUTES WATTS\n[END COURSE HEADER]\n[COURSE DATA]\n0.00\t200\n20.00\t200\n[END COURSE DATA]"},
+    {"title": "Step from 150 to 250 W", "content": "[COURSE HEADER]\nVERSION = 2\nUNITS = ENGLISH\nMINUTES WATTS\n[END COURSE HEADER]\n[COURSE DATA]\n0.00\t150\n10.00\t150\n10.00\t250\n20.00\t250\n[END COURSE DATA]"},
+    {"title": "Linear ramp 150->300 W", "content": "[COURSE HEADER]\nVERSION = 2\nUNITS = ENGLISH\nMINUTES WATTS\n[END COURSE HEADER]\n[COURSE DATA]\n0.00\t150\n25.00\t300\n[END COURSE DATA]"}
+  ],
+  "constraints": [
+    {"app": "generic", "note": "Watts are absolute; the same file is harder/easier for riders of different FTP."},
+    {"app": "generic", "note": "A vertical step needs two rows sharing the same minute value."},
+    {"app": "generic", "note": "Times are cumulative minutes from the start, not per-segment durations."}
+  ],
+  "conversion_notes": [
+    {"to": "mrc", "note": "Divide each watt value by FTP and multiply by 100 to get %FTP; otherwise the row structure is identical."},
+    {"to": "zwo", "note": "Group interpolated rows into Warmup/SteadyState/Ramp steps; convert watts to FTP fractions (watts/FTP)."}
+  ],
+  "glossary": [
+    {"term": "COURSE DATA", "definition": "The section holding 'minutes watts' rows defining the power-time profile."},
+    {"term": "interpolation", "definition": "Power between two rows is a straight line; identical-minute rows create instantaneous steps."}
+  ]
+}

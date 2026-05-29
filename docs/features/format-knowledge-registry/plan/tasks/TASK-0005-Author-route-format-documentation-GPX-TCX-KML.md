@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0005
 aliases: ["TASK-0005"]
 title: "Author route format documentation (GPX + TCX + KML)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0001]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-05, [[TST-0005]]).** specs/gpx.json + tcx.json + kml.json: route/activity XML formats with examples, constraints (coord order, extensions), conversion notes.
 
 # TASK-0005 — Author route format documentation (GPX + TCX + KML)
 

@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0007
 aliases: ["TASK-0007"]
 title: "Author locale string-bundle format documentation (Android XML / iOS strings / .po / flat JSON)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0001]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-05, [[TST-0005]]).** specs/locale.json: Android strings.xml / iOS .strings / gettext .po / flat JSON with examples, escaping & plural/placeholder constraints.
 
 # TASK-0007 — Author locale string-bundle format documentation (Android XML / iOS strings / .po / flat JSON)
 

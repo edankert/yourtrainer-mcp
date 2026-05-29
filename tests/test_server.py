@@ -20,6 +20,13 @@ def test_tools_are_registered():
 
     expected = {
         "list_supported_formats",
+        "get_format_spec",
+        "get_canonical_examples",
+        "get_format_constraints",
+        "get_conversion_notes",
+        "get_format_glossary",
+        "get_format_version",
+        "validate",
         "inspect_activity_file",
         "build_workout_from_intent",
         "read_fit_workout",

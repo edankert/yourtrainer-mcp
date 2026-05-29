@@ -1,0 +1,27 @@
+{
+  "key": "kml",
+  "name": "Keyhole Markup Language (KML)",
+  "kind": "route",
+  "binary": false,
+  "extensions": [".kml"],
+  "version": "OGC KML 2.2.",
+  "spec": "KML is an XML format rooted at <kml> in the OGC KML 2.2 namespace. Geographic features live under <Document>/<Placemark>. A route or track is typically a <Placemark> containing a <LineString> whose <coordinates> element is whitespace-separated 'lon,lat[,alt]' tuples — note the longitude-first ordering, the reverse of GPX/TCX. Altitude is optional and in metres. KML carries no time series or cycling sensor data by default (the gx: extension namespace adds <gx:Track> with <when> timestamps and gx:coord), so KML is mainly a route-geometry interchange, not an activity-recording format.",
+  "examples": [
+    {"title": "LineString route", "content": "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n  <Document><Placemark><LineString><coordinates>\n    5.0,52.0,12 5.001,52.001,14 5.002,52.002,15\n  </coordinates></LineString></Placemark></Document>\n</kml>"},
+    {"title": "Point placemark", "content": "<Placemark><name>Summit</name><Point><coordinates>5.5,52.5,340</coordinates></Point></Placemark>"},
+    {"title": "gx:Track with time", "content": "<gx:Track>\n  <when>2026-01-01T00:00:00Z</when>\n  <gx:coord>5.0 52.0 12</gx:coord>\n</gx:Track>  <!-- note: gx:coord is space-separated lon lat alt -->"}
+  ],
+  "constraints": [
+    {"app": "generic", "note": "Coordinate order is lon,lat,alt — the opposite of GPX/TCX lat/lon."},
+    {"app": "generic", "note": "<coordinates> tuples are separated by whitespace; components within a tuple by commas."},
+    {"app": "generic", "note": "No native power/HR/cadence; use gx:Track for timestamps if needed."}
+  ],
+  "conversion_notes": [
+    {"to": "gpx", "note": "Swap to lat/lon order and emit each coordinate as a <trkpt>; alt -> <ele>."},
+    {"to": "tcx", "note": "Route-only; produce a Course/Track of positions, but expect no sensor data."}
+  ],
+  "glossary": [
+    {"term": "LineString", "definition": "An ordered set of coordinate tuples describing a path."},
+    {"term": "coordinates", "definition": "Whitespace-separated lon,lat[,alt] tuples (longitude first)."}
+  ]
+}

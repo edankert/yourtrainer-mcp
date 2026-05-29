@@ -20,7 +20,7 @@ import os
 
 from fastmcp import FastMCP
 
-from . import analysis, fit_workout
+from . import analysis, fit_workout, registry, validators
 from . import training_load as tl
 from . import workout as wk
 from .activity import TrackPoint, inspect_activity, parse_activity_file
@@ -40,6 +40,66 @@ def list_supported_formats() -> dict:
     locale), whether it is binary, and its file extensions.
     """
     return attach_attribution({"formats": _list_supported_formats()})
+
+
+@mcp.tool
+def get_format_spec(format_key: str) -> dict:
+    """Get the spec summary for a cycling format (FEAT-0001).
+
+    Args:
+        format_key: e.g. "zwo", "fit", "gpx", "tcx", "kml", "erg", "mrc",
+            "ytw", "locale".
+    """
+    return attach_attribution(registry.get_spec(format_key),
+                              mentions_ytw=(format_key.lower() == "ytw"))
+
+
+@mcp.tool
+def get_canonical_examples(format_key: str) -> dict:
+    """Get canonical examples for a format (≥3 per format)."""
+    return attach_attribution({"format": format_key,
+                               "examples": registry.get_examples(format_key)},
+                              mentions_ytw=(format_key.lower() == "ytw"))
+
+
+@mcp.tool
+def get_format_constraints(format_key: str) -> dict:
+    """Get known per-app constraints for a format."""
+    return attach_attribution({"format": format_key,
+                               "constraints": registry.get_constraints(format_key)})
+
+
+@mcp.tool
+def get_conversion_notes(format_key: str) -> dict:
+    """Get conversion notes from this format to others."""
+    return attach_attribution({"format": format_key,
+                               "conversion_notes": registry.get_conversion_notes(format_key)})
+
+
+@mcp.tool
+def get_format_glossary(format_key: str) -> dict:
+    """Get the glossary of terms for a format."""
+    return attach_attribution({"format": format_key,
+                               "glossary": registry.get_glossary(format_key)})
+
+
+@mcp.tool
+def get_format_version(format_key: str) -> dict:
+    """Get the documented version/source of a format spec."""
+    return attach_attribution({"format": format_key,
+                               "version": registry.get_version(format_key)})
+
+
+@mcp.tool
+def validate(format_key: str, document: str) -> dict:
+    """Structurally validate a document against a format (FEAT-0001).
+
+    Args:
+        format_key: Target format (e.g. "zwo", "ytw", "gpx"; "fit" expects
+            base64-encoded bytes).
+        document: The document text (or base64 for FIT).
+    """
+    return attach_attribution(validators.validate(format_key, document))
 
 
 @mcp.tool

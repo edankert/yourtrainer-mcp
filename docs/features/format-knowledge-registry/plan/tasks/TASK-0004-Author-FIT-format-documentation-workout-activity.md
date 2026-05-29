@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0004
 aliases: ["TASK-0004"]
 title: "Author FIT format documentation (workout + activity)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0001]]"]
 fixes: []
 effort: L
 ---
+
+> **Done 2026-05-29 (CHG-20260529-05, [[TST-0005]]).** specs/fit.json: binary container (header/definition/data/CRC), workout + activity messages, %FTP target convention, examples.
 
 # TASK-0004 — Author FIT format documentation (workout + activity)
 

@@ -29,22 +29,22 @@ counters:
   ADR: 3
   CHG:
     last_date: "20260529"
-    last_seq: 4
+    last_seq: 5
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
   TASK: 54
-  TST: 4
+  TST: 5
   WF: 0
 
 focus:
-  task: "[[TASK-0002]]"
+  task: "[[TASK-0029]]"
   feature: "[[FEAT-0004]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "Wave 4 — knowledge registry (specs/ corpus + registry tools for 8 formats). Waves 1-3 done (FEAT-0004 capability tools complete bar TASK-0020/0021 external assets). VPS deploy held until v1 complete."
+  active_wave: "Wave 5 — rider workflows (FEAT-0005: pacing, anonymisation, migration, roundtrip, adherence, climb). Waves 1-4 done. VPS deploy held until v1 complete."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -255,37 +255,37 @@ items:
       parent: "FEAT-0001"
     TASK-0002:
       title: "Author ZWO format documentation (spec + examples + constraints + glossary + conversion notes)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0002-Author-ZWO-format-documentation-spec-examples-constraints-glossary-conversion-no.md"
       parent: "FEAT-0001"
     TASK-0003:
       title: "Author ERG/MRC format documentation"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0003-Author-ERG-MRC-format-documentation.md"
       parent: "FEAT-0001"
     TASK-0004:
       title: "Author FIT format documentation (workout + activity)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0004-Author-FIT-format-documentation-workout-activity.md"
       parent: "FEAT-0001"
     TASK-0005:
       title: "Author route format documentation (GPX + TCX + KML)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0005-Author-route-format-documentation-GPX-TCX-KML.md"
       parent: "FEAT-0001"
     TASK-0006:
       title: "Author .ytw format documentation"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0006-Author-ytw-format-documentation.md"
       parent: "FEAT-0001"
     TASK-0007:
       title: "Author locale string-bundle format documentation (Android XML / iOS strings / .po / flat JSON)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0007-Author-locale-string-bundle-format-documentation-Android-XML-iOS-strings-po-flat.md"
       parent: "FEAT-0001"
@@ -458,6 +458,12 @@ items:
       kind: automated
       path: "docs/features/capability-tools/plan/tests/TST-0004-Analytics-Detection-Batch.md"
       verifies: ["[[TASK-0022]]","[[TASK-0026]]","[[TASK-0027]]","[[TASK-0028]]","[[TASK-0036]]","[[TASK-0037]]","[[TASK-0046]]","[[TASK-0047]]","[[TASK-0051]]","[[TASK-0052]]","[[TASK-0053]]","[[TASK-0054]]"]
+    TST-0005:
+      title: "Knowledge registry corpus + validators suite"
+      status: passing
+      kind: automated
+      path: "docs/features/format-knowledge-registry/plan/tests/TST-0005-Registry-And-Validators.md"
+      verifies: ["[[TASK-0002]]","[[TASK-0003]]","[[TASK-0004]]","[[TASK-0005]]","[[TASK-0006]]","[[TASK-0007]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -481,9 +487,9 @@ metrics:
     features_total: 6
     features_done: 0
     tasks_total: 54
-    tasks_done: 22
-    tests_total: 4
-    tests_passing: 4
+    tasks_done: 28
+    tests_total: 5
+    tests_passing: 5
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

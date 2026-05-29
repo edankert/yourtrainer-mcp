@@ -1,0 +1,28 @@
+{
+  "key": "ytw",
+  "name": "Your Trainer Workout (.ytw)",
+  "kind": "workout",
+  "binary": false,
+  "extensions": [".ytw"],
+  "version": "1",
+  "spec": "The Your Trainer Workout format is a JSON document. Top level: {\"format\": \"ytw\", \"version\": 1, \"name\": str, \"description\": str, \"author\": str, \"steps\": [..]}. Power is a fraction of FTP (1.0 == FTP), matching ZWO/MRC semantics, so the file is FTP-independent. Each step has a \"kind\": warmup, cooldown, ramp (duration_s, power_low, power_high), steady (duration_s, power), interval (repeat, on_duration_s, off_duration_s, on_power, off_power), or freeride (duration_s). Any step may carry an optional integer \"cadence\" (rpm). .ytw imports directly into Your Trainer; it is the canonical authoring target of the build/decompose tools and round-trips losslessly with ZWO.",
+  "examples": [
+    {"title": "Steady endurance", "content": "{\n  \"format\": \"ytw\", \"version\": 1, \"name\": \"20 min Z2\",\n  \"steps\": [{\"kind\": \"steady\", \"duration_s\": 1200, \"power\": 0.65}]\n}"},
+    {"title": "Warmup + intervals + cooldown", "content": "{\n  \"format\": \"ytw\", \"version\": 1, \"name\": \"5x1 VO2\",\n  \"steps\": [\n    {\"kind\": \"warmup\", \"duration_s\": 600, \"power_low\": 0.4, \"power_high\": 0.75},\n    {\"kind\": \"interval\", \"repeat\": 5, \"on_duration_s\": 60, \"off_duration_s\": 60, \"on_power\": 1.2, \"off_power\": 0.5},\n    {\"kind\": \"cooldown\", \"duration_s\": 300, \"power_low\": 0.6, \"power_high\": 0.4}\n  ]\n}"},
+    {"title": "Step with cadence target", "content": "{\n  \"format\": \"ytw\", \"version\": 1, \"name\": \"Cadence drill\",\n  \"steps\": [{\"kind\": \"steady\", \"duration_s\": 300, \"power\": 0.6, \"cadence\": 100}]\n}"}
+  ],
+  "constraints": [
+    {"app": "your_trainer", "note": "Power values are fractions of FTP; 1.0 == FTP."},
+    {"app": "your_trainer", "note": "format must equal \"ytw\" and version must be a supported integer (currently 1)."},
+    {"app": "your_trainer", "note": "interval steps expand to repeat on/off pairs in document order."}
+  ],
+  "conversion_notes": [
+    {"to": "zwo", "note": "1:1 step mapping to Warmup/Cooldown/Ramp/SteadyState/IntervalsT/FreeRide; power fractions unchanged."},
+    {"to": "mrc", "note": "Multiply power fractions by 100 for %FTP rows; sample ramps/intervals into minute,percent points."},
+    {"to": "fit", "note": "Encode power fractions as FIT %FTP (1000+percent); expand intervals/ramps to discrete time steps."}
+  ],
+  "glossary": [
+    {"term": "kind", "definition": "The step type: warmup/cooldown/ramp/steady/interval/freeride."},
+    {"term": "power", "definition": "Target as a fraction of FTP (1.0 == FTP)."}
+  ]
+}

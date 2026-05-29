@@ -1,0 +1,27 @@
+{
+  "key": "gpx",
+  "name": "GPS Exchange Format (GPX)",
+  "kind": "activity",
+  "binary": false,
+  "extensions": [".gpx"],
+  "version": "GPX 1.1 (Topografix XML schema).",
+  "spec": "GPX is an XML format rooted at <gpx version=\"1.1\"> in the Topografix namespace. Routes use <rte>/<rtept>; recorded tracks use <trk> containing one or more <trkseg>, each a sequence of <trkpt lat=.. lon=..> points. A track point may carry <ele> (metres), <time> (ISO-8601 UTC). Cycling sensor data (power, heart rate, cadence, temperature) is not part of core GPX; it is carried in <extensions>, most commonly the Garmin TrackPointExtension (gpxtpx:hr, gpxtpx:cad) and a power element (<power> or gpxpx:PowerInWatts). Distance is not stored; it is computed from consecutive lat/lon via the haversine formula.",
+  "examples": [
+    {"title": "Bare route point", "content": "<gpx version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\">\n  <trk><trkseg>\n    <trkpt lat=\"52.0\" lon=\"5.0\"><ele>12.0</ele><time>2026-01-01T00:00:00Z</time></trkpt>\n  </trkseg></trk>\n</gpx>"},
+    {"title": "Track point with power extension", "content": "<trkpt lat=\"52.0\" lon=\"5.0\">\n  <ele>12.0</ele>\n  <time>2026-01-01T00:00:01Z</time>\n  <extensions><power>240</power></extensions>\n</trkpt>"},
+    {"title": "Garmin HR/cadence extension", "content": "<trkpt lat=\"52.0\" lon=\"5.0\"><extensions>\n  <gpxtpx:TrackPointExtension><gpxtpx:hr>148</gpxtpx:hr><gpxtpx:cad>90</gpxtpx:cad></gpxtpx:TrackPointExtension>\n</extensions></trkpt>"}
+  ],
+  "constraints": [
+    {"app": "generic", "note": "Power/HR/cadence live in <extensions>; namespaces vary by exporter, so match on local tag names."},
+    {"app": "generic", "note": "No stored distance; compute via haversine over lat/lon."},
+    {"app": "generic", "note": "Times are ISO-8601, usually UTC with a trailing Z."}
+  ],
+  "conversion_notes": [
+    {"to": "tcx", "note": "Map trkpt -> Trackpoint; lat/lon -> Position; ele -> AltitudeMeters; extension power -> TPX Watts."},
+    {"to": "fit", "note": "Convert lat/lon degrees to semicircles; pack power/hr/cadence as record fields."}
+  ],
+  "glossary": [
+    {"term": "trkseg", "definition": "A continuous span of track points; a new segment marks a recording gap."},
+    {"term": "TrackPointExtension", "definition": "Garmin's GPX extension carrying hr/cad/atemp per point."}
+  ]
+}

@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0003
 aliases: ["TASK-0003"]
 title: "Author ERG/MRC format documentation"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0001]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-05, [[TST-0005]]).** specs/erg.json + specs/mrc.json: absolute-watt and %FTP course formats with examples, constraints, conversion notes, glossary.
 
 # TASK-0003 — Author ERG/MRC format documentation
 

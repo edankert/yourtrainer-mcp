@@ -1,0 +1,28 @@
+{
+  "key": "fit",
+  "name": "Flexible and Interoperable Data Transfer (FIT)",
+  "kind": "activity",
+  "binary": true,
+  "extensions": [".fit"],
+  "version": "Garmin FIT protocol 2.x / FIT profile (see Garmin FIT SDK).",
+  "spec": "FIT is a compact little-endian binary container. Layout: a 12- or 14-byte header (header size, protocol version, profile version, data size (uint32), the ASCII '.FIT' signature, and an optional header CRC), followed by a sequence of records, terminated by a 2-byte file CRC over everything preceding. Each record begins with a 1-byte header. Definition messages (bit 6 set) declare a local message type, the global message number, byte order, and a list of fields (field number, size, base type). Subsequent data messages reference a local type and pack field values in the defined order. Common global messages: file_id (0), record (20, per-sample activity data: timestamp, position_lat/long in semicircles, distance, altitude, speed, power, heart_rate, cadence), workout (26) and workout_step (27) for structured workouts, plus session/lap summaries. Many fields are scaled (e.g. distance in cm, altitude as (m+500)*5). Power workout targets use a '%FTP' convention encoded as 1000+percent.",
+  "examples": [
+    {"title": "File header bytes (14-byte, hex)", "content": "0E 20 63 08 <data_size:4 LE> 2E 46 49 54 <hdr_crc:2 LE>  ; '2E 46 49 54' == '.FIT'"},
+    {"title": "Definition record (record message, 4 fields)", "content": "40 00 00 14 00 04  FD 04 86  07 02 84  03 01 02  04 01 02\n; def header 0x40, global 20 (record), 4 fields:\n;   253 timestamp uint32, 7 power uint16, 3 heart_rate uint8, 4 cadence uint8"},
+    {"title": "workout_step power target (% FTP)", "content": "target_type=power(4); custom_target_power_low/high = 1000+percent\n; 95% FTP low, 105% FTP high -> 1095 .. 1105"}
+  ],
+  "constraints": [
+    {"app": "garmin_edge", "note": "Workout step text events longer than ~32 characters can fail to load on some older Edge units."},
+    {"app": "generic", "note": "Timestamps are seconds since the FIT epoch 1989-12-31T00:00:00Z; values below 0x10000000 denote system (relative) time."},
+    {"app": "generic", "note": "Compressed-timestamp headers and developer data fields exist; a minimal reader may not handle them."}
+  ],
+  "conversion_notes": [
+    {"to": "tcx", "note": "Map record fields to Trackpoint children; FIT semicircle lat/long -> degrees via *(180/2^31)."},
+    {"to": "gpx", "note": "Emit trkpt lat/lon/ele/time; carry power/hr/cadence in track-point extensions."}
+  ],
+  "glossary": [
+    {"term": "definition message", "definition": "A record declaring the layout (fields, types, byte order) for a local message type."},
+    {"term": "semicircle", "definition": "FIT's integer angular unit; degrees = semicircles * 180 / 2^31."},
+    {"term": "base type", "definition": "The on-wire encoding of a field value (enum, uint8, uint16, uint32, string, ...)."}
+  ]
+}

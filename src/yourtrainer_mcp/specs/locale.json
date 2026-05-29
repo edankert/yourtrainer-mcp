@@ -1,0 +1,29 @@
+{
+  "key": "locale",
+  "name": "Locale string bundles",
+  "kind": "locale",
+  "binary": false,
+  "extensions": [".xml", ".strings", ".po", ".json"],
+  "version": "Android resources / Apple .strings / GNU gettext .po / flat JSON.",
+  "spec": "A family of key→translated-string formats used for app localisation. Android: res/values-<lang>/strings.xml with <string name=\"key\">value</string> and <plurals>; apostrophes and double-quotes must be escaped (\\' \\\"), and @/?  prefixes are special. Apple .strings: \"key\" = \"value\"; lines, UTF-8/UTF-16, /* comments */. GNU gettext .po: msgid/msgstr pairs with msgctxt and plural forms (msgid_plural, msgstr[n]) governed by a Plural-Forms header. Flat JSON: a single object of {\"key\": \"value\"}, sometimes nested. Common cross-format concerns: placeholder syntax (%1$s / %@ / {name}), plural categories (zero/one/two/few/many/other), and preserving untranslated keys.",
+  "examples": [
+    {"title": "Android strings.xml", "content": "<resources>\n  <string name=\"workout_start\">Start workout</string>\n  <plurals name=\"intervals\">\n    <item quantity=\"one\">%d interval</item>\n    <item quantity=\"other\">%d intervals</item>\n  </plurals>\n</resources>"},
+    {"title": "Apple .strings", "content": "/* Primary action */\n\"workout_start\" = \"Start workout\";\n\"intervals_count\" = \"%d intervals\";"},
+    {"title": "gettext .po", "content": "msgctxt \"button\"\nmsgid \"Start workout\"\nmsgstr \"Entraînement\"\n\nmsgid \"%d interval\"\nmsgid_plural \"%d intervals\"\nmsgstr[0] \"%d intervalle\"\nmsgstr[1] \"%d intervalles\""},
+    {"title": "Flat JSON", "content": "{\n  \"workout_start\": \"Start workout\",\n  \"intervals_other\": \"%d intervals\"\n}"}
+  ],
+  "constraints": [
+    {"app": "android", "note": "Escape ' and \" as \\' and \\\"; a leading @ or ? is treated as a resource reference."},
+    {"app": "ios", "note": ".strings entries end with a semicolon; both key and value are double-quoted."},
+    {"app": "gettext", "note": "Plural handling is driven by the Plural-Forms header; msgstr[n] indices follow it."},
+    {"app": "generic", "note": "Placeholder dialects differ: %1$s (Android), %@ (iOS), {name} (ICU/JSON); preserve them verbatim across conversion."}
+  ],
+  "conversion_notes": [
+    {"to": "json", "note": "Flatten Android <string>/<plurals> or .po entries to key→value; encode plural categories as suffixed keys (key_one/key_other)."},
+    {"to": "po", "note": "Map keys to msgid/msgctxt; expand plural-suffixed keys into msgid_plural + msgstr[n]."}
+  ],
+  "glossary": [
+    {"term": "plurals", "definition": "Category-based forms (zero/one/two/few/many/other) selected by quantity per locale rules."},
+    {"term": "placeholder", "definition": "A substitution token (%1$s, %@, {name}) that must survive translation unchanged."}
+  ]
+}

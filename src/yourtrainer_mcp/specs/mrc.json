@@ -1,0 +1,25 @@
+{
+  "key": "mrc",
+  "name": "MRC (percent-FTP workout)",
+  "kind": "workout",
+  "binary": false,
+  "extensions": [".mrc"],
+  "version": "PerfPRO / TrainerRoad-era plain-text MRC course format.",
+  "spec": "MRC is structurally identical to ERG but the data column is percentage of FTP rather than absolute watts. [COURSE HEADER] carries KEY = VALUE metadata with the legend 'MINUTES PERCENT'. [COURSE DATA] holds 'minutes percent' rows; percent is relative to the rider's FTP set in the trainer software, so one file scales across riders. Linear interpolation between rows; same-minute duplicate rows encode step changes. Because it is FTP-relative, MRC round-trips cleanly with ZWO and .ytw.",
+  "examples": [
+    {"title": "Steady 65% for 20 min", "content": "[COURSE HEADER]\nVERSION = 2\nUNITS = ENGLISH\nDESCRIPTION = Endurance\nMINUTES PERCENT\n[END COURSE HEADER]\n[COURSE DATA]\n0.00\t65\n20.00\t65\n[END COURSE DATA]"},
+    {"title": "2x stepped sweet spot", "content": "[COURSE HEADER]\nVERSION = 2\nMINUTES PERCENT\n[END COURSE HEADER]\n[COURSE DATA]\n0.00\t50\n5.00\t50\n5.00\t90\n25.00\t90\n25.00\t50\n30.00\t50\n[END COURSE DATA]"},
+    {"title": "Ramp 50->120%", "content": "[COURSE HEADER]\nVERSION = 2\nMINUTES PERCENT\n[END COURSE HEADER]\n[COURSE DATA]\n0.00\t50\n20.00\t120\n[END COURSE DATA]"}
+  ],
+  "constraints": [
+    {"app": "generic", "note": "Percent is relative to FTP configured in the player software; the file itself stores no FTP."},
+    {"app": "generic", "note": "Same-minute duplicate rows create instantaneous step transitions."}
+  ],
+  "conversion_notes": [
+    {"to": "erg", "note": "Multiply each percent by FTP/100 to get absolute watts."},
+    {"to": "zwo", "note": "Divide percent by 100 for FTP fractions; group rows into steps (Warmup/SteadyState/Ramp/IntervalsT)."}
+  ],
+  "glossary": [
+    {"term": "PERCENT", "definition": "Target power as a percentage of FTP (100 == FTP)."}
+  ]
+}

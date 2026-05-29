@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0002
 aliases: ["TASK-0002"]
 title: "Author ZWO format documentation (spec + examples + constraints + glossary + conversion notes)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0001]]"]
 fixes: []
 effort: L
 ---
+
+> **Done 2026-05-29 (CHG-20260529-05, [[TST-0005]]).** specs/zwo.json: grammar summary, 3 examples, constraints, conversion notes, glossary; served via get_format_* + validate('zwo').
 
 # TASK-0002 — Author ZWO format documentation (spec + examples + constraints + glossary + conversion notes)
 

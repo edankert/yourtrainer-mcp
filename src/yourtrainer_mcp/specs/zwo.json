@@ -1,0 +1,29 @@
+{
+  "key": "zwo",
+  "name": "Zwift Workout",
+  "kind": "workout",
+  "binary": false,
+  "extensions": [".zwo"],
+  "version": "Community-documented Zwift workout schema (no official public XSD).",
+  "spec": "ZWO is an XML document rooted at <workout_file>. Metadata children: <author>, <name>, <description>, <sportType> (bike|run), optional <tags>. The <workout> element contains ordered step elements executed top to bottom. Step elements: <Warmup>, <Cooldown>, and <Ramp> (Duration, PowerLow, PowerHigh) describe a linear power sweep; <SteadyState> (Duration, Power) holds a constant target; <IntervalsT> (Repeat, OnDuration, OffDuration, OnPower, OffPower) expands to Repeat on/off pairs; <FreeRide> (Duration, optional FlatRoad) leaves power unconstrained. Power is a fraction of FTP (1.0 == FTP); Duration is in seconds. Optional attributes: Cadence / CadenceLow / CadenceHigh (rpm), Pace. Inline <textevent timeoffset=.. message=..> attaches on-screen messages to a step.",
+  "examples": [
+    {"title": "Minimal steady ride", "content": "<workout_file>\n  <name>20 min Z2</name>\n  <sportType>bike</sportType>\n  <workout>\n    <SteadyState Duration=\"1200\" Power=\"0.65\"/>\n  </workout>\n</workout_file>"},
+    {"title": "Warmup + intervals + cooldown", "content": "<workout_file>\n  <name>5x1 VO2</name>\n  <sportType>bike</sportType>\n  <workout>\n    <Warmup Duration=\"600\" PowerLow=\"0.4\" PowerHigh=\"0.75\"/>\n    <IntervalsT Repeat=\"5\" OnDuration=\"60\" OffDuration=\"60\" OnPower=\"1.2\" OffPower=\"0.5\"/>\n    <Cooldown Duration=\"300\" PowerLow=\"0.6\" PowerHigh=\"0.4\"/>\n  </workout>\n</workout_file>"},
+    {"title": "Ramp test with cadence + text", "content": "<workout_file>\n  <name>Ramp Test</name>\n  <sportType>bike</sportType>\n  <workout>\n    <Ramp Duration=\"1500\" PowerLow=\"0.4\" PowerHigh=\"1.5\" Cadence=\"95\">\n      <textevent timeoffset=\"0\" message=\"Hold cadence, ride to failure\"/>\n    </Ramp>\n  </workout>\n</workout_file>"}
+  ],
+  "constraints": [
+    {"app": "zwift", "note": "Power expressed as a fraction of FTP; 1.0 means 100% FTP."},
+    {"app": "zwift", "note": "Steps execute in document order; there is no explicit time axis beyond per-step Duration."},
+    {"app": "generic", "note": "Ramp/Warmup/Cooldown all carry PowerLow/PowerHigh; only the on-screen colour differs."}
+  ],
+  "conversion_notes": [
+    {"to": "erg", "note": "ERG uses absolute watts, so multiply each ZWO power fraction by the rider FTP. Ramps must be sampled into discrete watt points."},
+    {"to": "mrc", "note": "MRC is %FTP like ZWO; multiply fractions by 100. Ramps sampled to %-points."},
+    {"to": "ytw", "note": "Direct structural mapping: Warmup/Cooldown/Ramp/SteadyState/IntervalsT/FreeRide map 1:1 to .ytw step kinds."}
+  ],
+  "glossary": [
+    {"term": "FTP", "definition": "Functional Threshold Power — the reference power (W) that ZWO fractions are relative to."},
+    {"term": "IntervalsT", "definition": "A repeated on/off block; expands to Repeat pairs of (OnDuration@OnPower, OffDuration@OffPower)."},
+    {"term": "textevent", "definition": "An on-screen message attached to a step at a time offset (seconds)."}
+  ]
+}
