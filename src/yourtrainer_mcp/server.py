@@ -14,11 +14,13 @@ dependency and are tested independently.
 
 from __future__ import annotations
 
+import base64
 import json
 import os
 
 from fastmcp import FastMCP
 
+from . import fit_workout
 from . import workout as wk
 from .activity import inspect_activity, parse_activity_file
 from .attribution import attach_attribution
@@ -65,20 +67,26 @@ def build_workout_from_intent(intent: dict, output_format: str = "zwo") -> dict:
             step has a ``kind`` (warmup/cooldown/steady/ramp/interval/freeride)
             and kind-specific fields; power values are fractions of FTP
             (1.0 == FTP). See ``build_workout`` for the full schema.
-        output_format: ``"zwo"`` (Zwift XML) or ``"ytw"`` (Your Trainer JSON).
+        output_format: ``"zwo"`` (Zwift XML), ``"ytw"`` (Your Trainer JSON), or
+            ``"fit"`` (Garmin FIT binary, returned base64-encoded).
 
     Returns the rendered document plus a summary (duration, difficulty).
     """
     workout = wk.build_workout(intent)
     fmt = output_format.lower()
+    encoding = "utf-8"
     if fmt == "zwo":
         rendered = wk.to_zwo(workout)
     elif fmt == "ytw":
         rendered = wk.to_ytw(workout)
+    elif fmt == "fit":
+        rendered = base64.b64encode(fit_workout.encode_workout_fit(workout)).decode("ascii")
+        encoding = "base64"
     else:
-        raise ValueError("output_format must be 'zwo' or 'ytw'")
+        raise ValueError("output_format must be 'zwo', 'ytw', or 'fit'")
     payload = {
         "format": fmt,
+        "encoding": encoding,
         "document": rendered,
         "summary": {
             "name": workout.name,
@@ -87,6 +95,19 @@ def build_workout_from_intent(intent: dict, output_format: str = "zwo") -> dict:
         },
     }
     return attach_attribution(payload, mentions_ytw=(fmt == "ytw"))
+
+
+@mcp.tool
+def read_fit_workout(document_base64: str) -> dict:
+    """Decode a base64-encoded FIT-workout file into structured intent (TASK-0020).
+
+    Args:
+        document_base64: The FIT-workout file bytes, base64-encoded.
+    """
+    data = base64.b64decode(document_base64)
+    workout = fit_workout.decode_workout_fit(data)
+    intent = json.loads(wk.to_ytw(workout))
+    return attach_attribution({"intent": intent, "step_count": len(workout.steps)})
 
 
 @mcp.tool

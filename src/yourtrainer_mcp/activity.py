@@ -134,15 +134,13 @@ def parse_gpx(text: str) -> list[TrackPoint]:
 def parse_fit(path: Path) -> list[TrackPoint]:
     try:
         from fitparse import FitFile
-    except ImportError as exc:  # pragma: no cover - exercised only without extra
-        raise UnsupportedActivityFormat(
-            "FIT support requires the optional dependency. Install with "
-            "`pip install yourtrainer-mcp[fit]`."
-        ) from exc
+    except ImportError:
+        # Fall back to the built-in codec for standard files (no extra needed).
+        return _parse_fit_builtin(path)
 
-    fit = FitFile(str(path))
+    fitfile = FitFile(str(path))
     points: list[TrackPoint] = []
-    for record in fit.get_messages("record"):
+    for record in fitfile.get_messages("record"):
         vals = {d.name: d.value for d in record}
         pt = TrackPoint(
             time=vals.get("timestamp"),
@@ -158,6 +156,29 @@ def parse_fit(path: Path) -> list[TrackPoint]:
             pt.lat = vals["position_lat"] * semicircle
         if vals.get("position_long") is not None:
             pt.lon = vals["position_long"] * semicircle
+        points.append(pt)
+    return points
+
+
+def _parse_fit_builtin(path: Path) -> list[TrackPoint]:
+    """Parse a standard FIT activity using the built-in codec (no extra)."""
+    from datetime import datetime, timedelta, timezone
+
+    from . import fit
+
+    base = datetime(1989, 12, 31, tzinfo=timezone.utc)
+    points: list[TrackPoint] = []
+    for s in fit.decode_activity(path.read_bytes()):
+        pt = TrackPoint(
+            power_w=s.get("power"),
+            heart_rate_bpm=s.get("heart_rate"),
+            cadence_rpm=s.get("cadence"),
+            distance_m=s.get("distance_m"),
+            altitude_m=s.get("altitude_m"),
+            speed_mps=s.get("speed_mps"),
+        )
+        if "timestamp_s" in s:
+            pt.time = base + timedelta(seconds=s["timestamp_s"])
         points.append(pt)
     return points
 

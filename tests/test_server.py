@@ -22,6 +22,7 @@ def test_tools_are_registered():
         "list_supported_formats",
         "inspect_activity_file",
         "build_workout_from_intent",
+        "read_fit_workout",
         "decompose_workout",
         "scale_workout",
         "lint_workout",

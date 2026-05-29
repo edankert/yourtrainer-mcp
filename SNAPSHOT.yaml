@@ -29,22 +29,22 @@ counters:
   ADR: 3
   CHG:
     last_date: "20260529"
-    last_seq: 2
+    last_seq: 3
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
   TASK: 54
-  TST: 2
+  TST: 3
   WF: 0
 
 focus:
-  task: "[[TASK-0020]]"
+  task: "[[TASK-0027]]"
   feature: "[[FEAT-0004]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "Wave 2 — FIT binary (workout write + activity read round-trip). Wave 1 (workout authoring) done. Building full PHASE-001 v1 locally; VPS deploy held until v1 complete."
+  active_wave: "Wave 3 — training-load math (CTL/ATL/TSB, HR-power decoupling, FTP detect, PDC, peak-power tool). Waves 1-2 (authoring + FIT codec) done. VPS deploy held until v1 complete."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -127,17 +127,18 @@ items:
       decides: "[[ADR-0003]]"
     TASK-0020:
       title: "FIT-workout read/write tool (binary, Garmin SDK)"
-      status: backlog
+      status: doing
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0020-FIT-workout-read-write-tool-binary-Garmin-SDK.md"
       parent: "FEAT-0004"
+      note: "Self-contained FIT codec (fit.py/fit_workout.py): encode/decode workout FIT; bytes cross-validated with independent fitparse. Remaining for done: >=10 canonical Garmin/Wahoo/TP sample files + on-device Edge import test."
     TASK-0021:
       title: "FIT-activity inspector + NP/IF/TSS calculation"
       status: doing
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0021-FIT-activity-inspector-NP-IF-TSS-calculation.md"
       parent: "FEAT-0004"
-      note: "NP/IF/TSS engine + TCX/GPX inspector implemented and unit-tested (TST-0001). Remaining for done: FIT binary fixtures + TrainingPeaks reference corpus (TASK-0045), time-in-zone presets."
+      note: "NP/IF/TSS engine + TCX/GPX/FIT inspector unit-tested (TST-0001, TST-0003). FIT-read now covered via built-in codec fixtures. Remaining for done: TrainingPeaks reference corpus (TASK-0045), selectable time-in-zone presets."
     TASK-0022:
       title: "Peak power curve calculator (mean-max 1s, 5s, 30s, 1min, 5min, 20min, 60min)"
       status: backlog
@@ -445,6 +446,12 @@ items:
       kind: automated
       path: "docs/features/capability-tools/plan/tests/TST-0002-Workout-Authoring.md"
       verifies: ["[[TASK-0023]]","[[TASK-0033]]","[[TASK-0035]]","[[TASK-0025]]","[[TASK-0050]]","[[TASK-0024]]"]
+    TST-0003:
+      title: "FIT codec round-trip + FIT-activity read suite"
+      status: passing
+      kind: automated
+      path: "docs/features/capability-tools/plan/tests/TST-0003-FIT-Codec.md"
+      verifies: ["[[TASK-0020]]","[[TASK-0021]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -469,8 +476,8 @@ metrics:
     features_done: 0
     tasks_total: 54
     tasks_done: 10
-    tests_total: 2
-    tests_passing: 2
+    tests_total: 3
+    tests_passing: 3
     tests_failing: 0
     issues_open: 0
     issues_triage: 0
