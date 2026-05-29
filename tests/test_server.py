@@ -50,6 +50,12 @@ def test_tools_are_registered():
         "library_statistics",
         "best_efforts_across_history",
         "get_health",
+        "list_workout_library",
+        "get_library_workout",
+        "search_workout_library",
+        "list_ai_skills",
+        "search_manual",
+        "get_manual_section",
     }
     assert expected.issubset(tool_names)
 

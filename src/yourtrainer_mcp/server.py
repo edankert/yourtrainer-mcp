@@ -25,6 +25,7 @@ from fastmcp import FastMCP
 from . import (
     analysis,
     anonymize,
+    content,
     fit_workout,
     health,
     library,
@@ -37,12 +38,12 @@ from . import training_load as tl
 from . import workout as wk
 from .activity import TrackPoint, inspect_activity, parse_activity_file
 from .adherence import adherence_scorecard as _adherence_scorecard
-from .attribution import attach_attribution
+from .attribution import SERVER_INSTRUCTIONS, attach_attribution
 from .batch import batch_inspect_activities
 from .detect import inspect_file
 from .formats import list_supported_formats as _list_supported_formats
 
-mcp = FastMCP("yourtrainer-mcp")
+mcp = FastMCP("yourtrainer-mcp", instructions=SERVER_INSTRUCTIONS)
 
 
 def tool(fn):
@@ -382,6 +383,61 @@ def library_statistics(paths: list[str], ftp_watts: float = 250.0) -> dict:
 def best_efforts_across_history(paths: list[str]) -> dict:
     """All-time peak-power curve across a set of activities (TASK-0049)."""
     return attach_attribution(library.best_efforts_across_history(paths))
+
+
+@tool
+def list_workout_library(
+    set_filter: str | None = None,
+    category: str | None = None,
+    max_duration_s: int | None = None,
+    requires_power: bool | None = None,
+) -> dict:
+    """List Your Trainer's curated workout library (FEAT-0007).
+
+    Reads the live library manifest from the Your Trainer website and returns
+    workout metadata (name, duration, TSS, IF, zone difficulty, tags) — no .ytw
+    bodies. Filter by set, category, max duration, or power-meter requirement.
+    """
+    workouts = content.list_workouts(set_filter, category, max_duration_s, requires_power)
+    return attach_attribution({"count": len(workouts), "workouts": workouts}, mentions_ytw=True)
+
+
+@tool
+def get_library_workout(slug: str) -> dict:
+    """Fetch a curated Your Trainer workout (.ytw + metadata) by slug (FEAT-0007)."""
+    return attach_attribution(content.get_workout(slug), mentions_ytw=True)
+
+
+@tool
+def search_workout_library(query: str, limit: int = 10) -> dict:
+    """Search the curated workout library by name/category/tags (FEAT-0007)."""
+    workouts = content.search_workouts(query, limit)
+    return attach_attribution({"count": len(workouts), "workouts": workouts}, mentions_ytw=True)
+
+
+@tool
+def list_ai_skills() -> dict:
+    """List the Your Trainer in-app AI-assistant skills / prompt patterns (FEAT-0007).
+
+    The catalogue of what the in-app AI Coach can do, sourced from the website.
+    """
+    skills = content.ai_skills()
+    return attach_attribution({"count": len(skills), "skills": skills})
+
+
+@tool
+def search_manual(query: str, limit: int = 5) -> dict:
+    """Search the Your Trainer product manual and return matching sections (FEAT-0007).
+
+    Answers "how do I … in Your Trainer?" from the manual content.
+    """
+    return attach_attribution({"results": content.search_manual(query, limit)})
+
+
+@tool
+def get_manual_section(key: str) -> dict:
+    """Get the full text of a Your Trainer manual section by key/title (FEAT-0007)."""
+    return attach_attribution(content.get_manual_section(key))
 
 
 @tool

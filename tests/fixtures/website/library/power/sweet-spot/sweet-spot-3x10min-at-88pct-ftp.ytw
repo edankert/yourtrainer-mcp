@@ -1,0 +1,232 @@
+{
+  "programId": "sweet-spot-3x10min-at-88pct-ftp",
+  "programName": "Sweet Spot 3×10min @ 88% FTP",
+  "description": "3 sustained sweet-spot intervals of 10 minutes at 88% of FTP, with 5-minute easy recovery between. Roughly 40 minutes of work plus warmup + cooldown.",
+  "totalDuration": 3600,
+  "workoutType": "POWER",
+  "primaryLocale": "en",
+  "intervals": [
+    {
+      "duration": 600,
+      "intensityZone": "Z2",
+      "label": "Warmup",
+      "intervalType": "WARMUP",
+      "id": "warmup",
+      "targetPowerPercent": 50,
+      "targetPowerEndPercent": 70,
+      "cues": [
+        {
+          "offsetSec": 0,
+          "text": "Easy spin — let the legs wake up gradually."
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "intervals": [
+        {
+          "duration": 600,
+          "intensityZone": "Z3",
+          "label": "Sweet Spot",
+          "intervalType": "INTERVAL",
+          "id": "ss",
+          "targetPowerPercent": 88,
+          "cues": [
+            {
+              "offsetSec": 0,
+              "text": "Sweet-spot pace — sustainable but firm. Lock in."
+            },
+            {
+              "offsetSec": 300,
+              "text": "Halfway — your breathing should be heavy but controlled."
+            },
+            {
+              "offsetSec": 570,
+              "text": "30 seconds left — hold form, don't fade."
+            }
+          ]
+        },
+        {
+          "duration": 300,
+          "intensityZone": "Z1",
+          "label": "Recovery",
+          "intervalType": "INTERVAL",
+          "id": "recovery",
+          "targetPowerPercent": 50
+        }
+      ]
+    },
+    {
+      "duration": 300,
+      "intensityZone": "Z1",
+      "label": "Cooldown",
+      "intervalType": "COOLDOWN",
+      "id": "cooldown",
+      "targetPowerPercent": 50,
+      "targetPowerEndPercent": 40,
+      "cues": [
+        {
+          "offsetSec": 0,
+          "text": "Easy spin to finish — well done."
+        }
+      ]
+    }
+  ],
+  "difficulty": 3,
+  "category": "sweet-spot",
+  "strings": {
+    "en": {
+      "name": "Sweet Spot 3×10min @ 88% FTP",
+      "description": "3 sustained sweet-spot intervals of 10 minutes at 88% of FTP, with 5-minute easy recovery between. Roughly 40 minutes of work plus warmup + cooldown.",
+      "labels": {
+        "warmup": "Warmup",
+        "ss": "Sweet Spot",
+        "recovery": "Recovery",
+        "cooldown": "Cooldown"
+      },
+      "cues": {
+        "warmup:0": "Easy spin — let the legs wake up gradually.",
+        "ss:0": "Sweet-spot pace — sustainable but firm. Lock in.",
+        "ss:1": "Halfway — your breathing should be heavy but controlled.",
+        "ss:2": "30 seconds left — hold form, don't fade.",
+        "cooldown:0": "Easy spin to finish — well done."
+      }
+    },
+    "de": {
+      "name": "Sweet Spot 3×10 min @ 88% FTP",
+      "description": "3 anhaltende Sweet-Spot-Intervalle à 10 Minuten bei 88% FTP, jeweils 5 Minuten lockere Erholung dazwischen. Rund 40 Minuten Arbeit plus Aufwärmen + Abkühlen.",
+      "labels": {
+        "warmup": "Aufwärmen",
+        "ss": "Sweet Spot",
+        "recovery": "Erholung",
+        "cooldown": "Abkühlung"
+      },
+      "cues": {
+        "warmup:0": "Locker drehen — die Beine langsam wach werden lassen.",
+        "ss:0": "Sweet-Spot-Tempo — anhaltend, aber bestimmt. Reinfinden.",
+        "ss:1": "Halbzeit — die Atmung darf schwer sein, aber kontrolliert.",
+        "ss:2": "30 Sekunden noch — Form halten, nicht nachlassen.",
+        "cooldown:0": "Locker drehen zum Ausrollen — gut gemacht."
+      }
+    },
+    "nl": {
+      "name": "Sweet Spot 3×10 min @ 88% FTP",
+      "description": "3 aanhoudende sweet-spot intervallen van 10 minuten op 88% van FTP, met telkens 5 minuten rustig herstel ertussen. Ongeveer 40 minuten werk plus opwarming + afkoeling.",
+      "labels": {
+        "warmup": "Opwarming",
+        "ss": "Sweet Spot",
+        "recovery": "Herstel",
+        "cooldown": "Afkoeling"
+      },
+      "cues": {
+        "warmup:0": "Rustig trappen — laat de benen geleidelijk wakker worden.",
+        "ss:0": "Sweet-spot tempo — vol te houden, maar stevig. Zet je vast.",
+        "ss:1": "Halverwege — je ademhaling mag zwaar zijn, maar onder controle.",
+        "ss:2": "Nog 30 seconden — vorm vasthouden, niet inzakken.",
+        "cooldown:0": "Rustig uittrappen — goed gedaan."
+      }
+    },
+    "fr": {
+      "name": "Sweet Spot 3×10 min à 88 % FTP",
+      "description": "3 intervalles sweet-spot soutenus de 10 minutes à 88 % de la FTP, avec 5 minutes de récupération facile entre chacun. Environ 40 minutes de travail plus échauffement + récupération.",
+      "labels": {
+        "warmup": "Échauffement",
+        "ss": "Sweet Spot",
+        "recovery": "Récupération",
+        "cooldown": "Récupération"
+      },
+      "cues": {
+        "warmup:0": "Pédale léger — laisse les jambes se réveiller doucement.",
+        "ss:0": "Allure sweet-spot — tenable mais ferme. Verrouille.",
+        "ss:1": "Mi-parcours — ta respiration peut être lourde mais contrôlée.",
+        "ss:2": "Plus que 30 secondes — tiens la forme, ne lâche pas.",
+        "cooldown:0": "Pédale léger pour finir — bien joué."
+      }
+    },
+    "it": {
+      "name": "Sweet Spot 3×10 min al 88% FTP",
+      "description": "3 intervalli sweet-spot continui da 10 minuti al 88% di FTP, con 5 minuti di recupero leggero tra uno e l'altro. Circa 40 minuti di lavoro più riscaldamento + defaticamento.",
+      "labels": {
+        "warmup": "Riscaldamento",
+        "ss": "Sweet Spot",
+        "recovery": "Recupero",
+        "cooldown": "Defaticamento"
+      },
+      "cues": {
+        "warmup:0": "Pedalata leggera — fai svegliare le gambe gradualmente.",
+        "ss:0": "Ritmo sweet-spot — sostenibile ma deciso. Mettiti in posizione.",
+        "ss:1": "Metà — il respiro può essere pesante ma controllato.",
+        "ss:2": "30 secondi alla fine — tieni la posizione, non mollare.",
+        "cooldown:0": "Pedalata leggera per chiudere — ben fatto."
+      }
+    },
+    "es": {
+      "name": "Sweet Spot 3×10 min al 88% FTP",
+      "description": "3 intervalos sweet-spot sostenidos de 10 minutos al 88% de la FTP, con 5 minutos de recuperación suave entre cada uno. Aproximadamente 40 minutos de trabajo más calentamiento + vuelta a la calma.",
+      "labels": {
+        "warmup": "Calentamiento",
+        "ss": "Sweet Spot",
+        "recovery": "Recuperación",
+        "cooldown": "Vuelta a la calma"
+      },
+      "cues": {
+        "warmup:0": "Pedalea suave — deja que las piernas se despierten poco a poco.",
+        "ss:0": "Ritmo sweet-spot — sostenible pero firme. Métete en el esfuerzo.",
+        "ss:1": "A mitad — tu respiración puede ser pesada pero controlada.",
+        "ss:2": "30 segundos para acabar — mantén la forma, no aflojes.",
+        "cooldown:0": "Pedalea suave para terminar — buen trabajo."
+      }
+    },
+    "pt-BR": {
+      "name": "Sweet Spot 3×10 min a 88% FTP",
+      "description": "3 intervalos sweet-spot sustentados de 10 minutos a 88% da FTP, com 5 minutos de recuperação leve entre eles. Cerca de 40 minutos de trabalho mais aquecimento + desaquecimento.",
+      "labels": {
+        "warmup": "Aquecimento",
+        "ss": "Sweet Spot",
+        "recovery": "Recuperação",
+        "cooldown": "Desaquecimento"
+      },
+      "cues": {
+        "warmup:0": "Pedalada leve — deixe as pernas acordarem aos poucos.",
+        "ss:0": "Ritmo sweet-spot — sustentável mas firme. Entre no esforço.",
+        "ss:1": "Na metade — sua respiração pode estar pesada mas controlada.",
+        "ss:2": "Faltam 30 segundos — segure a forma, não afrouxe.",
+        "cooldown:0": "Pedalada leve pra finalizar — muito bem."
+      }
+    },
+    "ja": {
+      "name": "スウィートスポット 3×10分 @ 88% FTP",
+      "description": "88% FTPで10分間のスウィートスポット・インターバルを3本、それぞれの間に5分の軽いリカバリー。実働約40分、ウォームアップとクールダウンを加えた構成。",
+      "labels": {
+        "warmup": "ウォームアップ",
+        "ss": "スウィートスポット",
+        "recovery": "リカバリー",
+        "cooldown": "クールダウン"
+      },
+      "cues": {
+        "warmup:0": "軽く回す — 脚をゆっくり起こしていこう。",
+        "ss:0": "スウィートスポットのペース — 続けられるが強め。集中。",
+        "ss:1": "折り返し — 呼吸は重くてもコントロールを保とう。",
+        "ss:2": "残り30秒 — フォームを保って、緩めない。",
+        "cooldown:0": "軽く回してフィニッシュ — お疲れさま。"
+      }
+    },
+    "zh-TW": {
+      "name": "甜蜜點 3×10分鐘 @ 88% FTP",
+      "description": "3組10分鐘的持續甜蜜點間歇,功率為FTP的88%,組間5分鐘輕鬆恢復。約40分鐘工作時間,加上熱身與緩和。",
+      "labels": {
+        "warmup": "熱身",
+        "ss": "甜蜜點",
+        "recovery": "恢復",
+        "cooldown": "緩和"
+      },
+      "cues": {
+        "warmup:0": "輕鬆踩踏 — 讓雙腿慢慢醒過來。",
+        "ss:0": "甜蜜點配速 — 可持續但堅定。專注。",
+        "ss:1": "過半 — 呼吸沉重但仍可控制。",
+        "ss:2": "剩30秒 — 維持姿勢,別鬆懈。",
+        "cooldown:0": "輕鬆收尾 — 做得好。"
+      }
+    }
+  }
+}

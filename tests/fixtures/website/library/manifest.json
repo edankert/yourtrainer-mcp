@@ -1,0 +1,2953 @@
+{
+  "schema_version": 1,
+  "generated_at": "2025-05-28T00:00:00Z",
+  "generator": "your-trainer/tools/scripts/generate_workout_library.py@v1",
+  "packs": [
+    {
+      "pack_id": "sweet-spot",
+      "name": "Sweet Spot",
+      "description": "26 sweet-spot sessions across classic intervals, sustained stacks, and over-unders. 51 to 103 minutes each; about 33 hours of riding in total. Builds sustainable aerobic strength and lactate buffering. Cues, labels, names and descriptions translated across all 9 Tier-1 locales.",
+      "version": "1.0.2",
+      "set": "power",
+      "category": "sweet-spot",
+      "file_path": "packs/sweet-spot/v1.0.2.ytwpack",
+      "content_hash": "sha256:9432a3a76015158dc71ec63422ca1a1b7b00debba5e63f0a077f395327b631e5",
+      "workout_count": 26,
+      "total_bytes": 91549,
+      "total_ride_time_seconds": 119340,
+      "experience_level": "intermediate",
+      "hrm_required": false,
+      "icon_url": "https://www.your-applications.com/your-trainer/packs/sweet-spot/icon.svg",
+      "format": "ytwpack",
+      "zwo_bundle_file_path": "packs/sweet-spot/v1.0.2-zwo.zip",
+      "zwo_bundle_total_bytes": 20758
+    }
+  ],
+  "workouts": [
+    {
+      "slug": "sweet-spot-3x10min-at-88pct-ftp",
+      "name": "Sweet Spot 3×10min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 3600,
+      "intensity_summary": "3x10min @ 88% FTP",
+      "tss": 58.4,
+      "intensity_factor": 0.764,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.333,
+        "z2": 0.0,
+        "z3": 0.667,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-3x10min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-3x10min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-3x10min-at-90pct-ftp",
+      "name": "Sweet Spot 3×10min @ 90% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 3600,
+      "intensity_summary": "3x10min @ 90% FTP",
+      "tss": 60.7,
+      "intensity_factor": 0.779,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.333,
+        "z2": 0.0,
+        "z3": 0.667,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-3x10min-at-90pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-3x10min-at-90pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-3x15min-at-88pct-ftp",
+      "name": "Sweet Spot 3×15min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 4500,
+      "intensity_summary": "3x15min @ 88% FTP",
+      "tss": 78.3,
+      "intensity_factor": 0.791,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.25,
+        "z2": 0.0,
+        "z3": 0.75,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-3x15min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-3x15min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-3x15min-at-90pct-ftp",
+      "name": "Sweet Spot 3×15min @ 90% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 4500,
+      "intensity_summary": "3x15min @ 90% FTP",
+      "tss": 81.6,
+      "intensity_factor": 0.808,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.25,
+        "z2": 0.0,
+        "z3": 0.75,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-3x15min-at-90pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-3x15min-at-90pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-3x20min-at-88pct-ftp",
+      "name": "Sweet Spot 3×20min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 5400,
+      "intensity_summary": "3x20min @ 88% FTP",
+      "tss": 98.0,
+      "intensity_factor": 0.808,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.2,
+        "z2": 0.0,
+        "z3": 0.8,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-3x20min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 1200,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 1200,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 1200,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-3x20min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-3x20min-at-90pct-ftp",
+      "name": "Sweet Spot 3×20min @ 90% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 5400,
+      "intensity_summary": "3x20min @ 90% FTP",
+      "tss": 102.2,
+      "intensity_factor": 0.826,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.2,
+        "z2": 0.0,
+        "z3": 0.8,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-3x20min-at-90pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 1200,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 1200,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 1200,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-3x20min-at-90pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-4x10min-at-88pct-ftp",
+      "name": "Sweet Spot 4×10min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 4500,
+      "intensity_summary": "4x10min @ 88% FTP",
+      "tss": 74.6,
+      "intensity_factor": 0.773,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.333,
+        "z2": 0.0,
+        "z3": 0.667,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-4x10min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-4x10min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-4x10min-at-90pct-ftp",
+      "name": "Sweet Spot 4×10min @ 90% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 4500,
+      "intensity_summary": "4x10min @ 90% FTP",
+      "tss": 77.7,
+      "intensity_factor": 0.789,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.333,
+        "z2": 0.0,
+        "z3": 0.667,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-4x10min-at-90pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-4x10min-at-90pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-4x15min-at-88pct-ftp",
+      "name": "Sweet Spot 4×15min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 5700,
+      "intensity_summary": "4x15min @ 88% FTP",
+      "tss": 101.1,
+      "intensity_factor": 0.799,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.25,
+        "z2": 0.0,
+        "z3": 0.75,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-4x15min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-4x15min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-4x15min-at-90pct-ftp",
+      "name": "Sweet Spot 4×15min @ 90% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 5700,
+      "intensity_summary": "4x15min @ 90% FTP",
+      "tss": 105.4,
+      "intensity_factor": 0.816,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.25,
+        "z2": 0.0,
+        "z3": 0.75,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-4x15min-at-90pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 900,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-4x15min-at-90pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-5x10min-at-88pct-ftp",
+      "name": "Sweet Spot 5×10min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 5400,
+      "intensity_summary": "5x10min @ 88% FTP",
+      "tss": 90.9,
+      "intensity_factor": 0.778,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.333,
+        "z2": 0.0,
+        "z3": 0.667,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-5x10min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-5x10min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-5x10min-at-90pct-ftp",
+      "name": "Sweet Spot 5×10min @ 90% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 5400,
+      "intensity_summary": "5x10min @ 90% FTP",
+      "tss": 94.7,
+      "intensity_factor": 0.795,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.333,
+        "z2": 0.0,
+        "z3": 0.667,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-5x10min-at-90pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 600,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-5x10min-at-90pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-5x12min-at-90pct-ftp",
+      "name": "Sweet Spot 5×12min @ 90% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 6000,
+      "intensity_summary": "5x12min @ 90% FTP",
+      "tss": 108.6,
+      "intensity_factor": 0.807,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.294,
+        "z2": 0.0,
+        "z3": 0.706,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-5x12min-at-90pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 600,
+          "z": "Z2",
+          "p": 50,
+          "e": 70,
+          "t": "WARMUP"
+        },
+        {
+          "d": 720,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 720,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 720,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 720,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 720,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-5x12min-at-90pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-over-unders-2x5-2minat88-1minat100",
+      "name": "Sweet Spot Over-Unders 2×5 (2min@88/1min@100)",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 3120,
+      "intensity_summary": "5x1min @ 100% FTP, 1x5min @ 50% FTP",
+      "tss": 59.5,
+      "intensity_factor": 0.829,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.143,
+        "z2": 0.0,
+        "z3": 0.571,
+        "z4": 0.286,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "lactate-buffering"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-over-unders-2x5-2minat88-1minat100.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 78,
+          "t": "WARMUP"
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-over-unders-2x5-2minat88-1minat100.zwo"
+    },
+    {
+      "slug": "sweet-spot-over-unders-2x6-2minat88-1minat100",
+      "name": "Sweet Spot Over-Unders 2×6 (2min@88/1min@100)",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 3480,
+      "intensity_summary": "6x1min @ 100% FTP, 1x5min @ 50% FTP",
+      "tss": 68.3,
+      "intensity_factor": 0.84,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.122,
+        "z2": 0.0,
+        "z3": 0.585,
+        "z4": 0.293,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "lactate-buffering"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-over-unders-2x6-2minat88-1minat100.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 78,
+          "t": "WARMUP"
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-over-unders-2x6-2minat88-1minat100.zwo"
+    },
+    {
+      "slug": "sweet-spot-over-unders-3x3-2minat90-1minat105",
+      "name": "Sweet Spot Over-Unders 3×3 (2min@90/1min@105)",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 3240,
+      "intensity_summary": "3x1min @ 105% FTP, 2x5min @ 50% FTP",
+      "tss": 62.0,
+      "intensity_factor": 0.83,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.27,
+        "z2": 0.0,
+        "z3": 0.486,
+        "z4": 0.243,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "lactate-buffering"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-over-unders-3x3-2minat90-1minat105.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 78,
+          "t": "WARMUP"
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-over-unders-3x3-2minat90-1minat105.zwo"
+    },
+    {
+      "slug": "sweet-spot-over-unders-3x4-2minat88-1minat100",
+      "name": "Sweet Spot Over-Unders 3×4 (2min@88/1min@100)",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 3780,
+      "intensity_summary": "4x1min @ 100% FTP, 2x5min @ 50% FTP",
+      "tss": 71.5,
+      "intensity_factor": 0.825,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.217,
+        "z2": 0.0,
+        "z3": 0.522,
+        "z4": 0.261,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "lactate-buffering"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-over-unders-3x4-2minat88-1minat100.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 78,
+          "t": "WARMUP"
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 120,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 60,
+          "z": "Z4",
+          "p": 100
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-over-unders-3x4-2minat88-1minat100.zwo"
+    },
+    {
+      "slug": "sweet-spot-over-unders-3x4-90sat90-30sat105",
+      "name": "Sweet Spot Over-Unders 3×4 (90s@90/30s@105)",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 3060,
+      "intensity_summary": "4x0min @ 105% FTP, 2x5min @ 50% FTP",
+      "tss": 55.8,
+      "intensity_factor": 0.81,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.294,
+        "z2": 0.0,
+        "z3": 0.529,
+        "z4": 0.176,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "lactate-buffering"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-over-unders-3x4-90sat90-30sat105.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 78,
+          "t": "WARMUP"
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-over-unders-3x4-90sat90-30sat105.zwo"
+    },
+    {
+      "slug": "sweet-spot-over-unders-3x5-90sat90-30sat105",
+      "name": "Sweet Spot Over-Unders 3×5 (90s@90/30s@105)",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 3420,
+      "intensity_summary": "5x0min @ 105% FTP, 2x5min @ 50% FTP",
+      "tss": 65.0,
+      "intensity_factor": 0.827,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.25,
+        "z2": 0.0,
+        "z3": 0.562,
+        "z4": 0.188,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "lactate-buffering"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-over-unders-3x5-90sat90-30sat105.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 78,
+          "t": "WARMUP"
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 90,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 30,
+          "z": "Z4",
+          "p": 105
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-over-unders-3x5-90sat90-30sat105.zwo"
+    },
+    {
+      "slug": "sweet-spot-stack-2x25min-at-88pct-ftp",
+      "name": "Sweet Spot Stack 2×25min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 4380,
+      "intensity_summary": "2x25min @ 88% FTP",
+      "tss": 80.8,
+      "intensity_factor": 0.815,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.107,
+        "z2": 0.0,
+        "z3": 0.893,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "time-at-tempo"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-stack-2x25min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 72,
+          "t": "WARMUP"
+        },
+        {
+          "d": 1500,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 1500,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-stack-2x25min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-stack-2x30min-at-88pct-ftp",
+      "name": "Sweet Spot Stack 2×30min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 4980,
+      "intensity_summary": "2x30min @ 88% FTP",
+      "tss": 93.9,
+      "intensity_factor": 0.824,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.091,
+        "z2": 0.0,
+        "z3": 0.909,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "time-at-tempo"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-stack-2x30min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 72,
+          "t": "WARMUP"
+        },
+        {
+          "d": 1800,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 1800,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-stack-2x30min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-stack-2x30min-at-90pct-ftp",
+      "name": "Sweet Spot Stack 2×30min @ 90% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 4980,
+      "intensity_summary": "2x30min @ 90% FTP",
+      "tss": 97.9,
+      "intensity_factor": 0.841,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.091,
+        "z2": 0.0,
+        "z3": 0.909,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "time-at-tempo"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-stack-2x30min-at-90pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 72,
+          "t": "WARMUP"
+        },
+        {
+          "d": 1800,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 1800,
+          "z": "Z3",
+          "p": 90
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-stack-2x30min-at-90pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-stack-2x35min-at-88pct-ftp",
+      "name": "Sweet Spot Stack 2×35min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 5580,
+      "intensity_summary": "2x35min @ 88% FTP",
+      "tss": 106.9,
+      "intensity_factor": 0.83,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.079,
+        "z2": 0.0,
+        "z3": 0.921,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "time-at-tempo"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-stack-2x35min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 72,
+          "t": "WARMUP"
+        },
+        {
+          "d": 2100,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 2100,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-stack-2x35min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-stack-2x40min-at-88pct-ftp",
+      "name": "Sweet Spot Stack 2×40min @ 88% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 6180,
+      "intensity_summary": "2x40min @ 88% FTP",
+      "tss": 119.9,
+      "intensity_factor": 0.836,
+      "difficulty_score": {
+        "overall": 5,
+        "z1": 0.07,
+        "z2": 0.0,
+        "z3": 0.93,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "time-at-tempo"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-stack-2x40min-at-88pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 720,
+          "z": "Z2",
+          "p": 50,
+          "e": 72,
+          "t": "WARMUP"
+        },
+        {
+          "d": 2400,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 2400,
+          "z": "Z3",
+          "p": 88
+        },
+        {
+          "d": 180,
+          "z": "Z1",
+          "p": 50
+        },
+        {
+          "d": 300,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-stack-2x40min-at-88pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-sustained-45min-at-87pct-ftp",
+      "name": "Sweet Spot Sustained 45min @ 87% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 4020,
+      "intensity_summary": "45min @ 87% FTP",
+      "tss": 72.6,
+      "intensity_factor": 0.807,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.0,
+        "z2": 0.0,
+        "z3": 1.0,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "time-at-tempo",
+        "mental-toughness"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-sustained-45min-at-87pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 900,
+          "z": "Z2",
+          "p": 50,
+          "e": 75,
+          "t": "WARMUP"
+        },
+        {
+          "d": 2700,
+          "z": "Z3",
+          "p": 87
+        },
+        {
+          "d": 420,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-sustained-45min-at-87pct-ftp.zwo"
+    },
+    {
+      "slug": "sweet-spot-sustained-60min-at-85pct-ftp",
+      "name": "Sweet Spot Sustained 60min @ 85% FTP",
+      "set": "power",
+      "category": "sweet-spot",
+      "duration_seconds": 4920,
+      "intensity_summary": "60min @ 85% FTP",
+      "tss": 87.9,
+      "intensity_factor": 0.802,
+      "difficulty_score": {
+        "overall": 4,
+        "z1": 0.0,
+        "z2": 0.0,
+        "z3": 1.0,
+        "z4": 0.0,
+        "z5": 0.0
+      },
+      "discipline_tags": [
+        "road",
+        "tt",
+        "indoor"
+      ],
+      "physiology_focus": [
+        "aerobic-endurance",
+        "fractional-utilization",
+        "time-at-tempo",
+        "mental-toughness"
+      ],
+      "requires_power_meter": true,
+      "version": 1,
+      "launch_slice": true,
+      "file_path": "library/power/sweet-spot/sweet-spot-sustained-60min-at-85pct-ftp.ytw",
+      "sparkline": [
+        {
+          "d": 900,
+          "z": "Z2",
+          "p": 50,
+          "e": 75,
+          "t": "WARMUP"
+        },
+        {
+          "d": 3600,
+          "z": "Z3",
+          "p": 85
+        },
+        {
+          "d": 420,
+          "z": "Z1",
+          "p": 50,
+          "e": 40,
+          "t": "COOLDOWN"
+        }
+      ],
+      "cadence_focus": "standard",
+      "locale_variants": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "nl",
+        "pt-BR",
+        "zh-TW"
+      ],
+      "zwo_path": "library/power/sweet-spot/sweet-spot-sustained-60min-at-85pct-ftp.zwo"
+    }
+  ]
+}
