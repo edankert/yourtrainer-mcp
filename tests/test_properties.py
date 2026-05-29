@@ -45,10 +45,14 @@ def _intent(draw):
 # ---- power-math invariants ----
 
 @given(st.lists(st.floats(min_value=0, max_value=2000, allow_nan=False), min_size=1, max_size=500))
-def test_np_never_below_average(power):
-    # NP is a 4th-power mean of a smoothed series; it can only meet or exceed
-    # the arithmetic mean.
-    assert pw.normalized_power(power) >= pw.average(power) - 1e-6
+def test_np_is_quartic_mean_of_rolling(power):
+    # The genuine invariant: NP is the 4th-power (quartic) mean of the 30 s
+    # rolling averages, so by the power-mean inequality it is >= their
+    # arithmetic mean. (NP >= mean(raw power) is only a heuristic — it can fail
+    # via window edge effects, e.g. a spike in the first 29 s; Hypothesis found
+    # exactly that, which is why we assert against the rolling-average mean.)
+    rolling = pw.rolling_average(power, 30)
+    assert pw.normalized_power(power) >= pw.average(rolling) - 1e-6
 
 
 @given(st.floats(min_value=1, max_value=600), st.integers(min_value=1, max_value=600))
