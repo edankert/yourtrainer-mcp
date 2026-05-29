@@ -29,14 +29,14 @@ counters:
   ADR: 6
   CHG:
     last_date: "20260529"
-    last_seq: 15
+    last_seq: 16
   FEAT: 7
   ISS: 1
   REQ: 0
   REL: 0
   RISK: 4
-  TASK: 63
-  TST: 12
+  TASK: 64
+  TST: 13
   WF: 0
 
 focus:
@@ -44,7 +44,7 @@ focus:
   feature: "[[FEAT-0002]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "TASK-0063/ISS-0001 done: workout model + .ytw writer/reader realigned to the canonical Your Trainer schema (verified against workout-schema.html: separate workoutType/variant, nested repeat groups, exact field names). build input = workout-intent shape; 192 tests."
+  active_wave: "TASK-0064: verified + enforced the strict-statelessness/privacy invariant (no rider data retained). Audit clean; added enforcing test suite + docs/PRIVACY.md + content-cache hardening. Only cross-call state is aggregate health counters + a public-content cache."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -205,6 +205,12 @@ items:
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0063-Realign-ytw-schema.md"
       parent: "FEAT-0004"
+    TASK-0064:
+      title: "Verify + enforce strict-statelessness (no rider data retained)"
+      status: done
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0064-Verify-statelessness.md"
+      parent: "FEAT-0002"
     TASK-0025:
       title: "Workout structure linter (domain-aware static analysis)"
       status: done
@@ -578,6 +584,12 @@ items:
       kind: automated
       path: "docs/features/yourtrainer-content/plan/tests/TST-0012-Content-Integration.md"
       verifies: ["[[TASK-0059]]","[[TASK-0060]]","[[TASK-0061]]","[[TASK-0062]]"]
+    TST-0013:
+      title: "Statelessness / privacy invariant suite (no rider data retained)"
+      status: passing
+      kind: automated
+      path: "docs/features/mcp-hosting/plan/tests/TST-0013-Statelessness.md"
+      verifies: ["[[TASK-0064]]","[[TASK-0017]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -615,10 +627,10 @@ metrics:
   counts:
     features_total: 7
     features_done: 5
-    tasks_total: 63
-    tasks_done: 59
-    tests_total: 12
-    tests_passing: 12
+    tasks_total: 64
+    tasks_done: 60
+    tests_total: 13
+    tests_passing: 13
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

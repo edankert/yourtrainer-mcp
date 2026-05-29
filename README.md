@@ -40,6 +40,8 @@ The operations LLMs can't reliably do alone:
 - Operational health metrics aggregate only.
 - No OAuth-mediated integrations (Strava pull, Garmin Connect, etc.). Users export their files; the MCP processes them.
 
+The no-rider-data guarantee is documented in [`docs/PRIVACY.md`](docs/PRIVACY.md) and enforced by `tests/test_statelessness.py`.
+
 ## Status
 **Alpha (v0.1.0)** — PHASE-001 v1 functionally complete (not yet deployed). The
 FastMCP server exposes **31 tools** across four layers; 118 tests, CI green.

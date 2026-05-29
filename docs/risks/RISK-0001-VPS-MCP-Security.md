@@ -43,3 +43,6 @@ The likelihood of compromise is low if standard hosting hygiene is applied. The 
 
 ## Notes
 The combination of *self-hosted* + *trusted-output* + *public* is the high-impact axis. Mitigations bring the residual risk to acceptable but not zero. Re-evaluate after the first 30 days of operation; consider promoting to a managed host if Edwin's ops bandwidth becomes a bottleneck.
+
+## Statelessness mitigation (2026-05-29, TASK-0064)
+Verified + enforced that no rider/user content is retained: user input is processed in memory and discarded; the only cross-call state is aggregate health counters and a public-content cache. Enforced by [[TST-0013]]; documented in `docs/PRIVACY.md`. Reduces the data-exposure surface of a VPS compromise (there is no rider data at rest to exfiltrate).

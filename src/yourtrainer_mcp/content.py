@@ -23,8 +23,13 @@ from html.parser import HTMLParser
 
 DEFAULT_BASE_URL = "https://www.your-applications.com/your-trainer"
 CACHE_TTL_S = 300.0
+_CACHE_MAX_ENTRIES = 256  # bound the (public-content-only) cache
 
 _base_url = DEFAULT_BASE_URL
+# Privacy invariant: this cache holds ONLY public Your Trainer website content
+# fetched by fixed/manifest-derived paths (see fetch_text). No rider/user data
+# ever passes through this module — user content (activity files, uploaded
+# documents) is handled elsewhere and never reaches fetch_text.
 _cache: dict[str, tuple[float, str]] = {}
 
 
@@ -62,6 +67,8 @@ def fetch_text(path: str) -> str:
         return hit[1]
     url = f"{_base_url}/{path.lstrip('/')}"
     text = _fetcher(url)
+    if len(_cache) >= _CACHE_MAX_ENTRIES:
+        _cache.clear()  # bound memory; all entries are public content, so this is safe
     _cache[path] = (now, text)
     return text
 
