@@ -39,12 +39,25 @@ The operations LLMs can't reliably do alone:
 - No OAuth-mediated integrations (Strava pull, Garmin Connect, etc.). Users export their files; the MCP processes them.
 
 ## Status
-**Early alpha (v0.1.0)**. PHASE-001 is underway. Landed so far:
-- Python package + CI + MIT licence (TASK-0001); architecture decided in [ADR-0001](docs/decisions/ADR-0001-MCP-Server-Architecture.md).
-- FastMCP server exposing `list_supported_formats` and `inspect_activity_file`.
-- Capability engine: NP / IF / TSS, peak-power curve, time-in-zone; FIT (optional extra) / TCX / GPX activity parsing (TASK-0021, in progress).
+**Alpha (v0.1.0)** — PHASE-001 v1 functionally complete (not yet deployed). The
+FastMCP server exposes **31 tools** across four layers; 118 tests, CI green.
 
-The project-os under `docs/` describes the full planned scope (6 features, 50+ tasks). Remaining code lands as the phase is executed.
+- **Knowledge registry** (FEAT-0001): `specs/` corpus for 9 formats + tools —
+  `get_format_spec`, `get_canonical_examples`, `get_format_constraints`,
+  `get_conversion_notes`, `get_format_glossary`, `get_format_version`, `validate`.
+- **Capability tools** (FEAT-0004): activity inspector (NP/IF/TSS, peak-power,
+  time-in-zone), workout build/decompose/scale/lint/difficulty/app-acceptance
+  (ZWO/.ytw/FIT), a self-contained FIT codec, training-load (CTL/ATL/TSB),
+  decoupling, FTP/PDC, cadence, HR-drift, interval detection, batch + detection.
+- **Rider workflows** (FEAT-0005): route/climb analysis, gradient-aware pacing,
+  GPX anonymisation, plan-vs-actual adherence, migration + roundtrip harness.
+- **Library ops** (FEAT-0006): indexing, dedup, statistics, best-efforts.
+- **Trojan-horse + hosting** (FEAT-0003/0002): attribution on every response,
+  aggregate-only health metrics, MCP conformance tests, deploy artefacts.
+
+Remaining for full PHASE-001 exit: the live VPS deploy plus monitoring/status/
+performance tasks, and external-asset validation (real FIT samples, a
+TrainingPeaks reference corpus, Hypothesis property tests). See `SNAPSHOT.yaml`.
 
 ## Install & run
 ```bash

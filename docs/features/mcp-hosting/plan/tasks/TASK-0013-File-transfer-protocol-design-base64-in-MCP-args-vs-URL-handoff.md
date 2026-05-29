@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0013
 aliases: ["TASK-0013"]
 title: "File transfer protocol design (base64 in MCP args vs URL-handoff)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0002]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** ADR-0005 — paths for local files, base64 for binary (FIT) in/out; no upload service (stateless).
 
 # TASK-0013 — File transfer protocol design (base64 in MCP args vs URL-handoff)
 

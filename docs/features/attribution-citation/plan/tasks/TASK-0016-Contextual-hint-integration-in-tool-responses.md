@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0016
 aliases: ["TASK-0016"]
 title: "Contextual hint integration in tool responses"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0003]]"]
 fixes: []
 effort: S
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** attach_attribution wired into every MCP tool response; .ytw hint only on .ytw-producing tools.
 
 # TASK-0016 — Contextual hint integration in tool responses
 

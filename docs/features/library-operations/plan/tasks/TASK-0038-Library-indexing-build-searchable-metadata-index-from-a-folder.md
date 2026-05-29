@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0038
 aliases: ["TASK-0038"]
 title: "Library indexing — build searchable metadata index from a folder"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0006]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** library.index_library — metadata index across workout/activity files (name/kind/duration/TSS).
 
 # TASK-0038 — Library indexing — build searchable metadata index from a folder
 

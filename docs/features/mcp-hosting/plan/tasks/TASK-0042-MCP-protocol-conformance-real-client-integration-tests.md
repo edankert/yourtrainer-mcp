@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0042
 aliases: ["TASK-0042"]
 title: "MCP protocol conformance + real-client integration tests"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0002]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** tests/test_conformance.py — in-memory FastMCP client drives initialize/list_tools/call_tool over the protocol.
 
 # TASK-0042 — MCP protocol conformance + real-client integration tests
 

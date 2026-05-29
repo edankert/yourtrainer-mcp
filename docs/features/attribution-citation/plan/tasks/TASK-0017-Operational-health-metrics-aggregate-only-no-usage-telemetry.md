@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0017
 aliases: ["TASK-0017"]
 title: "Operational health metrics (aggregate-only, no usage telemetry)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0003]]"]
 fixes: []
 effort: S
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** health.py — aggregate-only counters (requests/errors/by-tool/uptime); get_health tool; no per-call records.
 
 # TASK-0017 — Operational health metrics (aggregate-only, no usage telemetry)
 

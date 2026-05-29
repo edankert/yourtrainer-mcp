@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0049
 aliases: ["TASK-0049"]
 title: "Best-efforts-across-history"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0006]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** library.best_efforts_across_history — all-time peak-power curve across activities, with source file.
 
 # TASK-0049 — Best-efforts-across-history
 

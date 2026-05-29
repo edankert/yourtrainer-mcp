@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0039
 aliases: ["TASK-0039"]
 title: "Library deduplication — find near-duplicate workouts"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0006]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** library.find_duplicates — near-duplicate workouts by per-second power-series comparison.
 
 # TASK-0039 — Library deduplication — find near-duplicate workouts
 

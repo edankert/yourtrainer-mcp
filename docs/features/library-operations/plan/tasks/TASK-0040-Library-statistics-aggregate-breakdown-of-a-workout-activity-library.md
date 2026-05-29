@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0040
 aliases: ["TASK-0040"]
 title: "Library statistics — aggregate breakdown of a workout / activity library"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0006]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** library.library_stats — aggregate counts by format/kind, total/avg duration + TSS.
 
 # TASK-0040 — Library statistics — aggregate breakdown of a workout / activity library
 

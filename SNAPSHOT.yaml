@@ -26,25 +26,25 @@ docs_system:
     - docs/PHASES.md
 
 counters:
-  ADR: 3
+  ADR: 5
   CHG:
     last_date: "20260529"
-    last_seq: 6
+    last_seq: 7
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
   TASK: 54
-  TST: 6
+  TST: 8
   WF: 0
 
 focus:
-  task: "[[TASK-0038]]"
+  task: ""
   feature: "[[FEAT-0004]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "Wave 6 — library ops (FEAT-0006: indexing, dedup, stats, best-efforts) + close hosting/trojan-horse. Waves 1-5 done; FEAT-0005 complete. VPS deploy held until v1 complete."
+  active_wave: "v1 functional build complete (FEAT-0001/0003/0004/0005/0006 + MCP server). Remaining: VPS deploy (held per user), infra tasks (monitoring/status/perf), and external-asset tasks (FIT samples, TP corpus, Hypothesis). 31 MCP tools; 118 tests green."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -57,7 +57,7 @@ items:
   features:
     FEAT-0003:
       title: "Trojan-horse adoption layer (citation-source framing)"
-      status: in-progress
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/attribution-citation/FEAT-0003-Attribution-Citation-Policy.md"
     FEAT-0004:
@@ -72,7 +72,7 @@ items:
       path: "docs/features/format-knowledge-registry/FEAT-0001-Format-Knowledge-Registry.md"
     FEAT-0006:
       title: "Cycling library-aware operations"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/library-operations/FEAT-0006-Library-Operations.md"
     FEAT-0002:
@@ -89,25 +89,26 @@ items:
   tasks:
     TASK-0014:
       title: "Default output format ADR (trojan-horse intensity calibration)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/attribution-citation/plan/tasks/TASK-0014-Default-output-format-ADR-trojan-horse-intensity-calibration.md"
       parent: "FEAT-0003"
+      decides: "[[ADR-0004]]"
     TASK-0015:
       title: "Attribution + contextual-hint copy (POSITIONING-compliant)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/attribution-citation/plan/tasks/TASK-0015-Attribution-contextual-hint-copy-POSITIONING-compliant.md"
       parent: "FEAT-0003"
     TASK-0016:
       title: "Contextual hint integration in tool responses"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/attribution-citation/plan/tasks/TASK-0016-Contextual-hint-integration-in-tool-responses.md"
       parent: "FEAT-0003"
     TASK-0017:
       title: "Operational health metrics (aggregate-only, no usage telemetry)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/attribution-citation/plan/tasks/TASK-0017-Operational-health-metrics-aggregate-only-no-usage-telemetry.md"
       parent: "FEAT-0003"
@@ -303,25 +304,25 @@ items:
       parent: "FEAT-0001"
     TASK-0038:
       title: "Library indexing — build searchable metadata index from a folder"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/library-operations/plan/tasks/TASK-0038-Library-indexing-build-searchable-metadata-index-from-a-folder.md"
       parent: "FEAT-0006"
     TASK-0039:
       title: "Library deduplication — find near-duplicate workouts"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/library-operations/plan/tasks/TASK-0039-Library-deduplication-find-near-duplicate-workouts.md"
       parent: "FEAT-0006"
     TASK-0040:
       title: "Library statistics — aggregate breakdown of a workout / activity library"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/library-operations/plan/tasks/TASK-0040-Library-statistics-aggregate-breakdown-of-a-workout-activity-library.md"
       parent: "FEAT-0006"
     TASK-0049:
       title: "Best-efforts-across-history"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/library-operations/plan/tasks/TASK-0049-Best-efforts-across-history.md"
       parent: "FEAT-0006"
@@ -340,7 +341,7 @@ items:
       parent: "FEAT-0002"
     TASK-0010:
       title: "systemd unit + log rotation + restart-on-failure"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0010-systemd-unit-log-rotation-restart-on-failure.md"
       parent: "FEAT-0002"
@@ -352,19 +353,20 @@ items:
       parent: "FEAT-0002"
     TASK-0012:
       title: "Wire FEAT-0001 library functions as MCP tools"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0012-Wire-FEAT-0019-library-functions-as-MCP-tools.md"
       parent: "FEAT-0002"
     TASK-0013:
       title: "File transfer protocol design (base64 in MCP args vs URL-handoff)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0013-File-transfer-protocol-design-base64-in-MCP-args-vs-URL-handoff.md"
       parent: "FEAT-0002"
+      decides: "[[ADR-0005]]"
     TASK-0042:
       title: "MCP protocol conformance + real-client integration tests"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0042-MCP-protocol-conformance-real-client-integration-tests.md"
       parent: "FEAT-0002"
@@ -470,6 +472,18 @@ items:
       kind: automated
       path: "docs/features/rider-workflows/plan/tests/TST-0006-Rider-Workflows.md"
       verifies: ["[[TASK-0029]]","[[TASK-0030]]","[[TASK-0031]]","[[TASK-0032]]","[[TASK-0034]]","[[TASK-0048]]"]
+    TST-0007:
+      title: "Library operations suite (index/dedup/stats/best-efforts)"
+      status: passing
+      kind: automated
+      path: "docs/features/library-operations/plan/tests/TST-0007-Library-Operations.md"
+      verifies: ["[[TASK-0038]]","[[TASK-0039]]","[[TASK-0040]]","[[TASK-0049]]"]
+    TST-0008:
+      title: "MCP conformance + health-metrics suite"
+      status: passing
+      kind: automated
+      path: "docs/features/mcp-hosting/plan/tests/TST-0008-Conformance-And-Health.md"
+      verifies: ["[[TASK-0042]]","[[TASK-0017]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -487,15 +501,25 @@ items:
       status: accepted
       path: "docs/decisions/ADR-0003-Capability-Tools-V1-Scope.md"
       related: ["[[TASK-0019]]", "[[FEAT-0004]]"]
+    ADR-0004:
+      title: "Default workout output format + intensity convention"
+      status: accepted
+      path: "docs/decisions/ADR-0004-Default-Output-Format.md"
+      related: ["[[TASK-0014]]", "[[FEAT-0003]]", "[[FEAT-0004]]"]
+    ADR-0005:
+      title: "File transfer: paths for local files, base64 for binary"
+      status: accepted
+      path: "docs/decisions/ADR-0005-File-Transfer-Protocol.md"
+      related: ["[[TASK-0013]]", "[[FEAT-0002]]"]
 
 metrics:
   counts:
     features_total: 6
-    features_done: 0
+    features_done: 3
     tasks_total: 54
-    tasks_done: 34
-    tests_total: 6
-    tests_passing: 6
+    tasks_done: 46
+    tests_total: 8
+    tests_passing: 8
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

@@ -3,7 +3,7 @@ type: "[[feature]]"
 id: FEAT-0006
 aliases: ["FEAT-0006"]
 title: "Cycling library-aware operations"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27

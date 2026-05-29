@@ -45,6 +45,11 @@ def test_tools_are_registered():
         "adherence_scorecard",
         "migration_inventory",
         "roundtrip_workout",
+        "index_library",
+        "find_duplicate_workouts",
+        "library_statistics",
+        "best_efforts_across_history",
+        "get_health",
     }
     assert expected.issubset(tool_names)
 

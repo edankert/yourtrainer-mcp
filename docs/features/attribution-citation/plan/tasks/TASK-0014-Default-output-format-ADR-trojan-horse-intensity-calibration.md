@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0014
 aliases: ["TASK-0014"]
 title: "Default output format ADR (trojan-horse intensity calibration)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0003]]"]
 fixes: []
 effort: S
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** ADR-0004 — default output ZWO, fraction-of-FTP intensity convention, .ytw hint placement.
 
 # TASK-0014 — Default output format ADR (trojan-horse intensity calibration)
 

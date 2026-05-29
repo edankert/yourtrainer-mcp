@@ -17,10 +17,22 @@ from __future__ import annotations
 import base64
 import json
 import os
+import time
+from functools import wraps
 
 from fastmcp import FastMCP
 
-from . import analysis, anonymize, fit_workout, registry, route, validators, workflows
+from . import (
+    analysis,
+    anonymize,
+    fit_workout,
+    health,
+    library,
+    registry,
+    route,
+    validators,
+    workflows,
+)
 from . import training_load as tl
 from . import workout as wk
 from .activity import TrackPoint, inspect_activity, parse_activity_file
@@ -33,7 +45,26 @@ from .formats import list_supported_formats as _list_supported_formats
 mcp = FastMCP("yourtrainer-mcp")
 
 
-@mcp.tool
+def tool(fn):
+    """Register an MCP tool, incrementing aggregate health counters per call.
+
+    Counts are aggregate-only (tool name + ok/error); no arguments or results
+    are recorded (TASK-0017 / statelessness invariant).
+    """
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        ok = True
+        try:
+            return fn(*args, **kwargs)
+        except Exception:
+            ok = False
+            raise
+        finally:
+            health.record(fn.__name__, ok)
+    return mcp.tool(wrapper)
+
+
+@tool
 def list_supported_formats() -> dict:
     """List the cycling formats the knowledge registry covers.
 
@@ -43,7 +74,7 @@ def list_supported_formats() -> dict:
     return attach_attribution({"formats": _list_supported_formats()})
 
 
-@mcp.tool
+@tool
 def get_format_spec(format_key: str) -> dict:
     """Get the spec summary for a cycling format (FEAT-0001).
 
@@ -55,7 +86,7 @@ def get_format_spec(format_key: str) -> dict:
                               mentions_ytw=(format_key.lower() == "ytw"))
 
 
-@mcp.tool
+@tool
 def get_canonical_examples(format_key: str) -> dict:
     """Get canonical examples for a format (≥3 per format)."""
     return attach_attribution({"format": format_key,
@@ -63,35 +94,35 @@ def get_canonical_examples(format_key: str) -> dict:
                               mentions_ytw=(format_key.lower() == "ytw"))
 
 
-@mcp.tool
+@tool
 def get_format_constraints(format_key: str) -> dict:
     """Get known per-app constraints for a format."""
     return attach_attribution({"format": format_key,
                                "constraints": registry.get_constraints(format_key)})
 
 
-@mcp.tool
+@tool
 def get_conversion_notes(format_key: str) -> dict:
     """Get conversion notes from this format to others."""
     return attach_attribution({"format": format_key,
                                "conversion_notes": registry.get_conversion_notes(format_key)})
 
 
-@mcp.tool
+@tool
 def get_format_glossary(format_key: str) -> dict:
     """Get the glossary of terms for a format."""
     return attach_attribution({"format": format_key,
                                "glossary": registry.get_glossary(format_key)})
 
 
-@mcp.tool
+@tool
 def get_format_version(format_key: str) -> dict:
     """Get the documented version/source of a format spec."""
     return attach_attribution({"format": format_key,
                                "version": registry.get_version(format_key)})
 
 
-@mcp.tool
+@tool
 def validate(format_key: str, document: str) -> dict:
     """Structurally validate a document against a format (FEAT-0001).
 
@@ -103,7 +134,7 @@ def validate(format_key: str, document: str) -> dict:
     return attach_attribution(validators.validate(format_key, document))
 
 
-@mcp.tool
+@tool
 def inspect_activity_file(path: str, ftp_watts: float) -> dict:
     """Inspect a recorded ride and return a structured summary.
 
@@ -122,7 +153,7 @@ def inspect_activity_file(path: str, ftp_watts: float) -> dict:
     return attach_attribution(summary)
 
 
-@mcp.tool
+@tool
 def build_workout_from_intent(intent: dict, output_format: str = "zwo") -> dict:
     """Build a structured workout and render it deterministically.
 
@@ -161,7 +192,7 @@ def build_workout_from_intent(intent: dict, output_format: str = "zwo") -> dict:
     return attach_attribution(payload, mentions_ytw=(fmt == "ytw"))
 
 
-@mcp.tool
+@tool
 def read_fit_workout(document_base64: str) -> dict:
     """Decode a base64-encoded FIT-workout file into structured intent (TASK-0020).
 
@@ -174,7 +205,7 @@ def read_fit_workout(document_base64: str) -> dict:
     return attach_attribution({"intent": intent, "step_count": len(workout.steps)})
 
 
-@mcp.tool
+@tool
 def decompose_workout(document: str, source_format: str) -> dict:
     """Parse a ZWO or .ytw document back into structured intent (TASK-0033).
 
@@ -188,7 +219,7 @@ def decompose_workout(document: str, source_format: str) -> dict:
     return attach_attribution({"intent": intent})
 
 
-@mcp.tool
+@tool
 def scale_workout(
     document: str,
     source_format: str,
@@ -223,7 +254,7 @@ def scale_workout(
     return attach_attribution(payload, mentions_ytw=(out == "ytw"))
 
 
-@mcp.tool
+@tool
 def lint_workout(document: str, source_format: str) -> dict:
     """Run domain-aware static analysis on a workout (TASK-0025)."""
     src = source_format.lower()
@@ -232,7 +263,7 @@ def lint_workout(document: str, source_format: str) -> dict:
     return attach_attribution({"findings": findings, "count": len(findings)})
 
 
-@mcp.tool
+@tool
 def workout_difficulty(document: str, source_format: str, ftp_watts: float = 250.0) -> dict:
     """Score a workout's difficulty: IF, prescribed TSS, per-zone time (TASK-0050)."""
     src = source_format.lower()
@@ -240,7 +271,7 @@ def workout_difficulty(document: str, source_format: str, ftp_watts: float = 250
     return attach_attribution(wk.difficulty_score(workout, ftp_watts))
 
 
-@mcp.tool
+@tool
 def app_acceptance_check(
     document: str, source_format: str, apps: list[str] | None = None
 ) -> dict:
@@ -250,7 +281,7 @@ def app_acceptance_check(
     return attach_attribution({"apps": wk.app_acceptance(workout, apps)})
 
 
-@mcp.tool
+@tool
 def analyze_route(path: str, ftp_watts: float, target_intensity: float = 0.75) -> dict:
     """Analyse a GPX/TCX route: profile, climbs, and a pacing plan.
 
@@ -274,7 +305,7 @@ def analyze_route(path: str, ftp_watts: float, target_intensity: float = 0.75) -
     })
 
 
-@mcp.tool
+@tool
 def anonymize_gpx(document: str, privacy_radius_m: float = 200.0, drop_hr: bool = False) -> dict:
     """Anonymise a GPX track: privacy zones, optional HR strip (TASK-0030).
 
@@ -286,7 +317,7 @@ def anonymize_gpx(document: str, privacy_radius_m: float = 200.0, drop_hr: bool 
     return attach_attribution(anonymize.anonymize_gpx(document, privacy_radius_m, drop_hr))
 
 
-@mcp.tool
+@tool
 def adherence_scorecard(
     workout_document: str, workout_format: str, activity_path: str, ftp_watts: float
 ) -> dict:
@@ -307,14 +338,14 @@ def adherence_scorecard(
     )
 
 
-@mcp.tool
+@tool
 def migration_inventory(paths: list[str], target_format: str = "ytw") -> dict:
     """Inventory files for a batch library migration (TASK-0031)."""
     return attach_attribution(workflows.migration_inventory(paths, target_format),
                               mentions_ytw=(target_format.lower() == "ytw"))
 
 
-@mcp.tool
+@tool
 def roundtrip_workout(
     original: str,
     original_format: str,
@@ -327,6 +358,39 @@ def roundtrip_workout(
         workflows.roundtrip_workout(original, original_format, converted,
                                     converted_format, ftp_watts)
     )
+
+
+@tool
+def index_library(paths: list[str], ftp_watts: float = 250.0) -> dict:
+    """Build a searchable metadata index over workout/activity files (TASK-0038)."""
+    return attach_attribution(library.index_library(paths, ftp_watts))
+
+
+@tool
+def find_duplicate_workouts(paths: list[str], ftp_watts: float = 250.0) -> dict:
+    """Find near-duplicate workouts by power profile (TASK-0039)."""
+    return attach_attribution(library.find_duplicates(paths, ftp_watts))
+
+
+@tool
+def library_statistics(paths: list[str], ftp_watts: float = 250.0) -> dict:
+    """Aggregate breakdown of a workout/activity library (TASK-0040)."""
+    return attach_attribution(library.library_stats(paths, ftp_watts))
+
+
+@tool
+def best_efforts_across_history(paths: list[str]) -> dict:
+    """All-time peak-power curve across a set of activities (TASK-0049)."""
+    return attach_attribution(library.best_efforts_across_history(paths))
+
+
+@tool
+def get_health() -> dict:
+    """Operational health metrics: aggregate request/error counters + uptime.
+
+    Aggregate-only; no per-call records and no rider data (TASK-0017).
+    """
+    return attach_attribution(health.snapshot(time.monotonic()))
 
 
 def _series(points: list[TrackPoint]) -> dict:
@@ -346,7 +410,7 @@ def _series(points: list[TrackPoint]) -> dict:
     }
 
 
-@mcp.tool
+@tool
 def analyze_ride(path: str, ftp_watts: float) -> dict:
     """Run the full single-ride analytics suite on an activity file.
 
@@ -377,7 +441,7 @@ def analyze_ride(path: str, ftp_watts: float) -> dict:
     return attach_attribution(report)
 
 
-@mcp.tool
+@tool
 def training_load(dated_tss: list[list]) -> dict:
     """Compute CTL/ATL/TSB (fitness/fatigue/form) from dated TSS values (TASK-0027).
 
@@ -389,19 +453,19 @@ def training_load(dated_tss: list[list]) -> dict:
     return attach_attribution(tl.training_load_from_dated_tss(pairs))
 
 
-@mcp.tool
+@tool
 def recovery_time(tss: float) -> dict:
     """Estimate recovery time from a single session's TSS (TASK-0051)."""
     return attach_attribution(tl.recovery_estimate(tss))
 
 
-@mcp.tool
+@tool
 def detect_file(path: str) -> dict:
     """Detect a cycling file's format and report a lightweight summary (TASK-0037)."""
     return attach_attribution(inspect_file(path))
 
 
-@mcp.tool
+@tool
 def batch_inspect(paths: list[str], ftp_watts: float) -> dict:
     """Inspect many activity files and aggregate totals (TASK-0026)."""
     return attach_attribution(batch_inspect_activities(paths, ftp_watts))
@@ -414,6 +478,7 @@ def main() -> None:
     ``stdio`` (default) or ``http``. For HTTP, ``YTMCP_HOST``/``YTMCP_PORT``
     and ``YTMCP_PATH`` (default ``/your-trainer``) configure the bind.
     """
+    health.set_start(time.monotonic())
     transport = os.environ.get("YTMCP_TRANSPORT", "stdio")
     if transport == "http":
         mcp.run(

@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0010
 aliases: ["TASK-0010"]
 title: "systemd unit + log rotation + restart-on-failure"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0002]]"]
 fixes: []
 effort: S
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** deploy/yourtrainer-mcp.service — hardened systemd unit (restart-on-failure, ProtectSystem, no writable state).
 
 # TASK-0010 — systemd unit + log rotation + restart-on-failure
 

@@ -3,7 +3,7 @@ type: "[[feature]]"
 id: FEAT-0003
 aliases: ["FEAT-0003"]
 title: "Trojan-horse adoption layer (citation-source framing)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-26

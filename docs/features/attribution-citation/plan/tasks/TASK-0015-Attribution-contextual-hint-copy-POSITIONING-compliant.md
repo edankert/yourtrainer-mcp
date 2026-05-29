@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0015
 aliases: ["TASK-0015"]
 title: "Attribution + contextual-hint copy (POSITIONING-compliant)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0003]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-07).** attribution.py — POSITIONING-compliant attribution copy + .ytw contextual hint (no comparative content).
 
 # TASK-0015 — Attribution + contextual-hint copy (POSITIONING-compliant)
 
