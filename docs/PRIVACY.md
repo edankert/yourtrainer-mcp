@@ -17,8 +17,12 @@ accounts, no profiles, no usage analytics, and **retains no user content**.
      of *public Your Trainer website content* (the workout-library manifest,
      `.ytw` files, the manual, the AI-skill catalogue). This is published
      content, not rider data, and user input never reaches it.
-- **No logging of user content.** The library emits no log records of its own;
-  the reverse-proxy config logs aggregate request metadata only (never bodies).
+- **No logging of user content, and no IP retention.** The library emits no log
+  records of its own. The HTTP entrypoint **disables uvicorn's per-request access
+  log** (which would otherwise record client IPs), and the reverse-proxy vhosts
+  (`deploy/Caddyfile`, `deploy/nginx-mcp.conf`) log no request bodies and no
+  per-request client IPs (`access_log off`). Operational visibility comes from
+  the aggregate-only `get_health` tool.
 
 ## Why it's structural, not just policy
 The server has no concept of "rider X": there are no accounts and no stored

@@ -108,6 +108,15 @@ def test_repeated_calls_are_independent_no_cross_call_bleed():
     assert a == a_again and a != b
 
 
+def test_http_transport_disables_request_access_logging():
+    import logging
+
+    from yourtrainer_mcp import server
+    logging.getLogger("uvicorn.access").disabled = False
+    server._silence_request_logging()
+    assert logging.getLogger("uvicorn.access").disabled is True
+
+
 def test_package_emits_no_log_records():
     # Our code attaches no logging handlers and emits no records (so it cannot
     # leak user content into logs). Capture anything logged under the package.

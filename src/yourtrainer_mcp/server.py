@@ -536,6 +536,18 @@ def batch_inspect(paths: list[str], ftp_watts: float) -> dict:
     return attach_attribution(batch_inspect_activities(paths, ftp_watts))
 
 
+def _silence_request_logging() -> None:
+    """Disable per-request access logging (no client-IP / per-call records).
+
+    Privacy invariant (CONTEXT.md / docs/PRIVACY.md): no IP retention beyond
+    rate-limit buckets. uvicorn's access logger emits a per-request line with the
+    client IP; we disable it. Operational visibility comes from the aggregate-only
+    ``get_health`` tool instead. Startup/error logging (uvicorn.error) is kept.
+    """
+    import logging
+    logging.getLogger("uvicorn.access").disabled = True
+
+
 def main() -> None:
     """Console-script entry point.
 
@@ -546,6 +558,7 @@ def main() -> None:
     health.set_start(time.monotonic())
     transport = os.environ.get("YTMCP_TRANSPORT", "stdio")
     if transport == "http":
+        _silence_request_logging()
         mcp.run(
             transport="http",
             host=os.environ.get("YTMCP_HOST", "127.0.0.1"),
