@@ -29,14 +29,14 @@ counters:
   ADR: 5
   CHG:
     last_date: "20260529"
-    last_seq: 9
+    last_seq: 10
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
   TASK: 55
-  TST: 10
+  TST: 11
   WF: 0
 
 focus:
@@ -44,7 +44,7 @@ focus:
   feature: "[[FEAT-0001]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "Wave 8 (polish) done: public docs-site mirror generator (TASK-0055) + CONTRIBUTING/MAINTAINERS (ADR-0002 follow-up). 142 tests. Remaining for PHASE-001 exit: live VPS deploy (held) + provisioning + external-asset tasks (0009/0011/0020/0021/0043/0045)."
+  active_wave: "Wave 9 (polish): vendored MIT real FIT files (python-fitparse) + reference corpus. Real Garmin workout files read by our codec; real ride NP cross-validated 3 ways (our codec, fitparse, naive impl) = 301.05 W. 153 tests. TASK-0020/0021/0045 advanced (still doing: >=10 workout samples, >=5 TP-sourced activities, on-device test)."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -298,7 +298,7 @@ items:
       parent: "FEAT-0001"
     TASK-0045:
       title: "Reference-value test corpus (TrainingPeaks / Intervals.icu canonical numbers)"
-      status: backlog
+      status: doing
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0045-Reference-value-test-corpus-TrainingPeaks-Intervals-icu-canonical-numbers.md"
       parent: "FEAT-0001"
@@ -504,6 +504,12 @@ items:
       kind: automated
       path: "docs/features/format-knowledge-registry/plan/tests/TST-0010-Docs-Site.md"
       verifies: ["[[TASK-0055]]"]
+    TST-0011:
+      title: "Real-world FIT files + NP/IF/TSS reference corpus"
+      status: passing
+      kind: automated
+      path: "docs/features/capability-tools/plan/tests/TST-0011-Real-FIT-And-Reference-Corpus.md"
+      verifies: ["[[TASK-0020]]","[[TASK-0021]]","[[TASK-0045]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -538,8 +544,8 @@ metrics:
     features_done: 3
     tasks_total: 55
     tasks_done: 49
-    tests_total: 10
-    tests_passing: 10
+    tests_total: 11
+    tests_passing: 11
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

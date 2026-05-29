@@ -7,7 +7,7 @@ status: backlog
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0001]]"]
 fixes: []
@@ -24,3 +24,5 @@ Curate a corpus of canonical activities with known reference values from authori
 - [ ] Tolerance documented per metric (NP within ±2% across tools is standard; IF/TSS exact given consistent FTP).
 - [ ] Test fixtures wired into TASK-0021, TASK-0022, TASK-0027, TASK-0028 acceptance.
 - [ ] Process documented for adding new reference activities (any contributor can extend the corpus).
+
+> **Progress 2026-05-29 (CHG-20260529-10, [[TST-0011]]).** Reference corpus started: tests/fixtures/reference_values.json (analytic anchors incl. 1h@FTP=100 + a real cross-validated ride) + data-driven tests (TST-0011). Still open for done: >=5 activities with TrainingPeaks/Intervals.icu published numbers (login-gated; our values follow the documented formula).

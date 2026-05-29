@@ -56,3 +56,7 @@ warn_unused_ignores = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+filterwarnings = [
+    # fitparse (optional extra) uses the deprecated utcfromtimestamp internally.
+    "ignore:datetime.datetime.utcfromtimestamp:DeprecationWarning",
+]

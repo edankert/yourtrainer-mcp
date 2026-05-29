@@ -7,7 +7,7 @@ status: doing
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
@@ -33,3 +33,5 @@ Implement read + write for Garmin's FIT-workout binary format using the official
 > bundling the Garmin SDK. Encode/decode + base64 MCP tools (`build_workout_from_intent`
 > output_format=fit, `read_fit_workout`) work and are cross-validated with `fitparse`.
 > Remaining for `done`: real Garmin/Wahoo/TP sample corpus + paired-device import test.
+
+> **Progress 2026-05-29 (CHG-20260529-10, [[TST-0011]]).** Now reads real Garmin FIT workout files (WorkoutIndividualSteps/RepeatSteps/CustomTargetValues from python-fitparse, MIT) via our own codec, plus a real Activity.fit. Still open for done: >=10 sample corpus + on-device Edge import test.

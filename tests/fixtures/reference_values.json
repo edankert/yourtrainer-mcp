@@ -1,0 +1,37 @@
+{
+  "description": "Reference corpus for NP/IF/TSS validation (TASK-0045).",
+  "method": "Coggan Normalized Power: 30 s rolling average, 4th-power mean, 4th root. IF = NP/FTP. TSS = (duration_s * NP * IF) / (FTP * 3600) * 100. This is TrainingPeaks' published NP/TSS definition (help.trainingpeaks.com/hc/en-us/articles/204071804).",
+  "caveats": "Real-activity NP/IF/TSS here are computed per the documented formula and cross-validated by two independent FIT parsers (our codec + fitparse) AND an independent naive NP reimplementation. They are NOT scraped from TrainingPeaks' own per-activity output, which can differ by a fraction due to edge-of-ride handling and 25 s vs 30 s window choices across tools.",
+  "anchors": [
+    {
+      "id": "one_hour_at_ftp",
+      "kind": "synthetic",
+      "ftp": 250,
+      "constant_power": 250,
+      "duration_s": 3600,
+      "expected": { "np": 250.0, "if": 1.0, "tss": 100.0 },
+      "note": "The universal TrainingPeaks anchor: one hour at FTP = 100 TSS."
+    },
+    {
+      "id": "half_hour_at_0_8",
+      "kind": "synthetic",
+      "ftp": 250,
+      "constant_power": 200,
+      "duration_s": 1800,
+      "expected": { "np": 200.0, "if": 0.8, "tss": 32.0 },
+      "note": "Constant 0.8 FTP for 30 min: IF 0.8, TSS = 0.5h * 0.8^2 * 100 = 32."
+    }
+  ],
+  "real_activities": [
+    {
+      "id": "edge810_vector",
+      "file": "external/Edge810-Vector-2013-08-16-15-35-10.fit",
+      "ftp": 275,
+      "duration_s": 4700,
+      "expected": { "avg": 275.5, "np": 301.1, "if": 1.095, "tss": 156.5 },
+      "tolerance": { "np": 0.5, "if": 0.01, "tss": 1.0 },
+      "source": "python-fitparse (MIT)",
+      "note": "Real Edge 810 + Vector ride. NP cross-validated: our codec, fitparse, and a naive reimplementation all yield 301.05 W."
+    }
+  ]
+}
