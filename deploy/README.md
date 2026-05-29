@@ -30,11 +30,24 @@ sudo systemctl enable --now yourtrainer-mcp
 sudo systemctl status yourtrainer-mcp
 ```
 
-## Reverse proxy (Caddy)
+## Reverse proxy
+
+### Option A — Caddy (auto-TLS; for hosts where Caddy owns 80/443)
 ```bash
 sudo cp deploy/Caddyfile /etc/caddy/Caddyfile   # or merge into an existing one
 sudo systemctl reload caddy
 ```
+
+### Option B — nginx (when nginx already owns 80/443) — **used in production**
+The live deploy uses this path. Install the vhost + a Let's Encrypt cert:
+```bash
+sudo apt-get install -y certbot python3-certbot-nginx
+sudo certbot certonly --nginx -d mcp.your-applications.com   # grey-cloud / direct origin
+# deploy/nginx-mcp.conf references /etc/letsencrypt/live/mcp.your-applications.com/{fullchain,privkey}.pem
+sudo cp deploy/nginx-mcp.conf /etc/nginx/sites-enabled/mcp.your-applications.com.conf
+sudo nginx -t && sudo systemctl reload nginx
+```
+The nginx vhost sets `access_log off` (privacy: no client-IP/per-request records).
 
 ## Verify
 ```bash
