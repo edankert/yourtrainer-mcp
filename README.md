@@ -1,5 +1,7 @@
 # yourtrainer-mcp
 
+[![CI](https://github.com/edankert/yourtrainer-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/edankert/yourtrainer-mcp/actions/workflows/ci.yml)
+
 A self-hosted Model Context Protocol (MCP) server giving any MCP-aware LLM the reference material and computational tools to work with indoor-cycling data: workout formats, route formats, activity files, training-load math, pacing, library operations.
 
 **Endpoint**: `mcp.your-applications.com/your-trainer`
