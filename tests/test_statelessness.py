@@ -109,12 +109,11 @@ def test_repeated_calls_are_independent_no_cross_call_bleed():
 
 
 def test_http_transport_disables_request_access_logging():
-    import logging
-
+    # The HTTP entrypoint passes access_log=False to uvicorn (no per-request /
+    # client-IP records). uvicorn reconfigures logging at startup, so this MUST
+    # go through its config, not a pre-disabled logger.
     from yourtrainer_mcp import server
-    logging.getLogger("uvicorn.access").disabled = False
-    server._silence_request_logging()
-    assert logging.getLogger("uvicorn.access").disabled is True
+    assert server.PRIVACY_UVICORN_CONFIG["access_log"] is False
 
 
 def test_package_emits_no_log_records():

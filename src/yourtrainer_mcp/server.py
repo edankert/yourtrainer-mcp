@@ -536,16 +536,10 @@ def batch_inspect(paths: list[str], ftp_watts: float) -> dict:
     return attach_attribution(batch_inspect_activities(paths, ftp_watts))
 
 
-def _silence_request_logging() -> None:
-    """Disable per-request access logging (no client-IP / per-call records).
-
-    Privacy invariant (CONTEXT.md / docs/PRIVACY.md): no IP retention beyond
-    rate-limit buckets. uvicorn's access logger emits a per-request line with the
-    client IP; we disable it. Operational visibility comes from the aggregate-only
-    ``get_health`` tool instead. Startup/error logging (uvicorn.error) is kept.
-    """
-    import logging
-    logging.getLogger("uvicorn.access").disabled = True
+# Privacy invariant (CONTEXT.md / docs/PRIVACY.md): no per-request access logging
+# (no client-IP / per-call records). Passed to uvicorn at startup; operational
+# visibility comes from the aggregate-only get_health tool instead.
+PRIVACY_UVICORN_CONFIG: dict = {"access_log": False}
 
 
 def main() -> None:
@@ -558,12 +552,12 @@ def main() -> None:
     health.set_start(time.monotonic())
     transport = os.environ.get("YTMCP_TRANSPORT", "stdio")
     if transport == "http":
-        _silence_request_logging()
         mcp.run(
             transport="http",
             host=os.environ.get("YTMCP_HOST", "127.0.0.1"),
             port=int(os.environ.get("YTMCP_PORT", "8080")),
             path=os.environ.get("YTMCP_PATH", "/your-trainer"),
+            uvicorn_config=dict(PRIVACY_UVICORN_CONFIG),
         )
     else:
         mcp.run()
