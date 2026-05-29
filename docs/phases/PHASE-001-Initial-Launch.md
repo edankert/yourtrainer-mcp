@@ -3,11 +3,11 @@ type: "[[phase]]"
 id: PHASE-001
 aliases: ["PHASE-001"]
 title: "Initial Launch (knowledge registry + capability tools + hosting)"
-status: draft
+status: active
 order: 1
 owner: user:edwin
 created: 2026-05-26
-updated: 2026-05-27
+updated: 2026-05-29
 goal: "Publish a self-hosted MCP server at mcp.your-applications.com exposing two layers for the broader indoor-cycling ecosystem: a knowledge registry (cycling-format specs, examples, constraints, conversion notes, glossaries — the authoritative reference material LLMs cite) and a narrow capability layer (binary FIT read/write, NP/IF/TSS calculations, workout linting, batch ops — the genuinely tool-required operations LLMs can't do alone). Trojan-horse adoption pattern: become the citation source for cycling-format knowledge."
 features:
   - "[[FEAT-0001-Cycling-Format-Knowledge-Registry]]"

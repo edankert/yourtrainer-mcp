@@ -1,5 +1,5 @@
 version: 1
-updated: "2026-05-27T00:00Z"
+updated: "2026-05-29T00:00Z"
 
 template:
   replace_me: false
@@ -26,22 +26,22 @@ docs_system:
     - docs/PHASES.md
 
 counters:
-  ADR: 0
+  ADR: 3
   CHG:
-    last_date: ""
-    last_seq: 0
+    last_date: "20260529"
+    last_seq: 1
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
   TASK: 54
-  TST: 0
+  TST: 1
   WF: 0
 
 focus:
-  task: ""
-  feature: ""
+  task: "[[TASK-0021]]"
+  feature: "[[FEAT-0004]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
   bundled_launch:
@@ -56,17 +56,17 @@ items:
   features:
     FEAT-0003:
       title: "Trojan-horse adoption layer (citation-source framing)"
-      status: backlog
+      status: in-progress
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/attribution-citation/FEAT-0003-Attribution-Citation-Policy.md"
     FEAT-0004:
       title: "Cycling capability tools (binary + math + linting)"
-      status: backlog
+      status: in-progress
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/FEAT-0004-Capability-Tools.md"
     FEAT-0001:
       title: "Cycling format knowledge registry"
-      status: backlog
+      status: in-progress
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/FEAT-0001-Format-Knowledge-Registry.md"
     FEAT-0006:
@@ -76,7 +76,7 @@ items:
       path: "docs/features/library-operations/FEAT-0006-Library-Operations.md"
     FEAT-0002:
       title: "MCP server + VPS hosting (both layers)"
-      status: backlog
+      status: in-progress
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/FEAT-0002-MCP-Hosting.md"
     FEAT-0005:
@@ -112,16 +112,18 @@ items:
       parent: "FEAT-0003"
     TASK-0018:
       title: "Open-source ADR — library + MCP wrapper publication decision"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/attribution-citation/plan/tasks/TASK-0018-Open-source-ADR-library-MCP-wrapper-publication-decision.md"
       parent: "FEAT-0003"
+      decides: "[[ADR-0002]]"
     TASK-0019:
       title: "Capability tools scope ADR (v1 in/out, future-phase candidates)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0019-Capability-tools-scope-ADR-v1-in-out-future-phase-candidates.md"
       parent: "FEAT-0004"
+      decides: "[[ADR-0003]]"
     TASK-0020:
       title: "FIT-workout read/write tool (binary, Garmin SDK)"
       status: backlog
@@ -130,10 +132,11 @@ items:
       parent: "FEAT-0004"
     TASK-0021:
       title: "FIT-activity inspector + NP/IF/TSS calculation"
-      status: backlog
+      status: doing
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0021-FIT-activity-inspector-NP-IF-TSS-calculation.md"
       parent: "FEAT-0004"
+      note: "NP/IF/TSS engine + TCX/GPX inspector implemented and unit-tested (TST-0001). Remaining for done: FIT binary fixtures + TrainingPeaks reference corpus (TASK-0045), time-in-zone presets."
     TASK-0022:
       title: "Peak power curve calculator (mean-max 1s, 5s, 30s, 1min, 5min, 20min, 60min)"
       status: backlog
@@ -244,7 +247,7 @@ items:
       parent: "FEAT-0004"
     TASK-0001:
       title: "Bootstrap yourtrainer-mcp repo (Python package + CI + MIT licence + knowledge-registry structure)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0001-Bootstrap-cycling-format-tools-repo-Python-package-CI-MIT-licence-knowledge-regi.md"
       parent: "FEAT-0001"
@@ -322,10 +325,11 @@ items:
       parent: "FEAT-0006"
     TASK-0008:
       title: "MCP server architecture ADR + framework choice"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0008-MCP-server-architecture-ADR-framework-choice.md"
       parent: "FEAT-0002"
+      decides: "[[ADR-0001]]"
     TASK-0009:
       title: "VPS provisioning + Caddy/nginx + Let's Encrypt for mcp.your-applications.com"
       status: backlog
@@ -427,18 +431,39 @@ items:
       status: open
       path: "docs/risks/RISK-0003-Format-Spec-Drift.md"
 
-  tests: {}
+  tests:
+    TST-0001:
+      title: "NP/IF/TSS + activity-inspector unit suite"
+      status: passing
+      kind: automated
+      path: "docs/features/capability-tools/plan/tests/TST-0001-Power-Metrics-And-Inspector.md"
+      verifies: ["[[TASK-0021]]"]
   workflows: {}
-  decisions: {}
+  decisions:
+    ADR-0001:
+      title: "MCP server runtime + framework: Python + FastMCP, HTTP transport, subpath URL"
+      status: accepted
+      path: "docs/decisions/ADR-0001-MCP-Server-Architecture.md"
+      related: ["[[TASK-0008]]", "[[FEAT-0002]]"]
+    ADR-0002:
+      title: "Open-source the library + MCP wrapper under MIT; hosted instance canonical"
+      status: accepted
+      path: "docs/decisions/ADR-0002-Open-Source-Publication.md"
+      related: ["[[TASK-0018]]", "[[FEAT-0003]]"]
+    ADR-0003:
+      title: "Capability tools v1 scope (in/out + deferral list)"
+      status: accepted
+      path: "docs/decisions/ADR-0003-Capability-Tools-V1-Scope.md"
+      related: ["[[TASK-0019]]", "[[FEAT-0004]]"]
 
 metrics:
   counts:
     features_total: 6
     features_done: 0
     tasks_total: 54
-    tasks_done: 0
-    tests_total: 0
-    tests_passing: 0
+    tasks_done: 4
+    tests_total: 1
+    tests_passing: 1
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

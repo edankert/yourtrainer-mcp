@@ -1,0 +1,27 @@
+# Caddy reverse-proxy for the hosted MCP server.
+# TLS is provisioned automatically by Caddy via Let's Encrypt.
+#
+# Serves the MCP at https://mcp.your-applications.com/your-trainer
+# (the upstream listens on 127.0.0.1:8080 at the same subpath).
+
+mcp.your-applications.com {
+	encode zstd gzip
+
+	# MCP streamable-HTTP endpoint.
+	reverse_proxy /your-trainer* 127.0.0.1:8080 {
+		# SSE / streamable responses must not be buffered.
+		flush_interval -1
+	}
+
+	header {
+		# No tracking; strict-statelessness posture surfaced at the edge too.
+		-Server
+		Referrer-Policy "no-referrer"
+	}
+
+	log {
+		# Aggregate operational logs only; no request bodies, no rider data.
+		output file /var/log/caddy/yourtrainer-mcp.log
+		format json
+	}
+}

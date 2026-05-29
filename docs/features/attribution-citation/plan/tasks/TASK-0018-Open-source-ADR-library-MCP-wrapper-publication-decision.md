@@ -3,7 +3,7 @@ type: "[[task]]"
 id: TASK-0018
 aliases: ["TASK-0018"]
 title: "Open-source ADR — library + MCP wrapper publication decision"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
@@ -19,6 +19,9 @@ effort: S
 ADR formalising the open-source decision. Phase-note recommendation: OSS the library + MCP wrapper under MIT; keep the hosted instance canonical. Weighs: adoption friction, trojan-horse efficacy with vs without OSS, maintenance burden, forking risk.
 
 ## Acceptance
-- [ ] ADR drafted, reviewed, accepted.
-- [ ] If Yes: repo public, MIT licence file added, MAINTAINERS.md sets expectations.
-- [ ] If No: rationale recorded; revisit-trigger documented.
+- [x] ADR drafted, reviewed, accepted — [[ADR-0002]] (Yes: MIT, hosted instance canonical).
+- [x] Repo public on GitHub, MIT `LICENSE` added.
+- [ ] `MAINTAINERS.md` setting contribution expectations — follow-up (non-blocking).
+
+> **Closed 2026-05-29 (CHG-20260529-01).** Decision: OSS under MIT. See [[ADR-0002]].
+> MAINTAINERS.md tracked as a follow-up under [[RISK-0002]].

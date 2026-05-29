@@ -39,7 +39,21 @@ The operations LLMs can't reliably do alone:
 - No OAuth-mediated integrations (Strava pull, Garmin Connect, etc.). Users export their files; the MCP processes them.
 
 ## Status
-**Scaffolding phase**. The project-os under `docs/` describes the planned scope (6 features, 50+ tasks). Code lands as the phase is executed.
+**Early alpha (v0.1.0)**. PHASE-001 is underway. Landed so far:
+- Python package + CI + MIT licence (TASK-0001); architecture decided in [ADR-0001](docs/decisions/ADR-0001-MCP-Server-Architecture.md).
+- FastMCP server exposing `list_supported_formats` and `inspect_activity_file`.
+- Capability engine: NP / IF / TSS, peak-power curve, time-in-zone; FIT (optional extra) / TCX / GPX activity parsing (TASK-0021, in progress).
+
+The project-os under `docs/` describes the full planned scope (6 features, 50+ tasks). Remaining code lands as the phase is executed.
+
+## Install & run
+```bash
+pip install -e ".[dev]"        # add ".[fit]" for FIT-binary support
+pytest -q                      # run the test suite
+yourtrainer-mcp                # stdio transport (local MCP clients)
+YTMCP_TRANSPORT=http yourtrainer-mcp   # streamable-HTTP on 127.0.0.1:8080/your-trainer
+```
+Deploy to a VPS: see [`deploy/README.md`](deploy/README.md).
 
 ## Project-os structure
 - `SNAPSHOT.yaml` — canonical machine-readable state.
