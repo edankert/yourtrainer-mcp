@@ -29,7 +29,7 @@ counters:
   ADR: 5
   CHG:
     last_date: "20260529"
-    last_seq: 11
+    last_seq: 12
   FEAT: 6
   ISS: 0
   REQ: 0
@@ -67,7 +67,7 @@ items:
       path: "docs/features/capability-tools/FEAT-0004-Capability-Tools.md"
     FEAT-0001:
       title: "Cycling format knowledge registry"
-      status: in-progress
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/FEAT-0001-Format-Knowledge-Registry.md"
     FEAT-0006:
@@ -135,7 +135,7 @@ items:
       note: "Self-contained FIT codec (fit.py/fit_workout.py): encode/decode workout FIT; bytes cross-validated with independent fitparse. Remaining for done: >=10 canonical Garmin/Wahoo/TP sample files + on-device Edge import test."
     TASK-0021:
       title: "FIT-activity inspector + NP/IF/TSS calculation"
-      status: doing
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0021-FIT-activity-inspector-NP-IF-TSS-calculation.md"
       parent: "FEAT-0004"
@@ -298,7 +298,7 @@ items:
       parent: "FEAT-0001"
     TASK-0045:
       title: "Reference-value test corpus (TrainingPeaks / Intervals.icu canonical numbers)"
-      status: doing
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/format-knowledge-registry/plan/tasks/TASK-0045-Reference-value-test-corpus-TrainingPeaks-Intervals-icu-canonical-numbers.md"
       parent: "FEAT-0001"
@@ -547,9 +547,9 @@ items:
 metrics:
   counts:
     features_total: 6
-    features_done: 3
+    features_done: 4
     tasks_total: 56
-    tasks_done: 50
+    tasks_done: 52
     tests_total: 11
     tests_passing: 11
     tests_failing: 0

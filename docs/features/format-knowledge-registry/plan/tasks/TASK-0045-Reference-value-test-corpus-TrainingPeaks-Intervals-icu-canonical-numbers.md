@@ -26,3 +26,5 @@ Curate a corpus of canonical activities with known reference values from authori
 - [ ] Process documented for adding new reference activities (any contributor can extend the corpus).
 
 > **Progress 2026-05-29 (CHG-20260529-10, [[TST-0011]]).** Reference corpus started: tests/fixtures/reference_values.json (analytic anchors incl. 1h@FTP=100 + a real cross-validated ride) + data-driven tests (TST-0011). Still open for done: >=5 activities with TrainingPeaks/Intervals.icu published numbers (login-gated; our values follow the documented formula).
+
+> **Done 2026-05-29 (CHG-20260529-12).** Closed on the user's decision to accept validation against TrainingPeaks' *published formula* + universal anchors (1h@FTP=100) + a real ride cross-validated 3 ways (our codec, fitparse, naive impl). TrainingPeaks' own per-activity numbers are login-gated and were not used; the reference corpus (tests/fixtures/reference_values.json) records this caveat.

@@ -3,7 +3,7 @@ type: "[[task]]"
 id: TASK-0021
 aliases: ["TASK-0021"]
 title: "FIT-activity inspector + NP/IF/TSS calculation"
-status: doing
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
@@ -32,3 +32,5 @@ Read a recorded ride (FIT-activity), emit a structured JSON summary: duration, d
 > ([[TASK-0045]]), configurable zone presets.
 
 > **Progress 2026-05-29 (CHG-20260529-10, [[TST-0011]]).** NP/IF/TSS validated end-to-end on a real Edge810+Vector ride (NP 301.1 W, IF 1.095, TSS 156.5 @FTP275), cross-validated by our codec, fitparse, and an independent naive NP impl. Still open for done: >=5 activities vs TrainingPeaks' published numbers (TASK-0045).
+
+> **Done 2026-05-29 (CHG-20260529-12).** Closed on the user's decision to accept validation against TrainingPeaks' *published formula* + universal anchors (1h@FTP=100) + a real ride cross-validated 3 ways (our codec, fitparse, naive impl). TrainingPeaks' own per-activity numbers are login-gated and were not used; the reference corpus (tests/fixtures/reference_values.json) records this caveat.
