@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0026
 aliases: ["TASK-0026"]
 title: "Batch operations adapter (folder-of-files → aggregated results)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** batch.batch_inspect_activities — folder/list of files → per-file summaries + aggregate totals; survives bad files.
 
 # TASK-0026 — Batch operations adapter (folder-of-files → aggregated results)
 

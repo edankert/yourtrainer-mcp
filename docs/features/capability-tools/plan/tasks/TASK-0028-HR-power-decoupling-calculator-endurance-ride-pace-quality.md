@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0028
 aliases: ["TASK-0028"]
 title: "HR–power decoupling calculator (endurance-ride pace quality)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: S
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** analysis.hr_power_decoupling — Pw:Hr efficiency-factor drift across ride halves; <5% well-paced flag.
 
 # TASK-0028 — HR–power decoupling calculator (endurance-ride pace quality)
 

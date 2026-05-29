@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0037
 aliases: ["TASK-0037"]
 title: "Lightweight file inspector + format detection"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: S
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** detect.detect_format/inspect_file — content sniffing (FIT magic / XML root / JSON marker) + extension fallback.
 
 # TASK-0037 — Lightweight file inspector + format detection
 

@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0053
 aliases: ["TASK-0053"]
 title: "HR drift / aerobic threshold estimator (MAF-style)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** analysis.hr_drift — half-split HR drift % + indicative aerobic-HR estimate (MAF-style; approximate).
 
 # TASK-0053 — HR drift / aerobic threshold estimator (MAF-style)
 

@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0022
 aliases: ["TASK-0022"]
 title: "Peak power curve calculator (mean-max 1s, 5s, 30s, 1min, 5min, 20min, 60min)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** analysis.peak_power_curve + best_efforts (mean-max 1s/5s/30s/1min/5min/20min/60min); surfaced in analyze_ride + inspector.
 
 # TASK-0022 — Peak power curve calculator (mean-max 1s, 5s, 30s, 1min, 5min, 20min, 60min)
 

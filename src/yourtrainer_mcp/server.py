@@ -20,10 +20,13 @@ import os
 
 from fastmcp import FastMCP
 
-from . import fit_workout
+from . import analysis, fit_workout
+from . import training_load as tl
 from . import workout as wk
-from .activity import inspect_activity, parse_activity_file
+from .activity import TrackPoint, inspect_activity, parse_activity_file
 from .attribution import attach_attribution
+from .batch import batch_inspect_activities
+from .detect import inspect_file
 from .formats import list_supported_formats as _list_supported_formats
 
 mcp = FastMCP("yourtrainer-mcp")
@@ -184,6 +187,84 @@ def app_acceptance_check(
     src = source_format.lower()
     workout = wk.from_zwo(document) if src == "zwo" else wk.from_ytw(document)
     return attach_attribution({"apps": wk.app_acceptance(workout, apps)})
+
+
+def _series(points: list[TrackPoint]) -> dict:
+    """Extract aligned power/HR/cadence series + sample rate from track points."""
+    duration_s = 0.0
+    times = [p.time for p in points if p.time is not None]
+    if len(times) >= 2:
+        duration_s = (times[-1] - times[0]).total_seconds()
+    else:
+        duration_s = float(max(0, len(points) - 1))
+    sample_rate_hz = (len(points) - 1) / duration_s if duration_s > 0 else 1.0
+    return {
+        "power": [p.power_w for p in points if p.power_w is not None],
+        "heart_rate": [p.heart_rate_bpm for p in points if p.heart_rate_bpm is not None],
+        "cadence": [p.cadence_rpm for p in points if p.cadence_rpm is not None],
+        "sample_rate_hz": sample_rate_hz,
+    }
+
+
+@mcp.tool
+def analyze_ride(path: str, ftp_watts: float) -> dict:
+    """Run the full single-ride analytics suite on an activity file.
+
+    Includes peak-power curve, best efforts, FTP estimate, power-duration model
+    (mFTP), HR–power decoupling, HR drift, cadence analysis, and auto-detected
+    work intervals. Covers TASK-0022/0028/0036/0046/0047/0052/0053/0054.
+
+    Args:
+        path: Path to a .fit/.tcx/.gpx activity file.
+        ftp_watts: Rider FTP in watts.
+    """
+    points = parse_activity_file(path)
+    s = _series(points)
+    p, hr, cad, sr = s["power"], s["heart_rate"], s["cadence"], s["sample_rate_hz"]
+    report: dict = {
+        "peak_power_curve_w": {
+            str(k): round(v, 1) for k, v in analysis.peak_power_curve(p, sample_rate_hz=sr).items()
+        } if p else None,
+        "best_efforts": {str(k): v for k, v in analysis.best_efforts(p, sample_rate_hz=sr).items()}
+        if p else None,
+        "ftp_estimate": analysis.estimate_ftp(p, sr) if p else None,
+        "power_duration_model": analysis.power_duration_model(p, sample_rate_hz=sr) if p else None,
+        "hr_power_decoupling": analysis.hr_power_decoupling(p, hr) if p and hr else None,
+        "hr_drift": analysis.hr_drift(hr) if hr else None,
+        "cadence": analysis.cadence_analysis(cad, sr) if cad else None,
+        "intervals": analysis.detect_intervals(p, ftp_watts, sample_rate_hz=sr) if p else None,
+    }
+    return attach_attribution(report)
+
+
+@mcp.tool
+def training_load(dated_tss: list[list]) -> dict:
+    """Compute CTL/ATL/TSB (fitness/fatigue/form) from dated TSS values (TASK-0027).
+
+    Args:
+        dated_tss: List of ``[iso_date, tss]`` pairs, e.g. ``[["2026-05-01", 85], ...]``.
+            Multiple entries on one day sum; missing days are filled with 0.
+    """
+    pairs = [(str(d), float(t)) for d, t in dated_tss]
+    return attach_attribution(tl.training_load_from_dated_tss(pairs))
+
+
+@mcp.tool
+def recovery_time(tss: float) -> dict:
+    """Estimate recovery time from a single session's TSS (TASK-0051)."""
+    return attach_attribution(tl.recovery_estimate(tss))
+
+
+@mcp.tool
+def detect_file(path: str) -> dict:
+    """Detect a cycling file's format and report a lightweight summary (TASK-0037)."""
+    return attach_attribution(inspect_file(path))
+
+
+@mcp.tool
+def batch_inspect(paths: list[str], ftp_watts: float) -> dict:
+    """Inspect many activity files and aggregate totals (TASK-0026)."""
+    return attach_attribution(batch_inspect_activities(paths, ftp_watts))
 
 
 def main() -> None:

@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0047
 aliases: ["TASK-0047"]
 title: "Power Duration Curve fitting + modelled FTP (mFTP)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: L
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** analysis.power_duration_model — 2-param critical-power fit (CP, W'); mFTP = CP.
 
 # TASK-0047 — Power Duration Curve fitting + modelled FTP (mFTP)
 

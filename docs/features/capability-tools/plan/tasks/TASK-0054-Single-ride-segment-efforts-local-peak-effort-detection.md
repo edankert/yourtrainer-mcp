@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0054
 aliases: ["TASK-0054"]
 title: "Single-ride segment efforts (local peak-effort detection)"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** analysis.best_efforts — peak effort per duration with start offset.
 
 # TASK-0054 — Single-ride segment efforts (local peak-effort detection)
 

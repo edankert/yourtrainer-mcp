@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0036
 aliases: ["TASK-0036"]
 title: "Lap / interval auto-detection on unstructured activities"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** analysis.detect_intervals — threshold-based work-effort detection on unstructured rides.
 
 # TASK-0036 — Lap / interval auto-detection on unstructured activities
 

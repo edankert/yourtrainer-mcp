@@ -29,22 +29,22 @@ counters:
   ADR: 3
   CHG:
     last_date: "20260529"
-    last_seq: 3
+    last_seq: 4
   FEAT: 6
   ISS: 0
   REQ: 0
   REL: 0
   RISK: 3
   TASK: 54
-  TST: 3
+  TST: 4
   WF: 0
 
 focus:
-  task: "[[TASK-0027]]"
+  task: "[[TASK-0002]]"
   feature: "[[FEAT-0004]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "Wave 3 — training-load math (CTL/ATL/TSB, HR-power decoupling, FTP detect, PDC, peak-power tool). Waves 1-2 (authoring + FIT codec) done. VPS deploy held until v1 complete."
+  active_wave: "Wave 4 — knowledge registry (specs/ corpus + registry tools for 8 formats). Waves 1-3 done (FEAT-0004 capability tools complete bar TASK-0020/0021 external assets). VPS deploy held until v1 complete."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -141,7 +141,7 @@ items:
       note: "NP/IF/TSS engine + TCX/GPX/FIT inspector unit-tested (TST-0001, TST-0003). FIT-read now covered via built-in codec fixtures. Remaining for done: TrainingPeaks reference corpus (TASK-0045), selectable time-in-zone presets."
     TASK-0022:
       title: "Peak power curve calculator (mean-max 1s, 5s, 30s, 1min, 5min, 20min, 60min)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0022-Peak-power-curve-calculator-mean-max-1s-5s-30s-1min-5min-20min-60min.md"
       parent: "FEAT-0004"
@@ -165,19 +165,19 @@ items:
       parent: "FEAT-0004"
     TASK-0026:
       title: "Batch operations adapter (folder-of-files → aggregated results)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0026-Batch-operations-adapter-folder-of-files-aggregated-results.md"
       parent: "FEAT-0004"
     TASK-0027:
       title: "Training-load curve (CTL / ATL / TSB) from a folder of activities"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0027-Training-load-curve-CTL-ATL-TSB-from-a-folder-of-activities.md"
       parent: "FEAT-0004"
     TASK-0028:
       title: "HR–power decoupling calculator (endurance-ride pace quality)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0028-HR-power-decoupling-calculator-endurance-ride-pace-quality.md"
       parent: "FEAT-0004"
@@ -195,25 +195,25 @@ items:
       parent: "FEAT-0004"
     TASK-0036:
       title: "Lap / interval auto-detection on unstructured activities"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0036-Lap-interval-auto-detection-on-unstructured-activities.md"
       parent: "FEAT-0004"
     TASK-0037:
       title: "Lightweight file inspector + format detection"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0037-Lightweight-file-inspector-format-detection.md"
       parent: "FEAT-0004"
     TASK-0046:
       title: "FTP detection from a ride"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0046-FTP-detection-from-a-ride.md"
       parent: "FEAT-0004"
     TASK-0047:
       title: "Power Duration Curve fitting + modelled FTP (mFTP)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0047-Power-Duration-Curve-fitting-modelled-FTP-mFTP.md"
       parent: "FEAT-0004"
@@ -225,25 +225,25 @@ items:
       parent: "FEAT-0004"
     TASK-0051:
       title: "Recovery time estimator"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0051-Recovery-time-estimator.md"
       parent: "FEAT-0004"
     TASK-0052:
       title: "Cadence analysis"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0052-Cadence-analysis.md"
       parent: "FEAT-0004"
     TASK-0053:
       title: "HR drift / aerobic threshold estimator (MAF-style)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0053-HR-drift-aerobic-threshold-estimator-MAF-style.md"
       parent: "FEAT-0004"
     TASK-0054:
       title: "Single-ride segment efforts (local peak-effort detection)"
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/capability-tools/plan/tasks/TASK-0054-Single-ride-segment-efforts-local-peak-effort-detection.md"
       parent: "FEAT-0004"
@@ -452,6 +452,12 @@ items:
       kind: automated
       path: "docs/features/capability-tools/plan/tests/TST-0003-FIT-Codec.md"
       verifies: ["[[TASK-0020]]","[[TASK-0021]]"]
+    TST-0004:
+      title: "Training-load, ride-analytics, detection & batch suite"
+      status: passing
+      kind: automated
+      path: "docs/features/capability-tools/plan/tests/TST-0004-Analytics-Detection-Batch.md"
+      verifies: ["[[TASK-0022]]","[[TASK-0026]]","[[TASK-0027]]","[[TASK-0028]]","[[TASK-0036]]","[[TASK-0037]]","[[TASK-0046]]","[[TASK-0047]]","[[TASK-0051]]","[[TASK-0052]]","[[TASK-0053]]","[[TASK-0054]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -475,9 +481,9 @@ metrics:
     features_total: 6
     features_done: 0
     tasks_total: 54
-    tasks_done: 10
-    tests_total: 3
-    tests_passing: 3
+    tasks_done: 22
+    tests_total: 4
+    tests_passing: 4
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

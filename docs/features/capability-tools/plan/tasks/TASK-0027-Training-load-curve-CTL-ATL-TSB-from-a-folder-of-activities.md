@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0027
 aliases: ["TASK-0027"]
 title: "Training-load curve (CTL / ATL / TSB) from a folder of activities"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: M
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** training_load.CTL/ATL/TSB via EWMA of daily TSS (42/7-day); densify_daily_tss fills gaps; training_load MCP tool.
 
 # TASK-0027 — Training-load curve (CTL / ATL / TSB) from a folder of activities
 

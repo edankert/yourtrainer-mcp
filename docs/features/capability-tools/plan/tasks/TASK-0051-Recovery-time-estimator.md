@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0051
 aliases: ["TASK-0051"]
 title: "Recovery time estimator"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: S
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** training_load.recovery_estimate — TSS → strain band + recovery hours (heuristic).
 
 # TASK-0051 — Recovery time estimator
 

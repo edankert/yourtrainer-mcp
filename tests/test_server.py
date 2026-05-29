@@ -28,6 +28,11 @@ def test_tools_are_registered():
         "lint_workout",
         "workout_difficulty",
         "app_acceptance_check",
+        "analyze_ride",
+        "training_load",
+        "recovery_time",
+        "detect_file",
+        "batch_inspect",
     }
     assert expected.issubset(tool_names)
 

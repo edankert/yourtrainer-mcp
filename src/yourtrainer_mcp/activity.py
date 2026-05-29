@@ -142,8 +142,11 @@ def parse_fit(path: Path) -> list[TrackPoint]:
     points: list[TrackPoint] = []
     for record in fitfile.get_messages("record"):
         vals = {d.name: d.value for d in record}
+        ts = vals.get("timestamp")
         pt = TrackPoint(
-            time=vals.get("timestamp"),
+            # fitparse returns sub-epoch values as raw ints ("system time");
+            # only accept genuine datetimes, else fall back to 1 Hz timing.
+            time=ts if isinstance(ts, datetime) else None,
             altitude_m=vals.get("altitude") or vals.get("enhanced_altitude"),
             distance_m=vals.get("distance"),
             power_w=vals.get("power"),

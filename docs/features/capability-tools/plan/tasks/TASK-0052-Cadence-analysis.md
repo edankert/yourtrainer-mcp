@@ -3,16 +3,18 @@ type: "[[task]]"
 id: TASK-0052
 aliases: ["TASK-0052"]
 title: "Cadence analysis"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-29
 source: []
 implements: ["[[FEAT-0004]]"]
 fixes: []
 effort: S
 ---
+
+> **Done 2026-05-29 (CHG-20260529-04, [[TST-0004]]).** analysis.cadence_analysis — moving avg, coasting %, time-in-band.
 
 # TASK-0052 — Cadence analysis
 
