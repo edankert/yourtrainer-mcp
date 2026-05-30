@@ -1,5 +1,5 @@
 version: 1
-updated: "2026-05-29T00:00Z"
+updated: "2026-05-30T18:00Z"
 
 template:
   replace_me: false
@@ -35,7 +35,7 @@ counters:
   REQ: 0
   REL: 0
   RISK: 4
-  TASK: 64
+  TASK: 65
   TST: 13
   WF: 0
 
@@ -210,6 +210,12 @@ items:
       status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0064-Verify-statelessness.md"
+      parent: "FEAT-0002"
+    TASK-0065:
+      title: "Activity-file tools accept base64 alongside path (mobile / hosted compatibility) — inspect_activity_file / analyze_ride / analyze_route / adherence_scorecard each gain a document_base64 alternation alongside the existing path arg; ADR-0005 amended to list the two missing tools (analyze_route + adherence_scorecard.activity_path) and to record the 'exactly one of {path, base64}' canonical shape. Bulk tools (index_library / batch_inspect / library_statistics) stay path-only by design. Unblocks upstream your-trainer TASK-0613 (per-ride NP/IF/TSS/peak-power/decoupling) + TASK-0615 (adherence scorecard). Surfaced 2026-05-30 during your-trainer FEAT-0086 integration."
+      status: backlog
+      phase: "[[PHASE-001-Initial-Launch]]"
+      path: "docs/features/mcp-hosting/plan/tasks/TASK-0065-Activity-file-tools-accept-base64-alongside-path-for-mobile.md"
       parent: "FEAT-0002"
     TASK-0025:
       title: "Workout structure linter (domain-aware static analysis)"

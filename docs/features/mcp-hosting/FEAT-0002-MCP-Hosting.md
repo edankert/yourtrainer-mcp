@@ -11,7 +11,7 @@ updated: 2026-05-27
 source: []
 goal: "Deploy and operate the MCP server that exposes FEAT-0001's knowledge-registry tools AND FEAT-0004's capability tools through a single endpoint at mcp.your-applications.com/your-trainer. Self-hosted on Edwin's VPS. Reliable uptime, low operational overhead, monitorable, reproducible from infrastructure-as-code."
 requirements: []
-tasks: ["[[TASK-0008]]", "[[TASK-0009]]", "[[TASK-0010]]", "[[TASK-0011]]", "[[TASK-0012]]", "[[TASK-0013]]", "[[TASK-0042]]", "[[TASK-0043]]", "[[TASK-0044]]"]
+tasks: ["[[TASK-0008]]", "[[TASK-0009]]", "[[TASK-0010]]", "[[TASK-0011]]", "[[TASK-0012]]", "[[TASK-0013]]", "[[TASK-0042]]", "[[TASK-0043]]", "[[TASK-0044]]", "[[TASK-0064]]", "[[TASK-0065]]"]
 release: ""
 related: []
 tests: []
