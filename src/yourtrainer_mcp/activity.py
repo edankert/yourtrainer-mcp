@@ -132,13 +132,19 @@ def parse_gpx(text: str) -> list[TrackPoint]:
 
 
 def parse_fit(path: Path) -> list[TrackPoint]:
+    return parse_fit_bytes(path.read_bytes())
+
+
+def parse_fit_bytes(data: bytes) -> list[TrackPoint]:
     try:
+        import io
+
         from fitparse import FitFile
     except ImportError:
         # Fall back to the built-in codec for standard files (no extra needed).
-        return _parse_fit_builtin(path)
+        return _parse_fit_builtin_bytes(data)
 
-    fitfile = FitFile(str(path))
+    fitfile = FitFile(io.BytesIO(data))
     points: list[TrackPoint] = []
     for record in fitfile.get_messages("record"):
         vals = {d.name: d.value for d in record}
@@ -163,7 +169,7 @@ def parse_fit(path: Path) -> list[TrackPoint]:
     return points
 
 
-def _parse_fit_builtin(path: Path) -> list[TrackPoint]:
+def _parse_fit_builtin_bytes(data: bytes) -> list[TrackPoint]:
     """Parse a standard FIT activity using the built-in codec (no extra)."""
     from datetime import datetime, timedelta, timezone
 
@@ -171,7 +177,7 @@ def _parse_fit_builtin(path: Path) -> list[TrackPoint]:
 
     base = datetime(1989, 12, 31, tzinfo=timezone.utc)
     points: list[TrackPoint] = []
-    for s in fit.decode_activity(path.read_bytes()):
+    for s in fit.decode_activity(data):
         pt = TrackPoint(
             power_w=s.get("power"),
             heart_rate_bpm=s.get("heart_rate"),
@@ -197,6 +203,22 @@ def parse_activity_file(path: str | Path) -> list[TrackPoint]:
     if ext == ".fit":
         return parse_fit(path)
     raise UnsupportedActivityFormat(f"Unsupported activity format: {ext or path.name}")
+
+
+def parse_activity_data(data: bytes, fmt: str) -> list[TrackPoint]:
+    """Parse activity bytes into TrackPoints, dispatching on a format key.
+
+    ``fmt`` is one of ``tcx`` / ``gpx`` / ``fit`` (the activity formats). Used
+    for inline (base64-uploaded) activity content from remote/hosted clients.
+    """
+    fmt = fmt.lower()
+    if fmt == "tcx":
+        return parse_tcx(data.decode("utf-8", "replace"))
+    if fmt == "gpx":
+        return parse_gpx(data.decode("utf-8", "replace"))
+    if fmt == "fit":
+        return parse_fit_bytes(data)
+    raise UnsupportedActivityFormat(f"Unsupported activity format: {fmt!r}")
 
 
 def _haversine_m(lat1: float, lon1: float, lat2: float, lon2: float) -> float:

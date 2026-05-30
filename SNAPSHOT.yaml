@@ -29,14 +29,14 @@ counters:
   ADR: 6
   CHG:
     last_date: "20260529"
-    last_seq: 17
+    last_seq: 18
   FEAT: 7
   ISS: 1
   REQ: 0
   REL: 0
   RISK: 4
   TASK: 65
-  TST: 13
+  TST: 14
   WF: 0
 
 focus:
@@ -44,7 +44,7 @@ focus:
   feature: "[[FEAT-0002]]"
   phase: "[[PHASE-001-Initial-Launch]]"
   issue: ""
-  active_wave: "DEPLOYED LIVE at https://mcp.your-applications.com/your-trainer (nginx reverse proxy + Lets Encrypt via certbot; systemd service enabled; privacy hardening applied live: no request bodies, no client-IP/per-call logging). Remaining: monitoring alert wiring (TASK-0011) + public status page (TASK-0043)."
+  active_wave: "TASK-0065 done: single-activity tools (inspect_activity_file/analyze_ride/analyze_route/adherence_scorecard/detect_file) accept document_base64 alongside path (exactly-one), content-sniffed format, size-bounded; unblocks hosted/mobile FEAT-0086 flows. ADR-0005 amended. 213 tests."
   bundled_launch:
     intent: "PHASE-001 ships together with your-applications.com FEAT-0025 (web surfaces) + your-applications.com FEAT-0009 (curated workout library) + your-trainer FEAT-0086 (app integration) as one launch moment."
     pieces:
@@ -213,7 +213,7 @@ items:
       parent: "FEAT-0002"
     TASK-0065:
       title: "Activity-file tools accept base64 alongside path (mobile / hosted compatibility) — inspect_activity_file / analyze_ride / analyze_route / adherence_scorecard each gain a document_base64 alternation alongside the existing path arg; ADR-0005 amended to list the two missing tools (analyze_route + adherence_scorecard.activity_path) and to record the 'exactly one of {path, base64}' canonical shape. Bulk tools (index_library / batch_inspect / library_statistics) stay path-only by design. Unblocks upstream your-trainer TASK-0613 (per-ride NP/IF/TSS/peak-power/decoupling) + TASK-0615 (adherence scorecard). Surfaced 2026-05-30 during your-trainer FEAT-0086 integration."
-      status: backlog
+      status: done
       phase: "[[PHASE-001-Initial-Launch]]"
       path: "docs/features/mcp-hosting/plan/tasks/TASK-0065-Activity-file-tools-accept-base64-alongside-path-for-mobile.md"
       parent: "FEAT-0002"
@@ -596,6 +596,12 @@ items:
       kind: automated
       path: "docs/features/mcp-hosting/plan/tests/TST-0013-Statelessness.md"
       verifies: ["[[TASK-0064]]","[[TASK-0017]]"]
+    TST-0014:
+      title: "Activity tools: path | base64 alternation suite (TASK-0065)"
+      status: passing
+      kind: automated
+      path: "docs/features/mcp-hosting/plan/tests/TST-0014-Activity-Base64-Input.md"
+      verifies: ["[[TASK-0065]]"]
   workflows: {}
   decisions:
     ADR-0001:
@@ -633,10 +639,10 @@ metrics:
   counts:
     features_total: 7
     features_done: 5
-    tasks_total: 64
-    tasks_done: 61
-    tests_total: 13
-    tests_passing: 13
+    tasks_total: 65
+    tasks_done: 62
+    tests_total: 14
+    tests_passing: 14
     tests_failing: 0
     issues_open: 0
     issues_triage: 0

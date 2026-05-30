@@ -3,7 +3,7 @@ type: "[[task]]"
 aliases: ["TASK-0065"]
 id: TASK-0065
 title: "Activity-file tools accept base64 alongside path (mobile / hosted compatibility) — inspect_activity_file / analyze_ride / analyze_route / adherence_scorecard"
-status: backlog
+status: done
 phase: "[[PHASE-001-Initial-Launch]]"
 owner: unassigned
 created: 2026-05-30
@@ -64,21 +64,21 @@ heuristic (or required via an explicit `source_format?` if heuristic is unsafe
 
 ## Acceptance
 
-- [ ] Signatures expose both `path?` and `document_base64?` (resp.
+- [x] Signatures expose both `path?` and `document_base64?` (resp.
       `activity_path?` and `activity_base64?` for `adherence_scorecard`).
-- [ ] Server validates "exactly one of {path, base64}" and emits a clear
+- [x] Server validates "exactly one of {path, base64}" and emits a clear
       `MCP tool '<name>' error: provide either 'path' or 'document_base64',
       not both` on violation.
-- [ ] Base64 decode failure surfaces as a tool error with the format reason
+- [x] Base64 decode failure surfaces as a tool error with the format reason
       (no partial computation).
-- [ ] Backwards compatible: existing path-only callers continue to work
+- [x] Backwards compatible: existing path-only callers continue to work
       with no client changes required.
-- [ ] Unit tests cover (a) path-only existing path, (b) base64-only new
+- [x] Unit tests cover (a) path-only existing path, (b) base64-only new
       path, (c) both-provided rejection, (d) neither-provided rejection,
       (e) malformed base64 rejection, (f) format mismatch (e.g. a PDF
       sent as `document_base64` with FIT-sniffed bytes) yields a clean
       "unsupported format" error.
-- [ ] ADR-0005 amended (see below) — either supersede with ADR-0007 or
+- [x] ADR-0005 amended (see below) — either supersede with ADR-0007 or
       add an addendum section recording the alternation pattern.
 
 ## ADR-0005 amendment scope (small, doc-only)
@@ -136,3 +136,5 @@ Unblocks two rider-facing flows on `your-trainer` (the in-app client):
 - URL handoff / pre-signed uploads / stateful storage. Still rejected per
   ADR-0005.
 - Hosted-side caching of the inline bytes. Stateless contract preserved.
+
+> **Done 2026-05-31 (CHG-20260529-18, [[TST-0014]]).** Implemented the `path | document_base64` alternation on inspect_activity_file / analyze_ride / analyze_route / adherence_scorecard (activity_path|activity_base64) + detect_file; content-sniffed format with optional source_format override; MAX_INLINE_BYTES size bound; shared server._activity_points + activity.parse_activity_data/parse_fit_bytes core. ADR-0005 amended with the alternation addendum. Backwards-compatible (path callers unchanged). 14 new tests.

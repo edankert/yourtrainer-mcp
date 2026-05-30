@@ -15,6 +15,7 @@ dependency and are tested independently.
 from __future__ import annotations
 
 import base64
+import binascii
 import json
 import os
 import time
@@ -36,14 +37,23 @@ from . import (
 )
 from . import training_load as tl
 from . import workout as wk
-from .activity import TrackPoint, inspect_activity, parse_activity_file
+from .activity import (
+    TrackPoint,
+    inspect_activity,
+    parse_activity_data,
+    parse_activity_file,
+)
 from .adherence import adherence_scorecard as _adherence_scorecard
 from .attribution import SERVER_INSTRUCTIONS, attach_attribution
 from .batch import batch_inspect_activities
-from .detect import inspect_file
+from .detect import detect_format, inspect_bytes, inspect_file
 from .formats import list_supported_formats as _list_supported_formats
 
 mcp = FastMCP("yourtrainer-mcp", instructions=SERVER_INSTRUCTIONS)
+
+# Max decoded size for an inline (base64) activity upload — keeps the stateless
+# server predictable; remote clients with larger files use path-based tools.
+MAX_INLINE_BYTES = 12 * 1024 * 1024
 
 
 def tool(fn):
@@ -136,22 +146,30 @@ def validate(format_key: str, document: str) -> dict:
 
 
 @tool
-def inspect_activity_file(path: str, ftp_watts: float) -> dict:
+def inspect_activity_file(ftp_watts: float, path: str | None = None,
+                          document_base64: str | None = None,
+                          source_format: str | None = None) -> dict:
     """Inspect a recorded ride and return a structured summary.
 
-    Reads a FIT (optional extra), TCX, or GPX activity file and computes
-    duration, distance, elevation gain, average/peak power, Normalised Power,
-    Intensity Factor, Training Stress Score, peak-power curve, time-in-zone,
-    and HR/cadence/speed statistics.
+    Reads a FIT (optional extra), TCX, or GPX activity and computes duration,
+    distance, elevation gain, average/peak power, Normalised Power, Intensity
+    Factor, Training Stress Score, peak-power curve, time-in-zone, and
+    HR/cadence/speed statistics.
+
+    Provide the activity as **exactly one of** ``path`` (a server-readable
+    filesystem path, for local/stdio use) or ``document_base64`` (base64-encoded
+    file bytes, for remote/hosted clients such as the mobile app).
 
     Args:
-        path: Filesystem path to the activity file (.fit, .tcx, or .gpx).
         ftp_watts: Rider Functional Threshold Power in watts (used for IF/TSS
             and zone boundaries).
+        path: Filesystem path to the activity file (.fit, .tcx, or .gpx).
+        document_base64: Base64-encoded activity file bytes (alternative to path).
+        source_format: Optional format override (``fit``/``tcx``/``gpx``);
+            auto-detected from content when omitted.
     """
-    points = parse_activity_file(path)
-    summary = inspect_activity(points, ftp_watts)
-    return attach_attribution(summary)
+    points = _activity_points(path, document_base64, source_format)
+    return attach_attribution(inspect_activity(points, ftp_watts))
 
 
 @tool
@@ -292,17 +310,22 @@ def app_acceptance_check(
 
 
 @tool
-def analyze_route(path: str, ftp_watts: float, target_intensity: float = 0.75) -> dict:
+def analyze_route(ftp_watts: float, path: str | None = None,
+                  document_base64: str | None = None, source_format: str | None = None,
+                  target_intensity: float = 0.75) -> dict:
     """Analyse a GPX/TCX route: profile, climbs, and a pacing plan.
 
     Covers climb analysis (TASK-0048) and pacing strategy (TASK-0029).
+    Provide the route as exactly one of ``path`` or ``document_base64``.
 
     Args:
-        path: Path to a route file (.gpx or .tcx with positions/elevation).
         ftp_watts: Rider FTP in watts.
+        path: Path to a route file (.gpx or .tcx with positions/elevation).
+        document_base64: Base64-encoded route bytes (remote/hosted).
+        source_format: Optional format override; auto-detected when omitted.
         target_intensity: Target effort as a fraction of FTP (e.g. 0.75).
     """
-    points = parse_activity_file(path)
+    points = _activity_points(path, document_base64, source_format)
     profile = route.route_profile(points)
     return attach_attribution({
         "summary": {
@@ -329,19 +352,26 @@ def anonymize_gpx(document: str, privacy_radius_m: float = 200.0, drop_hr: bool 
 
 @tool
 def adherence_scorecard(
-    workout_document: str, workout_format: str, activity_path: str, ftp_watts: float
+    workout_document: str, workout_format: str, ftp_watts: float,
+    activity_path: str | None = None, activity_base64: str | None = None,
+    activity_source_format: str | None = None,
 ) -> dict:
     """Score how closely a ride followed a planned workout (TASK-0034).
+
+    Provide the recorded activity as exactly one of ``activity_path`` or
+    ``activity_base64``. The planned workout is always inline text.
 
     Args:
         workout_document: The planned workout (ZWO or .ytw).
         workout_format: ``"zwo"`` or ``"ytw"``.
-        activity_path: Path to the recorded activity (.fit/.tcx/.gpx).
         ftp_watts: Rider FTP in watts.
+        activity_path: Path to the recorded activity (.fit/.tcx/.gpx; local/stdio).
+        activity_base64: Base64-encoded activity bytes (remote/hosted).
+        activity_source_format: Optional format override; auto-detected when omitted.
     """
     src = workout_format.lower()
     workout = wk.from_zwo(workout_document) if src == "zwo" else wk.from_ytw(workout_document)
-    points = parse_activity_file(activity_path)
+    points = _activity_points(activity_path, activity_base64, activity_source_format)
     s = _series(points)
     return attach_attribution(
         _adherence_scorecard(workout, s["power"], ftp_watts, s["sample_rate_hz"])
@@ -458,6 +488,33 @@ def get_health() -> dict:
     return attach_attribution(health.snapshot(time.monotonic()))
 
 
+def _activity_points(path: str | None, document_base64: str | None,
+                     source_format: str | None) -> list[TrackPoint]:
+    """Load activity TrackPoints from exactly one of a path or base64 content.
+
+    Local/stdio clients pass ``path``; remote/hosted clients (e.g. the mobile
+    app) pass ``document_base64``. Format is sniffed from the content when not
+    given explicitly (TASK-0065 / ADR-0005 addendum).
+    """
+    if (path is None) == (document_base64 is None):
+        raise ValueError("provide exactly one of 'path' or 'document_base64', not both")
+    if path is not None:
+        return parse_activity_file(path)
+    try:
+        data = base64.b64decode(document_base64, validate=True)  # type: ignore[arg-type]
+    except (binascii.Error, ValueError) as e:
+        raise ValueError(f"invalid base64 in document_base64: {e}") from e
+    if len(data) > MAX_INLINE_BYTES:
+        raise ValueError(
+            f"document_base64 decodes to {len(data)} bytes, over the "
+            f"{MAX_INLINE_BYTES // (1024 * 1024)} MB inline limit; use a path-based call"
+        )
+    fmt = (source_format or detect_format("", data[:512]) or "").lower()
+    if not fmt:
+        raise ValueError("could not detect activity format from content; pass source_format")
+    return parse_activity_data(data, fmt)
+
+
 def _series(points: list[TrackPoint]) -> dict:
     """Extract aligned power/HR/cadence series + sample rate from track points."""
     duration_s = 0.0
@@ -476,18 +533,24 @@ def _series(points: list[TrackPoint]) -> dict:
 
 
 @tool
-def analyze_ride(path: str, ftp_watts: float) -> dict:
-    """Run the full single-ride analytics suite on an activity file.
+def analyze_ride(ftp_watts: float, path: str | None = None,
+                 document_base64: str | None = None,
+                 source_format: str | None = None) -> dict:
+    """Run the full single-ride analytics suite on an activity.
 
     Includes peak-power curve, best efforts, FTP estimate, power-duration model
     (mFTP), HR–power decoupling, HR drift, cadence analysis, and auto-detected
     work intervals. Covers TASK-0022/0028/0036/0046/0047/0052/0053/0054.
 
+    Provide the activity as exactly one of ``path`` or ``document_base64``.
+
     Args:
-        path: Path to a .fit/.tcx/.gpx activity file.
         ftp_watts: Rider FTP in watts.
+        path: Path to a .fit/.tcx/.gpx activity file (local/stdio).
+        document_base64: Base64-encoded activity bytes (remote/hosted).
+        source_format: Optional format override; auto-detected when omitted.
     """
-    points = parse_activity_file(path)
+    points = _activity_points(path, document_base64, source_format)
     s = _series(points)
     p, hr, cad, sr = s["power"], s["heart_rate"], s["cadence"], s["sample_rate_hz"]
     report: dict = {
@@ -525,9 +588,20 @@ def recovery_time(tss: float) -> dict:
 
 
 @tool
-def detect_file(path: str) -> dict:
-    """Detect a cycling file's format and report a lightweight summary (TASK-0037)."""
-    return attach_attribution(inspect_file(path))
+def detect_file(path: str | None = None, document_base64: str | None = None) -> dict:
+    """Detect a cycling file's format and report a lightweight summary (TASK-0037).
+
+    Provide exactly one of ``path`` (local) or ``document_base64`` (remote/hosted).
+    """
+    if (path is None) == (document_base64 is None):
+        raise ValueError("provide exactly one of 'path' or 'document_base64', not both")
+    if path is not None:
+        return attach_attribution(inspect_file(path))
+    try:
+        data = base64.b64decode(document_base64, validate=True)  # type: ignore[arg-type]
+    except (binascii.Error, ValueError) as e:
+        raise ValueError(f"invalid base64 in document_base64: {e}") from e
+    return attach_attribution(inspect_bytes(data))
 
 
 @tool

@@ -58,3 +58,16 @@ def inspect_file(path: str | Path) -> dict:
         "binary": info.binary if info else None,
         "size_bytes": path.stat().st_size if path.exists() else None,
     }
+
+
+def inspect_bytes(data: bytes) -> dict:
+    """Lightweight 'what is this?' summary for inline (uploaded) content."""
+    key = detect_format("", data[:512])
+    info = next((f for f in SUPPORTED_FORMATS if f.key == key), None)
+    return {
+        "filename": None,
+        "detected_format": key,
+        "kind": info.kind if info else None,
+        "binary": info.binary if info else None,
+        "size_bytes": len(data),
+    }

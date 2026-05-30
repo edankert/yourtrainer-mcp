@@ -46,3 +46,29 @@ respects strict statelessness — no stored uploads, no retained data.
   activity sets are handled via path-based batch tools the host can read.
 - If a future hosted scenario needs remote files, that is a separate stateful
   service outside PHASE-001 scope.
+
+## Addendum (2026-05-31, TASK-0065) — path | base64 alternation for single-file tools
+
+The original "local files referenced by path" rule was correct for local/stdio
+clients but **path-only blocked the hosted endpoint**: a remote client (e.g. the
+mobile app) cannot give the server a path into its own filesystem. The fix is
+**not** a stateful upload service — base64 inlining (already used by
+`read_fit_workout` / `validate("fit", …)`) is sufficient and keeps the
+stateless contract.
+
+**Canonical shape for single-activity-file tools:** accept **exactly one of**
+`path` (server-readable; local/stdio) or `document_base64` (inline bytes;
+remote/hosted), with an optional `source_format` override (format is otherwise
+sniffed from content). Decoded inline payloads are size-bounded
+(`MAX_INLINE_BYTES`). This now applies to:
+
+- `inspect_activity_file`, `analyze_ride`, `analyze_route`
+- `adherence_scorecard` (its `activity_path` | `activity_base64`; the workout
+  half stays inline text)
+- `detect_file` (the `what-is-this` helper)
+
+**Bulk tools stay path-only by design** — `index_library`, `batch_inspect`,
+`library_statistics`: base64-ing a whole folder is the wrong ergonomics, and
+bulk ops are a co-located-host scenario.
+
+Spirit unchanged: still stateless, still no stored uploads, still no URL handoff.
