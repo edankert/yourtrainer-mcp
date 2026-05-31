@@ -64,14 +64,24 @@ performance tasks, and external-asset validation (real FIT samples, a
 TrainingPeaks reference corpus, Hypothesis property tests). See `SNAPSHOT.yaml`.
 
 ## Install & run
+
+Hosted: no install — register `https://mcp.your-applications.com/your-trainer`
+with your MCP client. To run it **locally / self-host** (Python ≥ 3.10):
+
 ```bash
-pip install -e ".[dev]"        # add ".[fit]" for FIT-binary support
-pytest -q                      # run the test suite
-yourtrainer-mcp                # stdio transport (local MCP clients)
+pipx install "git+https://github.com/edankert/yourtrainer-mcp"   # isolated CLI (no clone)
+# or: pip install "git+https://github.com/edankert/yourtrainer-mcp"
+#     add the [fit] extra for richer real-world FIT reading
+
+yourtrainer-mcp                        # stdio transport (default) — local MCP clients
 YTMCP_TRANSPORT=http yourtrainer-mcp   # streamable-HTTP on 127.0.0.1:8080/your-trainer
 ```
-Deploy to a VPS: see [`deploy/README.md`](deploy/README.md).
-Integrate a client (app AI assistant / workout creation): see [`docs/INTEGRATION.md`](docs/INTEGRATION.md) and [`examples/client_demo.py`](examples/client_demo.py).
+
+Contributors: `pip install -e ".[dev]"` then `pytest -q`.
+
+- **Local install + per-client (Claude Desktop/Code, Cursor, Codex, SDK) registration:** [`docs/INTEGRATION.md`](docs/INTEGRATION.md)
+- **Self-host on a VPS (systemd + reverse proxy + TLS):** [`deploy/README.md`](deploy/README.md)
+- **Minimal client example:** [`examples/client_demo.py`](examples/client_demo.py)
 
 ## Project-os structure
 - `SNAPSHOT.yaml` — canonical machine-readable state.

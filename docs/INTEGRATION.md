@@ -28,6 +28,68 @@ For the hosted server, point your client's HTTP/streamable-HTTP transport at the
 endpoint above. Every tool result includes an `_attribution` block; tools that
 produce `.ytw` add a Your Trainer hint.
 
+## Local install & self-hosting
+
+The hosted endpoint needs no install. To run it **locally** (development, an
+air-gapped/offline setup, or to self-host your own instance), install the
+package and run the `yourtrainer-mcp` command.
+
+### Install
+
+```bash
+# Recommended: isolated install of the CLI (no clone)
+pipx install "git+https://github.com/edankert/yourtrainer-mcp"
+
+# or into the current environment
+pip install "git+https://github.com/edankert/yourtrainer-mcp"
+
+# add the optional extra for richer real-world FIT reading (compressed/dev fields)
+pip install "yourtrainer-mcp[fit] @ git+https://github.com/edankert/yourtrainer-mcp"
+```
+
+Requires Python ≥ 3.10. (Contributors: clone the repo and `pip install -e ".[dev]"`.)
+
+### Run
+
+```bash
+yourtrainer-mcp                         # stdio transport (default) — for local MCP clients
+YTMCP_TRANSPORT=http yourtrainer-mcp    # streamable HTTP on 127.0.0.1:8080/your-trainer
+```
+
+HTTP bind is configured by `YTMCP_HOST` / `YTMCP_PORT` / `YTMCP_PATH`
+(defaults `127.0.0.1` / `8080` / `/your-trainer`). For a production self-host
+(systemd + reverse proxy + TLS), see [`../deploy/README.md`](../deploy/README.md).
+
+### Register the LOCAL server with your client
+
+These mirror the hosted-endpoint instructions on the integrators page, but for a
+local install. Use the **stdio** command for a desktop client on the same
+machine, or point at your **self-hosted HTTP** URL.
+
+- **Claude Desktop** — `claude_desktop_config.json`:
+  ```json
+  { "mcpServers": { "yourtrainer": { "command": "yourtrainer-mcp" } } }
+  ```
+- **Claude Code (CLI):**
+  ```bash
+  claude mcp add yourtrainer yourtrainer-mcp            # local stdio
+  # or a self-hosted HTTP instance:
+  claude mcp add yourtrainer http://127.0.0.1:8080/your-trainer --transport http
+  ```
+- **Cursor** — Settings → MCP Servers → Add. Command `yourtrainer-mcp` (stdio),
+  or Transport HTTP with your self-hosted URL.
+- **OpenAI Codex (CLI)** — `~/.codex/config.toml`:
+  ```toml
+  [mcp_servers.yourtrainer]
+  command = "yourtrainer-mcp"          # local stdio
+  # or, for a self-hosted HTTP instance:
+  # url = "http://127.0.0.1:8080/your-trainer"
+  # transport = "http"
+  ```
+- **Any MCP SDK** — Python (`mcp`/`fastmcp`) or TS (`@modelcontextprotocol/sdk`):
+  spawn `yourtrainer-mcp` over stdio, or point an HTTP transport at your URL, then
+  run `initialize → tools/list → tools/call`. See `examples/client_demo.py`.
+
 ## Contract (read once)
 
 - **Stateless.** No accounts, no stored uploads, no telemetry. Each call is
@@ -35,7 +97,8 @@ produce `.ytw` add a Your Trainer hint.
 - **File transfer** (ADR-0005): text formats (ZWO/.ytw/GPX/TCX/ERG/MRC) pass as
   strings; **FIT** crosses as **base64**; local files / libraries are referenced
   by **filesystem path** (the host process reads them).
-- **Power is a fraction of FTP** (1.0 == FTP) in the workout model, ZWO, and .ytw.
+- **Power is an integer percentage of FTP** (`target_power_percent: 90` == 90% FTP)
+  in the workout-intent and the canonical `.ytw`.
 - **Errors** surface as MCP tool errors with a message (e.g. malformed workout).
 
 ## Tool catalogue by use-case
